@@ -31,6 +31,10 @@ public interface UserControls {
     return new Trigger();
   }
 
+  public default Trigger getSpeedModeButton() {
+    return new Trigger();
+  }
+
   public default Trigger getAutoDriveButton() {
     return new Trigger();
   }
