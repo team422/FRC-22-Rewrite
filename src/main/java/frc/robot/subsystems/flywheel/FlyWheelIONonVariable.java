@@ -13,7 +13,7 @@ import edu.wpi.first.math.util.Units;
 // Internal Imports
 import frc.robot.Constants;
 
-public class FlywheelIONonVariable implements FlywheelIO {
+public class FlyWheelIONonVariable implements FlyWheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
@@ -21,7 +21,7 @@ public class FlywheelIONonVariable implements FlywheelIO {
     private WPI_TalonFX rightFlyWheel;
     private WPI_TalonFX topFlyWheel;
 
-    public flyIONonVariable() {
+    public FlyWheelIONonVariable() {
         switch (Constants.getBot()) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);

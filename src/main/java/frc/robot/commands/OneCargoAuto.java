@@ -5,14 +5,24 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.drivetrain.DriveBase;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /** An example command that uses an example subsystem. */
 public class OneCargoAuto extends SequentialCommandGroup {
 
     public OneCargoAuto(DriveBase drive) {
         addCommands(
-
+            parallel( //intake down command,
+                //start fly wheel command,
+            ),
+            new WaitCommand(1),
+            //start intake,transversal, and cell stop command,
+            parallel( //drive straight command,
+                //stop shooter command
+            )
+            //command to turn towards nearest ball? 
         );
     }
 }

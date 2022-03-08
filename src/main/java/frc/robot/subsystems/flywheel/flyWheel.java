@@ -5,16 +5,16 @@ import frc.robot.Constants;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class flyWheel extends SubsystemBase {
+public class FlyWheel extends SubsystemBase {
     private static final double flyWheelRadiusMeters = 0.0508;
     private static final double hoodWheelRadiusMeters = 0.028575;
 
-    private final flyIO flyIO;
+    private final FlyWheelIO flyIO;
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward topFF;
 
-    public flyWheel(flyIO flyIO) {
+    public FlyWheel(FlyWheelIO flyIO) {
         this.flyIO = flyIO;
 
         //not arbitruary values (these exist)

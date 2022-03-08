@@ -1,6 +1,6 @@
 package frc.robot.subsystems.flywheel;
 
-public interface flyIO {
+public interface FlyWheelIO {
 
     /** Sets the voltage of the drivetrain motors (open loop) */
     public default void setVoltage(double leftVolts, double rightVolts) {
