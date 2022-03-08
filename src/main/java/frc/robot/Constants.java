@@ -31,6 +31,10 @@ public final class Constants {
         return bot;
     }
 
+    public static void setBot(BotType botType) {
+        bot = botType;
+    }
+
     public static enum BotType {
         ROBOT_2022_COMP, ROBOT_2022_PRACTICE
     }
