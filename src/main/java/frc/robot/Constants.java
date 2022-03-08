@@ -20,6 +20,7 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static boolean tuningMode = false;
     private static BotType bot = BotType.ROBOT_2022_COMP;
 
     // Commented out because I think it's unnecessary since we only set it once - Shreyas
