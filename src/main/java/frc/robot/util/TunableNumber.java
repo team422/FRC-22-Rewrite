@@ -1,6 +1,8 @@
 package frc.robot.util;
 
+import java.util.function.Consumer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.Constants;
 
 public class TunableNumber {
@@ -10,9 +12,15 @@ public class TunableNumber {
     private String key;
     private double defaultValue;
     private double previousValue = defaultValue;
+    private Consumer<Double> onValueChangedConsumer;
 
     public TunableNumber (String numberKey) {
         this.key = tableKey + "/" + numberKey;
+    }
+
+    public TunableNumber (String numberKey, Consumer<Double> consumer) {
+        this.key = tableKey + "/" + numberKey;
+        this.onValueChangedConsumer = consumer;
     }
 
     public double getDefault () {
@@ -31,17 +39,31 @@ public class TunableNumber {
     }
 
     public double get() {
-        return Constants.tuningMode ? SmartDashboard.getNumber(key, defaultValue) : defaultValue;
-    }
-
-    public boolean hasChagned() {
-        double currentValue = get();
-        if (currentValue != previousValue) {
-            previousValue = currentValue;
-            return true;
+        if (!Constants.tuningMode) {
+            return defaultValue;
         }
 
-        return false;
+        double value = SmartDashboard.getNumber(key, defaultValue);
+
+        if (value != previousValue) {
+            if (onValueChangedConsumer != null) {
+                onValueChangedConsumer.accept(value);
+            }
+            
+            previousValue = value;
+        }
+
+        return value;
     }
+
+    // public boolean hasChagned() {
+    //     double currentValue = get();
+    //     if (currentValue != previousValue) {
+    //         previousValue = currentValue;
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
 
 }
