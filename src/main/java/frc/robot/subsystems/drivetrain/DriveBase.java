@@ -25,9 +25,9 @@ public class DriveBase extends SubsystemBase {
         driveIO.setVoltage(leftVoltage, rightVoltage);
     }
 
-    public void driveVelocity(double leftVelocity, double rightVelocity) {
-        double leftVelocityRadPerSec = leftVelocity / wheelRadiusMeters;
-        double rightVelocityRadPerSec = rightVelocity / wheelRadiusMeters;
+    public void driveVelocity(double leftVelocityMetersPerSec, double rightVelocityMetersPerSec) {
+        double leftVelocityRadPerSec = leftVelocityMetersPerSec / wheelRadiusMeters;
+        double rightVelocityRadPerSec = rightVelocityMetersPerSec / wheelRadiusMeters;
 
         double leftFFValue = leftFF.calculate(leftVelocityRadPerSec);
         double rightFFValue = rightFF.calculate(rightVelocityRadPerSec);
