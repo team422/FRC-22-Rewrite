@@ -13,7 +13,7 @@ import edu.wpi.first.math.util.Units;
 // Internal Imports
 import frc.robot.Constants;
 
-public class flyIONonVariable implements flyIO {
+public class FlywheelIONonVariable implements FlywheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
