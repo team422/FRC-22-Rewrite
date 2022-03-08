@@ -6,7 +6,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-    private static final double wheelRadiusMeters = 0.127;
+    private static final double wheelRadiusMeters = 0.0508;
 
     private final DriveIO driveIO;
 
