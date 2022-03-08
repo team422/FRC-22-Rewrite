@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
 import frc.robot.subsystems.drivetrain.*;
@@ -47,9 +48,9 @@ public class RobotContainer {
     // Define commands here
     DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(
         drive,
-        controls::getLeftDriveY,
-        controls::getRightDriveX);
-
+        () -> controls.getLeftDriveY(),
+        () -> controls.getRightDriveX());
+    
     // Define default commands here
     drive.setDefaultCommand(defaultDriveCommand);
 
