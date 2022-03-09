@@ -47,7 +47,6 @@ public class TeleIntake extends CommandBase{
             double voltage = voltageSupplier.get();
             flyWheel.flyVoltage(voltage, voltage);
             transversal.setTrueVoltage(voltage);
-            uptake.setTrueVoltage(voltage);
             //intake.setTrueVoltage(voltage);
         }
     }
