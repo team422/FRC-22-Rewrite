@@ -1,7 +1,5 @@
 package frc.robot.subsystems.drivetrain;
 
-import frc.robot.Constants;
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

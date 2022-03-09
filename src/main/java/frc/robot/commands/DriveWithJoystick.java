@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class DriveWithJoystick extends CommandBase {
-  private final DriveBase drive;
   private final Supplier<Double> speedSupplier, turnSupplier;
 
   /**
@@ -20,7 +19,6 @@ public class DriveWithJoystick extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public DriveWithJoystick(DriveBase drive, Supplier<Double> speedSupplier, Supplier<Double> turnSupplier) {
-    this.drive = drive;
     this.speedSupplier = speedSupplier;
     this.turnSupplier = turnSupplier;
 
