@@ -1,7 +1,7 @@
 package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -11,13 +11,13 @@ import frc.robot.Constants;
 
 public class IntakeIOTalonSRX implements IntakeIO{
     
-    private TalonSRX intakeMotor;
+    private WPI_TalonSRX intakeMotor;
     private DoubleSolenoid intakeArmSolenoid;
 
     public IntakeIOTalonSRX(){
         switch(Constants.getBot()){
             case ROBOT_2022_COMP:
-                this.intakeMotor = new TalonSRX(59);
+                this.intakeMotor = new WPI_TalonSRX(59);
                 this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
                 break;
             default:
@@ -26,19 +26,19 @@ public class IntakeIOTalonSRX implements IntakeIO{
     }
 
     public void runIntakeVoltage(double volts){
-        
+        intakeMotor.set(ControlMode.PercentOutput, volts / 12);
+    }
+
+    public void runIntakeVelocity(double velocity){
+        intakeMotor.set(ControlMode.Velocity, velocity);
     }
 
     public void stopIntake(){
-
-    }
-
-    public void runIntakeVelocity(double Velocity){
-
+        intakeMotor.stopMotor();
     }
 
     public void setIntakeSolenoid(Value value){
-        
+        intakeArmSolenoid.set(value);
     }
 
 }
