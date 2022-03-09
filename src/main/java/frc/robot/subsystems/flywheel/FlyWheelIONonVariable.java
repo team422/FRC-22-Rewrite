@@ -2,15 +2,10 @@ package frc.robot.subsystems.flywheel;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-// External Imports
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.util.Units;
-// Internal Imports
 import frc.robot.Constants;
 
 public class FlyWheelIONonVariable implements FlyWheelIO {
@@ -22,7 +17,7 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
     private WPI_TalonFX topFlyWheel;
 
     public FlyWheelIONonVariable() {
-        switch (Constants.getBot()) {
+        switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
                 this.rightFlyWheel = new WPI_TalonFX(9);
