@@ -9,7 +9,8 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.util.Units;
-
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 // Internal Imports
 import frc.robot.Constants;
 
@@ -21,6 +22,12 @@ public class DriveIOFalcon implements DriveIO {
     private WPI_TalonFX leftFollower;
     private WPI_TalonFX rightLeader;
     private WPI_TalonFX rightFollower;
+
+    private double leftEncoderValue;
+    private double rightEncoderValue;
+
+    private ADXRS450_Gyro gyro;
+    private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public DriveIOFalcon() {
         switch (Constants.bot) {
@@ -58,6 +65,8 @@ public class DriveIOFalcon implements DriveIO {
         leftFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightLeader.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
+
+        this.gyro = new ADXRS450_Gyro(kGyroPort);
     }
 
     @Override
@@ -97,5 +106,50 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.config_kP(0, kP);
         leftLeader.config_kI(0, kI);
         leftLeader.config_kD(0, kD);
+    }
+
+    @Override
+    public double getLeftPosition() {
+        return leftLeader.getSelectedSensorPosition(0) - leftEncoderValue;
+    }
+
+    @Override
+    public void resetLeftPosition() {
+        leftEncoderValue = leftLeader.getSelectedSensorPosition(0);
+    }
+
+    @Override
+    public double getLeftRate() {
+        return leftLeader.getSelectedSensorVelocity(0);
+    }
+
+    @Override
+    public double getRightPosition() {
+        return rightLeader.getSelectedSensorPosition(0) - rightEncoderValue;
+    }
+
+    @Override
+    public void resetRightPosition() {
+        rightEncoderValue = rightLeader.getSelectedSensorPosition(0);
+    }
+
+    @Override
+    public double getRightRate() {
+        return rightLeader.getSelectedSensorVelocity(0);
+    }
+
+    @Override
+    public double getGyroAngle() {
+        return gyro.getAngle();
+    }
+
+    @Override
+    public void resetGyroAngle() {
+        gyro.reset();
+    }
+
+    @Override
+    public double getGyroRate() {
+        return gyro.getRate();
     }
 }
