@@ -23,6 +23,7 @@ public class TunableNumber {
     public TunableNumber(String numberKey, double defaultValue) {
         this.numberKey = numberKey;
         this.defaultValue = defaultValue;
+        this.previousValue = defaultValue;
 
         if (Constants.tuningMode) {
             tab.add(numberKey, defaultValue);
@@ -32,6 +33,7 @@ public class TunableNumber {
     public TunableNumber(String numberKey, double defaultValue, Consumer<Double> consumer) {
         this.numberKey = numberKey;
         this.defaultValue = defaultValue;
+        this.previousValue = defaultValue;
         this.onValueChangedConsumer = consumer;
 
         if (Constants.tuningMode) {
