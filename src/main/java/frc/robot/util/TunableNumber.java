@@ -18,27 +18,21 @@ public class TunableNumber {
 
     public TunableNumber(String numberKey) {
         this.numberKey = numberKey;
+
+        if (Constants.tuningMode) {
+            entry = tab.add(numberKey, defaultValue).getEntry();
+        }
     }
 
     public TunableNumber(String numberKey, double defaultValue) {
-        this.numberKey = numberKey;
+        this(numberKey);
         this.defaultValue = defaultValue;
         this.previousValue = defaultValue;
-
-        if (Constants.tuningMode) {
-            entry = tab.add(numberKey, defaultValue).getEntry();
-        }
     }
 
     public TunableNumber(String numberKey, double defaultValue, Consumer<Double> consumer) {
-        this.numberKey = numberKey;
-        this.defaultValue = defaultValue;
-        this.previousValue = defaultValue;
+        this(numberKey, defaultValue);
         this.onValueChangedConsumer = consumer;
-
-        if (Constants.tuningMode) {
-            entry = tab.add(numberKey, defaultValue).getEntry();
-        }
     }
 
     public double getDefault() {
