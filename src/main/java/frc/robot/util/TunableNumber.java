@@ -26,7 +26,7 @@ public class TunableNumber {
         this.previousValue = defaultValue;
 
         if (Constants.tuningMode) {
-            tab.add(numberKey, defaultValue);
+            entry = tab.add(numberKey, defaultValue).getEntry();
         }
     }
 
@@ -37,7 +37,7 @@ public class TunableNumber {
         this.onValueChangedConsumer = consumer;
 
         if (Constants.tuningMode) {
-            tab.add(numberKey, defaultValue);
+            entry = tab.add(numberKey, defaultValue).getEntry();
         }
     }
 
@@ -49,7 +49,7 @@ public class TunableNumber {
         this.defaultValue = newDefault;
 
         if (Constants.tuningMode) {
-            tab.add(numberKey, defaultValue);
+            entry = tab.add(numberKey, defaultValue).getEntry();
         }
     }
 
