@@ -23,7 +23,7 @@ public class DriveIOFalcon implements DriveIO {
     private WPI_TalonFX rightFollower;
 
     public DriveIOFalcon() {
-        switch (Constants.getBot()) {
+        switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftLeader = new WPI_TalonFX(7);
                 this.leftFollower = new WPI_TalonFX(6);
