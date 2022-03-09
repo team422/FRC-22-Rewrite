@@ -30,7 +30,7 @@ public class DriveIOFalcon implements DriveIO {
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
     public DriveIOFalcon() {
-        switch (Constants.getBot()) {
+        switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftLeader = new WPI_TalonFX(7);
                 this.leftFollower = new WPI_TalonFX(6);

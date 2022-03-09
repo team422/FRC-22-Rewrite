@@ -1,7 +1,5 @@
 package frc.robot.subsystems.drivetrain;
 
-import frc.robot.Constants;
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 // import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 // import edu.wpi.first.math.geometry.Rotation2d;

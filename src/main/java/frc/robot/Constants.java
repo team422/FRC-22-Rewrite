@@ -13,38 +13,24 @@ package frc.robot;
  *
  * <p>
  * It is advised to statically
-
- import this class (or one of its inner classes)
+ * 
+ * import this class (or one of its inner classes)
  * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
-    public static enum DriveMode {
-        TANK, ARCADE
-    }
-
-    private static BotType bot = BotType.ROBOT_2022_COMP;
-
-    public static DriveMode mode = DriveMode.ARCADE;
-
-    public static double loopPeriodSecs = 0.02;
-
-    // Commented out because I think it's unnecessary since we only set it once - Shreyas
-    // public static void setBot(BotType botType) {
-    //     bot = botType;
-    // }
-
-    public static BotType getBot() {
-        return bot;
-    }
-
-    public static void setBot(BotType botType) {
-        bot = botType;
-    }
-
-    public static enum BotType {
+    public enum BotType {
         ROBOT_2022_COMP, ROBOT_2022_PRACTICE
     }
 
+    public enum DriveMode {
+        TANK, ARCADE
+    }
+
+    public static final BotType bot = BotType.ROBOT_2022_COMP;
+    public static final DriveMode mode = DriveMode.ARCADE;
+
+    public static double loopPeriodSecs = 0.02;
+    public static boolean tuningMode = false;
 }
