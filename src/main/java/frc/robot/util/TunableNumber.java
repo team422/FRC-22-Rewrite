@@ -9,20 +9,18 @@ import frc.robot.Constants;
 
 public class TunableNumber {
     
-    private ShuffleboardTab tab;
+    private static final ShuffleboardTab tab = Shuffleboard.getTab("Tuning");
     private String numberKey;
     private NetworkTableEntry entry;
     private double defaultValue;
     private double previousValue = defaultValue;
     private Consumer<Double> onValueChangedConsumer;
 
-    public TunableNumber(String tabName, String numberKey) {
-        this.tab = Shuffleboard.getTab(tabName);
+    public TunableNumber(String numberKey) {
         this.numberKey = numberKey;
     }
 
-    public TunableNumber(String tabName, String numberKey, double defaultValue) {
-        this.tab = Shuffleboard.getTab(tabName);
+    public TunableNumber(String numberKey, double defaultValue) {
         this.numberKey = numberKey;
         this.defaultValue = defaultValue;
 
@@ -31,8 +29,7 @@ public class TunableNumber {
         }
     }
 
-    public TunableNumber(String tabName, String numberKey, double defaultValue, Consumer<Double> consumer) {
-        this.tab = Shuffleboard.getTab(tabName);
+    public TunableNumber(String numberKey, double defaultValue, Consumer<Double> consumer) {
         this.numberKey = numberKey;
         this.defaultValue = defaultValue;
         this.onValueChangedConsumer = consumer;
@@ -71,15 +68,4 @@ public class TunableNumber {
 
         return value;
     }
-
-    // public boolean hasChanged() {
-    //     double currentValue = get();
-    //     if (currentValue != previousValue) {
-    //         previousValue = currentValue;
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
-
 }
