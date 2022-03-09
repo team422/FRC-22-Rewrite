@@ -13,20 +13,13 @@ public class TransversalIOSparkMax implements TransversalIO{
     public TransversalIOSparkMax () {
         this.leftTransversal = new CANSparkMax(20, MotorType.kBrushless);
         this.rightTransversal = new CANSparkMax(1, MotorType.kBrushless);
-
-        rightTransversal.setInverted(true);
+        rightTransversal.follow(leftTransversal, true);
     }
 
     @Override
-    public void setVoltage(double TransversalPower) {
-        leftTransversal.set(TransversalPower / 12.0);
-        rightTransversal.set(TransversalPower *0.75 / 12.0);
-    }
-
-    @Override 
-    public void setTrueVoltage(double Voltage) {
-        leftTransversal.setVoltage(Voltage);
-        rightTransversal.setVoltage(Voltage*0.75);
+    public void setVoltage(double transversalPower) {
+        leftTransversal.set(transversalPower / 12.0);
+        rightTransversal.set(transversalPower *0.75 / 12.0);
     }
 
 }

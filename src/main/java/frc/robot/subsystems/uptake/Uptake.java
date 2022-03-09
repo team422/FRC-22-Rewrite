@@ -10,8 +10,8 @@ public class Uptake extends SubsystemBase{
         this.uptakeIO = uptakeIO;
     }
 
-    public void setTrueVoltage(double Voltage) {
-        uptakeIO.setTrueVoltage(Voltage);
+    public void setVoltage(double Voltage) {
+        uptakeIO.setVoltage(Voltage);
     }
     
 }

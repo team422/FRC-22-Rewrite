@@ -15,9 +15,4 @@ public class UptakeIOSparkMax implements UptakeIO {
     public void setVoltage (double voltage) {
         UptakeNEO.set(voltage/12);
     }
-
-
-    public void setTrueVoltage (double voltage) {
-        UptakeNEO.setVoltage(voltage);
-    }
 }

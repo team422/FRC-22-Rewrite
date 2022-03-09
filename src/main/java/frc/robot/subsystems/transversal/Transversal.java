@@ -17,8 +17,4 @@ public class Transversal extends SubsystemBase {
         transversalIO.setVoltage(Voltage);
     }
 
-    public void setTrueVoltage(double Voltage) {
-        transversalIO.setTrueVoltage(Voltage);
-    }
-
 }
