@@ -2,14 +2,14 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase{
+public class Intake extends SubsystemBase {
 
     private final IntakeIO intakeIO;
 
-    public Intake(IntakeIO intakeIO){
+    private boolean isExtended;
+
+    public Intake(IntakeIO intakeIO) {
         this.intakeIO = intakeIO;
-        intakeIO.setIntakeMotorBrakeMode(false);
-        retract();
     }
 
     /** Run the roller at the specified percentage. */
@@ -22,10 +22,18 @@ public class Intake extends SubsystemBase{
     }
 
     public void extend() {
+        if (isExtended) {
+            return;
+        }
+
         intakeIO.setIntakeSolenoid(true);
     }
 
     public void retract() {
+        if (!isExtended) {
+            return;
+        }
+
         intakeIO.setIntakeSolenoid(false);
     }
 }
