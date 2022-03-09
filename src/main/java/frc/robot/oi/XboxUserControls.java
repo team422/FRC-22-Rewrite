@@ -35,6 +35,11 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getSniperModeButton() {
         return new Trigger(() -> driverController.getRightBumper());
+    
+    }
+    @Override
+    public Trigger getSpeedModeButton() {
+        return new Trigger(() -> driverController.getLeftBumper());
     }
 
     @Override

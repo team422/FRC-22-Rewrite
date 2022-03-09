@@ -1,10 +1,12 @@
 package frc.robot.subsystems.drivetrain;
 
+import frc.robot.Constants;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-    private static final double wheelRadiusMeters = 0.127;
+    private static final double wheelRadiusMeters = 0.0508;
 
     private final DriveIO driveIO;
 
@@ -23,9 +25,9 @@ public class DriveBase extends SubsystemBase {
         driveIO.setVoltage(leftVoltage, rightVoltage);
     }
 
-    public void driveVelocity(double leftVelocityMetersPerSec, double rightVelocityMetersPerSec) {
-        double leftVelocityRadPerSec = leftVelocityMetersPerSec / wheelRadiusMeters;
-        double rightVelocityRadPerSec = rightVelocityMetersPerSec / wheelRadiusMeters;
+    public void driveVelocity(double leftVelocity, double rightVelocity) {
+        double leftVelocityRadPerSec = leftVelocity / wheelRadiusMeters;
+        double rightVelocityRadPerSec = rightVelocity / wheelRadiusMeters;
 
         double leftFFValue = leftFF.calculate(leftVelocityRadPerSec);
         double rightFFValue = rightFF.calculate(rightVelocityRadPerSec);

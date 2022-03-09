@@ -20,18 +20,23 @@ package frc.robot;
  */
 public final class Constants {
 
-    public enum BotType {
-        ROBOT_2022_COMP, ROBOT_2022_PRACTICE
-    }
+    private static BotType bot = BotType.ROBOT_2022_COMP;
 
-    private static BotType bot;
+    // Commented out because I think it's unnecessary since we only set it once - Shreyas
+    // public static void setBot(BotType botType) {
+    //     bot = botType;
+    // }
+
+    public static BotType getBot() {
+        return bot;
+    }
 
     public static void setBot(BotType botType) {
         bot = botType;
     }
 
-    public static BotType getBot() {
-        return bot;
+    public static enum BotType {
+        ROBOT_2022_COMP, ROBOT_2022_PRACTICE
     }
 
 }

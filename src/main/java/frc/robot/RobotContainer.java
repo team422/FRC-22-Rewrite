@@ -47,9 +47,9 @@ public class RobotContainer {
     // Define commands here
     DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(
         drive,
-        controls::getLeftDriveY,
-        controls::getRightDriveX);
-
+        () -> controls.getLeftDriveY(),
+        () -> controls.getRightDriveX());
+    
     // Define default commands here
     drive.setDefaultCommand(defaultDriveCommand);
 
