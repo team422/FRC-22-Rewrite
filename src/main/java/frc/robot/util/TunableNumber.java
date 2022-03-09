@@ -1,40 +1,56 @@
 package frc.robot.util;
 
 import java.util.function.Consumer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 import frc.robot.Constants;
 
 public class TunableNumber {
-
-    private static final String tableKey = "TunableNumbers";
     
-    private String key;
+    private ShuffleboardTab tab;
+    private String numberKey;
+    private NetworkTableEntry entry;
     private double defaultValue;
     private double previousValue = defaultValue;
     private Consumer<Double> onValueChangedConsumer;
 
-    public TunableNumber (String numberKey) {
-        this.key = tableKey + "/" + numberKey;
+    public TunableNumber(String tabName, String numberKey) {
+        this.tab = Shuffleboard.getTab(tabName);
+        this.numberKey = numberKey;
     }
 
-    public TunableNumber (String numberKey, Consumer<Double> consumer) {
-        this.key = tableKey + "/" + numberKey;
+    public TunableNumber(String tabName, String numberKey, double defaultValue) {
+        this.tab = Shuffleboard.getTab(tabName);
+        this.numberKey = numberKey;
+        this.defaultValue = defaultValue;
+
+        if (Constants.tuningMode) {
+            tab.add(numberKey, defaultValue);
+        }
+    }
+
+    public TunableNumber(String tabName, String numberKey, double defaultValue, Consumer<Double> consumer) {
+        this.tab = Shuffleboard.getTab(tabName);
+        this.numberKey = numberKey;
+        this.defaultValue = defaultValue;
         this.onValueChangedConsumer = consumer;
+
+        if (Constants.tuningMode) {
+            tab.add(numberKey, defaultValue);
+        }
     }
 
-    public double getDefault () {
+    public double getDefault() {
         return this.defaultValue;
     }
 
-    public void setDefault (double newDefault) {
+    public void setDefault(double newDefault) {
         this.defaultValue = newDefault;
 
         if (Constants.tuningMode) {
-            SmartDashboard.putNumber(key,
-                SmartDashboard.getNumber(key, defaultValue));
-        } else {
-            SmartDashboard.delete(key);
+            tab.add(numberKey, defaultValue);
         }
     }
 
@@ -43,7 +59,7 @@ public class TunableNumber {
             return defaultValue;
         }
 
-        double value = SmartDashboard.getNumber(key, defaultValue);
+        double value = entry.getDouble(defaultValue);
 
         if (value != previousValue) {
             if (onValueChangedConsumer != null) {
@@ -56,7 +72,7 @@ public class TunableNumber {
         return value;
     }
 
-    // public boolean hasChagned() {
+    // public boolean hasChanged() {
     //     double currentValue = get();
     //     if (currentValue != previousValue) {
     //         previousValue = currentValue;
