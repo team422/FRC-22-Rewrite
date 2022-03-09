@@ -20,7 +20,15 @@ package frc.robot;
  */
 public final class Constants {
 
+    public static enum DriveMode {
+        TANK, ARCADE
+    }
+
     private static BotType bot = BotType.ROBOT_2022_COMP;
+
+    public static DriveMode mode = DriveMode.ARCADE;
+
+    public static double loopPeriodSecs = 0.02;
 
     // Commented out because I think it's unnecessary since we only set it once - Shreyas
     // public static void setBot(BotType botType) {
