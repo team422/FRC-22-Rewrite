@@ -13,31 +13,17 @@ package frc.robot;
  *
  * <p>
  * It is advised to statically
-
- import this class (or one of its inner classes)
+ * 
+ * import this class (or one of its inner classes)
  * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
-    public static boolean tuningMode = false;
-    private static BotType bot = BotType.ROBOT_2022_COMP;
-
-    // Commented out because I think it's unnecessary since we only set it once - Shreyas
-    // public static void setBot(BotType botType) {
-    //     bot = botType;
-    // }
-
-    public static BotType getBot() {
-        return bot;
-    }
-
-    public static void setBot(BotType botType) {
-        bot = botType;
-    }
-
-    public static enum BotType {
+    public enum BotType {
         ROBOT_2022_COMP, ROBOT_2022_PRACTICE
     }
 
+    public static boolean tuningMode = false;
+    public static final BotType bot = BotType.ROBOT_2022_COMP;
 }

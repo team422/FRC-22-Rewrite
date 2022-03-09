@@ -22,7 +22,7 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
     private WPI_TalonFX topFlyWheel;
 
     public FlyWheelIONonVariable() {
-        switch (Constants.getBot()) {
+        switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
                 this.rightFlyWheel = new WPI_TalonFX(9);
