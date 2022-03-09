@@ -12,7 +12,13 @@ public class UptakeIOSparkMax implements UptakeIO {
         this.UptakeNEO = new CANSparkMax(11, MotorType.kBrushless);
     }
 
+    @Override
     public void setVoltage (double voltage) {
         UptakeNEO.set(voltage/12);
+    }
+
+    @Override
+    public void stop() {
+        UptakeNEO.stopMotor();
     }
 }

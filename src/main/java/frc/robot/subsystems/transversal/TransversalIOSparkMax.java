@@ -22,4 +22,10 @@ public class TransversalIOSparkMax implements TransversalIO{
         rightTransversal.set(transversalPower*2 / 3*12.0);
     }
 
+    @Override
+    public void stop() {
+        leftTransversal.stopMotor();
+        rightTransversal.stopMotor();
+    }
+
 }

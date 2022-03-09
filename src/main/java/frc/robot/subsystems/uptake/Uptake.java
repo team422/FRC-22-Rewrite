@@ -14,4 +14,8 @@ public class Uptake extends SubsystemBase{
         uptakeIO.setVoltage(Voltage);
     }
     
+    public void stop() {
+        uptakeIO.stop();
+    }
+
 }
