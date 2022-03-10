@@ -3,6 +3,7 @@ package frc.robot.subsystems.transversal;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import frc.robot.Constants;
 
 public class TransversalIOSparkMax implements TransversalIO{
     private static final double encoderTicksPerRev = 2048.0;
@@ -11,9 +12,16 @@ public class TransversalIOSparkMax implements TransversalIO{
     private CANSparkMax rightTransversal;
 
     public TransversalIOSparkMax () {
-        this.leftTransversal = new CANSparkMax(20, MotorType.kBrushless);
-        this.rightTransversal = new CANSparkMax(1, MotorType.kBrushless);
-        rightTransversal.setInverted(true);
+        switch (Constants.bot) {
+            case ROBOT_2022_COMP:
+                this.leftTransversal = new CANSparkMax(20, MotorType.kBrushless);
+                this.rightTransversal = new CANSparkMax(1, MotorType.kBrushless);
+                rightTransversal.setInverted(true);
+                break;
+        
+            default:
+                throw new RuntimeException("Transversal does not exist for this robot");
+        }
     }
 
     @Override

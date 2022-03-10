@@ -15,7 +15,7 @@ public class IntakeIOTalonSRX implements IntakeIO{
     private DoubleSolenoid intakeArmSolenoid;
 
     public IntakeIOTalonSRX(){
-        switch(Constants.getBot()){
+        switch(Constants.bot){
             case ROBOT_2022_COMP:
                 this.intakeMotor = new WPI_TalonSRX(59);
                 this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
