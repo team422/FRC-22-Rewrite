@@ -11,6 +11,7 @@ public class FlyWheel extends SubsystemBase {
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward topFF;
+    public static boolean isFlyExtended;
 
     public FlyWheel(FlyWheelIO flyIO) {
         this.flyIO = flyIO;
@@ -36,5 +37,31 @@ public class FlyWheel extends SubsystemBase {
 
     public void stop() {
         flyIO.stop();
+    }
+
+    public void extendFly() {
+        if(flyIO.getClass() == FlyWheelIOVariable.class){
+            if (isFlyExtended) {
+                return;
+            }
+
+            flyIO.switchState(true);
+            isFlyExtended = true;
+        } else {
+            isFlyExtended = false;
+        }
+    }
+
+    public void retractFly() {
+        if(flyIO.getClass() == FlyWheelIOVariable.class){
+            if (!isFlyExtended) {
+                return;
+            }
+
+            flyIO.switchState(false);
+            isFlyExtended = false;
+        } else {
+            isFlyExtended = false;
+        }
     }
 }

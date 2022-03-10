@@ -19,8 +19,6 @@ public class FlyWheelIOVariable implements FlyWheelIO {
     private WPI_TalonFX rightFlyWheel;
     private WPI_TalonFX topFlyWheel;
     private DoubleSolenoid flyWheelExtender;
-    
-    public static boolean isExtended;
 
     public FlyWheelIOVariable() {
         switch (Constants.bot) {
@@ -76,11 +74,8 @@ public class FlyWheelIOVariable implements FlyWheelIO {
     }
 
     @Override
-    public void switchState() {
-        if(isExtended) {
-            flyWheelExtender.set(isExtended ? Value.kForward : Value.kReverse);
-        }
-        isExtended = !isExtended;
+    public void switchState(boolean extend) {
+            flyWheelExtender.set(extend ? Value.kForward : Value.kReverse);
     }
 
     @Override

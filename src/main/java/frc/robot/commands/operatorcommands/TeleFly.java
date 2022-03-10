@@ -14,9 +14,9 @@ public class TeleFly extends CommandBase{
 
     @Override
     public void execute() {
-        if(FlyWheelIOVariable.isExtended) {
+        if(FlyWheel.isFlyExtended) {
             flyWheel.flyVelocity(422, 422);
-        } else if(!FlyWheelIOVariable.isExtended){
+        } else if(!FlyWheel.isFlyExtended){
             flyWheel.flyVelocity(422/2, 422/2);
         }
     }

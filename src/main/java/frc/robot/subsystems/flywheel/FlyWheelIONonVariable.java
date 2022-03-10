@@ -68,7 +68,6 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
     }
 
     @Override
-    public void switchState() {
-        FlyWheelIOVariable.isExtended = false;
+    public void switchState(boolean extend) {
     }
 }
