@@ -102,7 +102,7 @@ public class DriveWithJoystick extends CommandBase {
         }
 
         public static WheelSpeeds fromArcade(double speed, double rotation) {
-            return new WheelSpeeds(speed + rotation, speed - rotation);
+            return new WheelSpeeds(speed - rotation, speed + rotation);
         }
     }
 

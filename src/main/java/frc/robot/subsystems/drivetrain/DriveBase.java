@@ -12,13 +12,16 @@ public class DriveBase extends SubsystemBase {
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward rightFF;
+    private static final double kS = 0.66569;
+    private static final double kV = 0.050387;
+    private static final double kA = 0.0051628;
 
     public DriveBase(DriveIO driveIO) {
         this.driveIO = driveIO;
 
         // Arbitrary values for now
-        leftFF = new SimpleMotorFeedforward(0.01, 0.01);
-        rightFF = new SimpleMotorFeedforward(0.01, 0.01);
+        leftFF = new SimpleMotorFeedforward(kS, kV, kA);
+        rightFF = new SimpleMotorFeedforward(kS, kV, kA);
     }
 
     public void driveVoltage(double leftVoltage, double rightVoltage) {

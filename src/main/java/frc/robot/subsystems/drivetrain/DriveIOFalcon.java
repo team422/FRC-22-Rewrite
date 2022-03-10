@@ -49,10 +49,10 @@ public class DriveIOFalcon implements DriveIO {
         leftFollower.follow(leftLeader);
         rightFollower.follow(rightLeader);
 
-        leftLeader.setInverted(true);
+        leftLeader.setInverted(false);
         leftFollower.setInverted(InvertType.FollowMaster);
 
-        rightLeader.setInverted(false);
+        rightLeader.setInverted(true);
         rightFollower.setInverted(InvertType.FollowMaster);
 
         leftLeader.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, .5));
