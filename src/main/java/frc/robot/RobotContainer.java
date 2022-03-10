@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
+import frc.robot.commands.TestAuto;
 import frc.robot.subsystems.drivetrain.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.oi.*;
@@ -66,6 +67,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new OneCargoAuto(drive);
+    return new TestAuto(drive);
   }
 }

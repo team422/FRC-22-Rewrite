@@ -1,6 +1,9 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,12 +18,31 @@ public class DriveBase extends SubsystemBase {
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward rightFF;
 
+    private DifferentialDriveOdometry odometry =
+        new DifferentialDriveOdometry(new Rotation2d(),
+            new Pose2d());
+
     public DriveBase(DriveIO driveIO) {
         this.driveIO = driveIO;
 
         // Arbitrary values for now
-        leftFF = new SimpleMotorFeedforward(0.01, 0.01);
-        rightFF = new SimpleMotorFeedforward(0.01, 0.01);
+        this.leftFF = new SimpleMotorFeedforward(
+            driveIO.getkS(),
+            driveIO.getkV(),
+            driveIO.getkA());
+        this.rightFF = new SimpleMotorFeedforward(
+            driveIO.getkS(),
+            driveIO.getkV(),
+            driveIO.getkA());
+        
+        setBrakeMode(false);
+    }
+
+    @Override
+    public void periodic() {
+        odometry.update(new Rotation2d(driveIO.getGyroAngle()),
+            getLeftDistanceMeters(),
+            getRightDistanceMeters());
     }
 
     public void driveVoltage(double leftVoltage, double rightVoltage) {
@@ -47,6 +69,18 @@ public class DriveBase extends SubsystemBase {
 
     public void setBrakeMode(boolean enable) {
         driveIO.setBrakeMode(enable);
+    }
+
+    public double getLeftDistanceMeters() {
+        return driveIO.getLeftPosition() / 2048 * wheelRadiusMeters;
+    }
+
+    public double getRightDistanceMeters() {
+        return driveIO.getRightPosition() / 2048 * wheelRadiusMeters;
+    }
+
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
     }
 
     public double getTrackWidthMeters() {

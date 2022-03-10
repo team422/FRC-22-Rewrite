@@ -6,10 +6,13 @@ import java.util.List;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer.TrajectoryGenerationException;
 import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
@@ -46,7 +49,7 @@ public class AutoMotionProfiling extends CommandBase {
             case ROBOT_2022_COMP:
             case ROBOT_2022_PRACTICE:
                 maxVoltage = 10.0;
-                maxVelocity = 5.0;
+                maxVelocity = 2.5;
                 maxAcceleration = 20.0;
                 maxCentripetalAcceleration = 10.0;
                 break;
@@ -68,13 +71,13 @@ public class AutoMotionProfiling extends CommandBase {
             .addConstraints(constraints)
             .setStartVelocity(startVelocity)
             .setEndVelocity(endVelocity).setReversed(reversed);
-        if (drive.getDriveIO().getkA() != 0) {
-            config.addConstraint(new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(drive.getDriveIO().getkS(),
-                    drive.getDriveIO().getkV(),
-                    drive.getDriveIO().getkA()),
-                kinematics, maxVoltage));
-        }
+        // if (drive.getDriveIO().getkA() != 0) {
+        //     config.addConstraint(new DifferentialDriveVoltageConstraint(
+        //         new SimpleMotorFeedforward(drive.getDriveIO().getkS(),
+        //             drive.getDriveIO().getkV(),
+        //             drive.getDriveIO().getkA()),
+        //         kinematics, maxVoltage));
+        // }
 
         // Generate trajectory
         Trajectory generatedTrajectory;
@@ -97,7 +100,13 @@ public class AutoMotionProfiling extends CommandBase {
 
     @Override
     public void execute() {
-        // Potential for logging
+        State setpoint = trajectory.sample(timer.get());
+        ChassisSpeeds chassisSpeeds = controller.calculate(drive.getPose(),
+            setpoint);
+        DifferentialDriveWheelSpeeds wheelSpeeds =
+            kinematics.toWheelSpeeds(chassisSpeeds);
+        drive.driveVelocity(wheelSpeeds.leftMetersPerSecond,
+            wheelSpeeds.rightMetersPerSecond);
     }
 
     @Override
