@@ -28,6 +28,10 @@ public class DriveIOFalcon implements DriveIO {
     private ADXRS450_Gyro gyro;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
+    private final double kS;
+    private final double kV;
+    private final double kA;
+
     public DriveIOFalcon() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
@@ -35,12 +39,21 @@ public class DriveIOFalcon implements DriveIO {
                 this.leftFollower = new WPI_TalonFX(6);
                 this.rightLeader = new WPI_TalonFX(11);
                 this.rightFollower = new WPI_TalonFX(5);
+
+                // TO CHANGE VIA CHARACTERIZATION
+                this.kS = 0.66569;
+                this.kV = 0.050387;
+                this.kA = 0.0051628;
                 break;
             case ROBOT_2022_PRACTICE:
                 this.leftLeader = new WPI_TalonFX(4);
                 this.leftFollower = new WPI_TalonFX(2);
                 this.rightLeader = new WPI_TalonFX(3);
                 this.rightFollower = new WPI_TalonFX(1);
+
+                this.kS = 0.66569;
+                this.kV = 0.050387;
+                this.kA = 0.0051628;
                 break;
             default:
                 throw new RuntimeException("Invalid robot for DriveIOFalcon!");
@@ -150,5 +163,20 @@ public class DriveIOFalcon implements DriveIO {
     @Override
     public double getGyroRate() {
         return gyro.getRate();
+    }
+
+    @Override
+    public double getkS() {
+        return kS;
+    }
+
+    @Override
+    public double getkV() {
+        return kV;
+    }
+
+    @Override
+    public double getkA() {
+        return kA;
     }
 }

@@ -57,4 +57,18 @@ public interface DriveIO {
         return 0.0;
     }
 
+    /** Gets kS value */
+    public default double getkS() {
+        return 0.0;
+    }
+
+    /** Gets kV value */
+    public default double getkV() {
+        return 0.0;
+    }
+
+    /** Gets kA value */
+    public default double getkA() {
+        return 0.0;
+    }
 }

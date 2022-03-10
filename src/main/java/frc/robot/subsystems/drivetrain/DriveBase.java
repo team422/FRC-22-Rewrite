@@ -1,12 +1,14 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
     // Static final for now, make sure to change in order to switch between drives
-    private static final double wheelRadiusMeters = 0.0508;
-    private static final double maxVelocityMetersPerSec = 10;
+    private static final double wheelRadiusMeters = Units.inchesToMeters(2);
+    private static final double maxVelocityMetersPerSec = Units.feetToMeters(16.5);
+    private static final double trackWidthMeters = 0.61;
 
     private final DriveIO driveIO;
 
@@ -39,7 +41,19 @@ public class DriveBase extends SubsystemBase {
         driveIO.setVelocity(leftVelocityRadPerSec, rightVelocityRadPerSec, leftFFValue, rightFFValue);
     }
 
+    public void stop() {
+        drivePercent(0, 0);
+    }
+
     public void setBrakeMode(boolean enable) {
         driveIO.setBrakeMode(enable);
+    }
+
+    public double getTrackWidthMeters() {
+        return trackWidthMeters;
+    }
+
+    public DriveIO getDriveIO() {
+        return driveIO;
     }
 }
