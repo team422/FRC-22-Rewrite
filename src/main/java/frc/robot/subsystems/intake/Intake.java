@@ -27,6 +27,7 @@ public class Intake extends SubsystemBase {
         }
 
         intakeIO.setIntakeSolenoid(true);
+        isExtended = false;
     }
 
     public void retract() {
@@ -35,5 +36,6 @@ public class Intake extends SubsystemBase {
         }
 
         intakeIO.setIntakeSolenoid(false);
+        isExtended = true;
     }
 }
