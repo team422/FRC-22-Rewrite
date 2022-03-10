@@ -20,6 +20,8 @@ public class IntakeIOTalonSRX implements IntakeIO{
                 this.intakeMotor = new WPI_TalonSRX(59);
                 this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
                 break;
+            case ROBOT_2022_PRACTICE:
+                break;
             default:
                 throw new RuntimeException("Invalid robot for IntakeIOTalonSRX!");
         }

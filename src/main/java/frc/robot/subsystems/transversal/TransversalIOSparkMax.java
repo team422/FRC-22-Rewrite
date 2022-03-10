@@ -18,7 +18,8 @@ public class TransversalIOSparkMax implements TransversalIO{
                 this.rightTransversal = new CANSparkMax(1, MotorType.kBrushless);
                 rightTransversal.setInverted(true);
                 break;
-        
+            case ROBOT_2022_PRACTICE:
+                break;
             default:
                 throw new RuntimeException("Transversal does not exist for this robot");
         }
