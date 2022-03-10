@@ -24,7 +24,6 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
                 this.topFlyWheel = new WPI_TalonFX(10);
                 break;
             case ROBOT_2022_PRACTICE:
-                
             default:
                 throw new RuntimeException("Invalid FlyBoi!");
         }
