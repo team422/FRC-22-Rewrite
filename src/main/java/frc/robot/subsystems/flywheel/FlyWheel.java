@@ -33,4 +33,8 @@ public class FlyWheel extends SubsystemBase {
 
         flyIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
     }
+
+    public void stop() {
+        flyIO.stop();
+    }
 }

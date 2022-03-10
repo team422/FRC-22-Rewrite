@@ -16,11 +16,16 @@ public class TeleFly extends CommandBase{
     public void execute() {
         if(FlyWheelIOVariable.isExtended) {
             flyWheel.flyVelocity(422, 422);
-        } else {
+        } else if(!FlyWheelIOVariable.isExtended){
             flyWheel.flyVelocity(422/2, 422/2);
         }
     }
     
+    @Override
+    public void end(boolean interrupted) {
+        flyWheel.stop();
+    }
+
     @Override
     public boolean isFinished() {
         return false;

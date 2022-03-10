@@ -32,7 +32,7 @@ public class FlyWheelIOVariable implements FlyWheelIO {
                 this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 422, 422);
                 break;
             case ROBOT_2022_PRACTICE:
-                break;
+                
             default:
                 throw new RuntimeException("Invalid FlyBoi!");
         }
@@ -81,5 +81,10 @@ public class FlyWheelIOVariable implements FlyWheelIO {
             flyWheelExtender.set(isExtended ? Value.kForward : Value.kReverse);
         }
         isExtended = !isExtended;
+    }
+
+    @Override
+    public void stop() {
+        leftFlyWheel.stopMotor();
     }
 }

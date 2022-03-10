@@ -19,6 +19,12 @@ public interface FlyWheelIO {
     public default void setPID(double kP, double kI, double kD) {
     }
 
-    public default void switchState() {}
+    public default void switchState() {
+
+    }
+
+    public default void stop() {
+        
+    }
 
 }
