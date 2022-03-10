@@ -19,7 +19,7 @@ public class TransversalIOSparkMax implements TransversalIO{
     @Override
     public void setVoltage(double transversalPower) {
         leftTransversal.set(transversalPower / 12.0);
-        rightTransversal.set(transversalPower*2 / 3*12.0);
+        rightTransversal.set(transversalPower * 0.667 / 12);
     }
 
     @Override
