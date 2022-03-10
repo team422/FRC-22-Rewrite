@@ -20,4 +20,9 @@ public class TeleFly extends CommandBase{
             flyWheel.flyVelocity(422/2, 422/2);
         }
     }
+    
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

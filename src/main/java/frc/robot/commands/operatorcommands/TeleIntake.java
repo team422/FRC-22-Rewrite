@@ -28,6 +28,7 @@ public class TeleIntake extends CommandBase{
         intake.stop();
     }
 
+    @Override
     public boolean isFinished() {
         return false;
     }
