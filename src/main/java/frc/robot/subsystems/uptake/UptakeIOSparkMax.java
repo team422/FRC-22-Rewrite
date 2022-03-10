@@ -6,19 +6,19 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class UptakeIOSparkMax implements UptakeIO {
 
-    private CANSparkMax UptakeNEO;
+    private CANSparkMax uptakeNEO;
 
     public UptakeIOSparkMax () {
-        this.UptakeNEO = new CANSparkMax(11, MotorType.kBrushless);
+        this.uptakeNEO = new CANSparkMax(11, MotorType.kBrushless);
     }
 
     @Override
     public void setVoltage (double voltage) {
-        UptakeNEO.set(voltage/12);
+        uptakeNEO.set(voltage / 12);
     }
 
     @Override
     public void stop() {
-        UptakeNEO.stopMotor();
+        uptakeNEO.stopMotor();
     }
 }
