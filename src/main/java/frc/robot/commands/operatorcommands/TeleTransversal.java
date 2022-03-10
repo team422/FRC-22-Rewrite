@@ -11,6 +11,8 @@ public class TeleTransversal extends CommandBase{
     public TeleTransversal(Transversal transversal, Supplier<Double> voltageSupplier) {
         this.transversal = transversal;
         this.voltageSupplier = voltageSupplier;
+
+        addRequirements(transversal);
     }
 
     @Override

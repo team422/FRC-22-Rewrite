@@ -4,24 +4,32 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
+import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
-public class FlyWheelIONonVariable implements FlyWheelIO {
+public class FlyWheelIOVariable implements FlyWheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
     private WPI_TalonFX leftFlyWheel;
     private WPI_TalonFX rightFlyWheel;
     private WPI_TalonFX topFlyWheel;
+    private DoubleSolenoid flyWheelExtender;
+    
+    public static boolean isExtended;
 
-    public FlyWheelIONonVariable() {
+    public FlyWheelIOVariable() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
                 this.rightFlyWheel = new WPI_TalonFX(9);
                 this.topFlyWheel = new WPI_TalonFX(10);
+                //arbitrary things
+                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 422, 422);
                 break;
             case ROBOT_2022_PRACTICE:
                 break;
@@ -65,5 +73,13 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
         topFlyWheel.config_kP(0, kP);
         topFlyWheel.config_kI(0, kI);
         topFlyWheel.config_kD(0, kD);
+    }
+
+    @Override
+    public void switchState() {
+        if(isExtended) {
+            flyWheelExtender.set(isExtended ? Value.kForward : Value.kReverse);
+        }
+        isExtended = !isExtended;
     }
 }
