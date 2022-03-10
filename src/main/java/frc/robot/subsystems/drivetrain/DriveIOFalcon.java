@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drivetrain;
 
-// External Imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
