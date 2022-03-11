@@ -41,29 +41,13 @@ public class VarFlyWheel extends SubsystemBase {
     }
 
     public void extendFly() {
-        if(varFlyWheelIO.getClass() == VarFlyWheelIOFalcon.class){
-            if (isFlyExtended) {
-                return;
-            }
-
             varFlyWheelIO.switchState(true);
             isFlyExtended = true;
-        } else {
-            isFlyExtended = false;
-        }
     }
 
     public void retractFly() {
-        if(varFlyWheelIO.getClass() == VarFlyWheelIOFalcon.class){
-            if (!isFlyExtended) {
-                return;
-            }
-
             varFlyWheelIO.switchState(false);
             isFlyExtended = false;
-        } else {
-            isFlyExtended = false;
-        }
     }
 
     public boolean getState() {
