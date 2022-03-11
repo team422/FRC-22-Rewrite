@@ -1,7 +1,7 @@
 package frc.robot.oi;
 
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class XboxUserControls implements UserControls {
     private final XboxController driverController;
@@ -35,8 +35,9 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getSniperModeButton() {
         return new Trigger(() -> driverController.getRightBumper());
-    
+
     }
+
     @Override
     public Trigger getSpeedModeButton() {
         return new Trigger(() -> driverController.getLeftBumper());
