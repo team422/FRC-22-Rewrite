@@ -1,6 +1,6 @@
-package frc.robot.subsystems.flywheel;
+package frc.robot.subsystems.flywheelvarhood;
 
-public interface FlyWheelIO {
+public interface VarFlyWheelIO {
 
     /** Sets the voltage of the drivetrain motors (open loop) */
     public default void setVoltage(double leftVolts, double rightVolts) {
@@ -17,6 +17,14 @@ public interface FlyWheelIO {
 
     /** Set PID constants */
     public default void setPID(double kP, double kI, double kD) {
+    }
+
+    public default void switchState(boolean extend) {
+
+    }
+
+    public default boolean getState() {
+        return false;
     }
 
     public default void stop() {

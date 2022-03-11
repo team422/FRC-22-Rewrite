@@ -1,4 +1,4 @@
-package frc.robot.subsystems.flywheel;
+package frc.robot.subsystems.flywheelvarhood;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIO;
 
-public class FlyWheelIOVariable implements FlyWheelIO {
+public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
@@ -20,7 +21,7 @@ public class FlyWheelIOVariable implements FlyWheelIO {
     private WPI_TalonFX topFlyWheel;
     private DoubleSolenoid flyWheelExtender;
 
-    public FlyWheelIOVariable() {
+    public VarFlyWheelIOFalcon() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
@@ -75,9 +76,20 @@ public class FlyWheelIOVariable implements FlyWheelIO {
 
     @Override
     public void switchState(boolean extend) {
-            flyWheelExtender.set(extend ? Value.kForward : Value.kReverse);
+        flyWheelExtender.set(extend ?  Value.kForward : Value.kReverse);
     }
 
+    @Override
+    public boolean getState() {
+    //     if(flyWheelExtender.get() == Value.kForward) {
+    //         return true;
+    //     } else if(flyWheelExtender.get() == Value.kReverse) {
+    //         return false;
+    //     }
+    // }
+    return (flyWheelExtender.get() == Value.kForward);
+    }
+    
     @Override
     public void stop() {
         leftFlyWheel.stopMotor();

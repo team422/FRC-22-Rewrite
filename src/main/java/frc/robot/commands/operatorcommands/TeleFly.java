@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
 import frc.robot.subsystems.flywheel.FlyWheel;
-import frc.robot.subsystems.flywheel.FlyWheelIOVariable;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
 
 public class TeleFly extends CommandBase{
     private final FlyWheel flyWheel;

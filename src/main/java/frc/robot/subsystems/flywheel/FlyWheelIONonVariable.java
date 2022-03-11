@@ -66,7 +66,4 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
         topFlyWheel.config_kD(0, kD);
     }
 
-    @Override
-    public void switchState(boolean extend) {
-    }
 }
