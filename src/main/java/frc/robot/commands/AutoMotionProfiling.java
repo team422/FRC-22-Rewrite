@@ -20,7 +20,6 @@ import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-@SuppressWarnings("unused")
 public class AutoMotionProfiling extends CommandBase {
     private static final double ramseteB = 2;
     private static final double ramseteZeta = 0.7;

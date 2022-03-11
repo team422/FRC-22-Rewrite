@@ -72,11 +72,11 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getLeftDistanceMeters() {
-        return driveIO.getLeftPosition() / 2048 * wheelRadiusMeters;
+        return driveIO.getLeftPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
     }
 
     public double getRightDistanceMeters() {
-        return driveIO.getRightPosition() / 2048 * wheelRadiusMeters;
+        return driveIO.getRightPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
     }
 
     public Pose2d getPose() {
