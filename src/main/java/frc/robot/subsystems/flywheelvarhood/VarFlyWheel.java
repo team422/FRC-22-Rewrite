@@ -26,9 +26,7 @@ public class VarFlyWheel extends SubsystemBase {
         varFlyWheelIO.setVoltage(flyVoltage, topVoltage);
     }
 
-    public void flyVelocity(double flyVelocity, double topVelocity) {
-        double flyVelocityRadPerSec = flyVelocity / flyWheelRadiusMeters;
-        double topVelocityRadPerSec = topVelocity / hoodWheelRadiusMeters;
+    public void flyVelocity(double flyVelocityRadPerSec, double topVelocityRadPerSec) {
 
         double flyFFValue = leftFF.calculate(flyVelocityRadPerSec);
         double topFFValue = topFF.calculate(topVelocityRadPerSec);
