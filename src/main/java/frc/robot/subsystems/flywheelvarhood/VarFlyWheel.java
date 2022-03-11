@@ -65,4 +65,8 @@ public class VarFlyWheel extends SubsystemBase {
             isFlyExtended = false;
         }
     }
+
+    public boolean getState() {
+        return varFlyWheelIO.getState();
+    }
 }
