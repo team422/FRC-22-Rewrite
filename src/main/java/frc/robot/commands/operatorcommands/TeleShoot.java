@@ -30,9 +30,9 @@ public class TeleShoot extends ParallelCommandGroup{
         this.flyWheel = flyWheel;
         this.tunableNumberFly = new TunableNumber("Shooter Tunner", 0.0).get();
         this.tunableNumberHood = new TunableNumber("hood Tunner", 0.0).get();
-        
+
         addCommands(
-            new TeleFly(flyWheel, tunableNumberFly, tunableNumberHood).withTimeout(10),
+            new TeleFly(flyWheel, 19.9491133503*10, 5.34768712369*10).withTimeout(10),
             sequence(
                 new WaitCommand(1),
                 parallel(
