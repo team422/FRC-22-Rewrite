@@ -12,6 +12,7 @@ import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleShoot;
+import frc.robot.commands.operatorcommands.TeleShootStop;
 import frc.robot.oi.UserControls;
 import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
@@ -76,7 +77,7 @@ public class RobotContainer {
         () -> controls.getRightDriveY());
     
     TeleShoot shootCommand = new TeleShoot(flyWheel, transversal, uptake, () -> controls.defaultVoltage());
-    TeleShoot shootStopCommand = new TeleShoot(flyWheel, transversal, uptake, () -> controls.zeroValue());
+    TeleShootStop shootStopCommand = new TeleShootStop(flyWheel, transversal, uptake, () -> controls.zeroValue());
     TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
     TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
 

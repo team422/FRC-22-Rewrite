@@ -14,7 +14,7 @@ public class XboxUserControls implements UserControls {
 
     @Override
     public double defaultVoltage() {
-        return 0.7;
+        return 10;
     }
 
     @Override

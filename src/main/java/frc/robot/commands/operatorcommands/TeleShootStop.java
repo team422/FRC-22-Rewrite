@@ -13,25 +13,24 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
 import frc.robot.subsystems.flywheel.FlyWheel;
 
-public class TeleShoot extends ParallelCommandGroup{
+public class TeleShootStop extends ParallelCommandGroup{
     private final Transversal transversal;
     private final Uptake uptake;
     private final Supplier<Double> voltageSupplier;
     private final FlyWheel flyWheel;
 
-    public TeleShoot(FlyWheel flyWheel, Transversal transversal, Uptake uptake, Supplier<Double> voltageSupplier) {
+    public TeleShootStop(FlyWheel flyWheel, Transversal transversal, Uptake uptake, Supplier<Double> voltageSupplier) {
         this.transversal = transversal;
         this.uptake = uptake;
         this.voltageSupplier = voltageSupplier;
         this.flyWheel = flyWheel;
 
         addCommands(
-            new TeleFly(flyWheel, 100).withTimeout(10),
+            new TeleFly(flyWheel, 0).withTimeout(10),
             sequence(
                 new WaitCommand(1),
-                parallel(
-                    new TeleTransversal(transversal, voltageSupplier).withTimeout(8),
-                    new TeleUptake(uptake, voltageSupplier))
+                new TeleTransversal(transversal, voltageSupplier).withTimeout(8),
+                new TeleUptake(uptake, voltageSupplier).withTimeout(8)
             )
         );
     }
