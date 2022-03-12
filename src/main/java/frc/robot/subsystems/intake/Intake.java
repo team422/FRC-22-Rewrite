@@ -38,4 +38,8 @@ public class Intake extends SubsystemBase {
         intakeIO.setIntakeSolenoid(false);
         isExtended = true;
     }
+
+    public boolean getState() {
+        return intakeIO.getState();
+    }
 }

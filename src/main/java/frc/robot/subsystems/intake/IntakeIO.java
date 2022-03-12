@@ -12,5 +12,9 @@ public interface IntakeIO {
 
     public default void setIntakeSolenoid(boolean extended){}
 
+    public default boolean getState() {
+        return false;
+    }
+
 
 }

@@ -50,4 +50,9 @@ public class IntakeIOTalonSRX implements IntakeIO{
     public void setIntakeSolenoid(boolean extended){
         intakeArmSolenoid.set(extended ? Value.kReverse : Value.kForward);
     }
+
+    @Override
+    public boolean getState() {
+        return (intakeArmSolenoid.get() == Value.kReverse);
+    }
 }
