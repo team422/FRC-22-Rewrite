@@ -29,7 +29,7 @@ import frc.robot.subsystems.flywheel.FlyWheelIONonVariable;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveBase drive = new DriveBase(new DriveIOFalcon());
-  private final FlyWheel flyWheel = new FlyWheel(new FlyWheelIONonVariable());
+  // private final FlyWheel flyWheel = new FlyWheel(new FlyWheelIONonVariable());
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

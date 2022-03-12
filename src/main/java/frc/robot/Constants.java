@@ -25,11 +25,11 @@ public final class Constants {
     }
 
     public enum DriveMode {
-        TANK, ARCADE
+        TANK, ARCADE, MATTHEW_MODE
     }
 
-    public static final BotType bot = BotType.ROBOT_2022_COMP;
-    public static final DriveMode mode = DriveMode.ARCADE;
+    public static final BotType bot = BotType.ROBOT_2022_PRACTICE;
+    public static final DriveMode mode = DriveMode.MATTHEW_MODE;
 
     public static double loopPeriodSecs = 0.02;
     public static boolean tuningMode = false;
