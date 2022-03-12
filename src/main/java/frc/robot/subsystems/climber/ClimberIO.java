@@ -10,4 +10,9 @@ public interface ClimberIO {
 
     public default void setTargetPoint(double degrees){}
 
+    public default void tiltRobot(boolean tilt) {}
+
+    public default boolean getTilt() {
+        return false;
+    }
 }

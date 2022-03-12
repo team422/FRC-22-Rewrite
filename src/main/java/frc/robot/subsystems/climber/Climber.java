@@ -31,4 +31,11 @@ public class Climber {
         rightClimberIO.setPercentPower(percent);
     }
 
+    public void tiltRobot() {
+        if(!leftClimberIO.getTilt()) {
+            leftClimberIO.tiltRobot(true);
+        } else if(leftClimberIO.getTilt()) {
+            leftClimberIO.tiltRobot(false);
+        }
+    }
 }

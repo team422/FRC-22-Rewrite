@@ -47,7 +47,7 @@ public interface UserControls {
     return new Trigger();
   }
 
-  public default Trigger getIntakeExtendButton() {
+  public default Trigger getClimbButton() {
     return new Trigger();
   }
 

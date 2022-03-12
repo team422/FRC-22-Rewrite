@@ -59,7 +59,7 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getIntakeExtendButton() {
+    public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
     }
 
