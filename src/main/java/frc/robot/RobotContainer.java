@@ -11,12 +11,22 @@ import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.oi.UserControls;
 import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.drivetrain.DriveIOFalcon;
+import frc.robot.subsystems.flywheel.FlyWheel;
+import frc.robot.subsystems.flywheel.FlyWheelIONonVariable;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOTalonSRX;
+import frc.robot.subsystems.transversal.Transversal;
+import frc.robot.subsystems.transversal.TransversalIOSparkMax;
+import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.subsystems.uptake.UptakeIOSparkMax;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -33,7 +43,10 @@ public class RobotContainer {
   private final Climber climber = new Climber(
       new ClimberIOFalcon(ClimberIOFalcon.leftClimberPort),
       new ClimberIOFalcon(ClimberIOFalcon.rightClimberPort));
-
+  private final Intake intake = new Intake(new IntakeIOTalonSRX());
+  private final FlyWheel flyWheel = new FlyWheel(new FlyWheelIONonVariable());
+  private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
+  private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -61,7 +74,9 @@ public class RobotContainer {
         () -> controls.getLeftDriveY(),
         () -> controls.getRightDriveX(),
         () -> controls.getRightDriveY());
-
+    
+    TeleShoot shootCommand = new TeleShoot(flyWheel, transversal, uptake, () -> controls.defaultVoltage());
+    TeleShoot shootStopCommand = new TeleShoot(flyWheel, transversal, uptake, () -> controls.zeroValue());
     TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
     TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
 
@@ -71,6 +86,8 @@ public class RobotContainer {
     // Define button / command bindings here
     controls.getClimbUp().whileActiveOnce(climberUpCommand);
     controls.getClimbDown().whileActiveOnce(climberDownCommand);
+    controls.getShootButton().whenInactive(shootStopCommand);
+    controls.getShootButton().whileActiveOnce(shootCommand);
   }
 
   /**

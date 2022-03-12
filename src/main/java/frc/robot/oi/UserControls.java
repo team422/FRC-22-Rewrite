@@ -27,6 +27,14 @@ public interface UserControls {
     return 0.0;
   }
 
+  public default double defaultVoltage() {
+    return 2;
+  }
+
+  public default double zeroValue() {
+    return 0;
+  }
+
   public default Trigger getSniperModeButton() {
     return new Trigger();
   }

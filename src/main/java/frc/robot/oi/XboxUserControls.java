@@ -13,6 +13,16 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
+    public double defaultVoltage() {
+        return 0.7;
+    }
+
+    @Override
+    public double zeroValue() {
+        return 0.0;
+    }
+
+    @Override
     public double getLeftDriveX() {
         return driverController.getLeftX();
     }
