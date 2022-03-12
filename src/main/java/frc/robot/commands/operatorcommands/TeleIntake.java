@@ -3,30 +3,29 @@ package frc.robot.commands.operatorcommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
-import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.subsystems.intake.Intake;
 
+public class TeleIntake extends CommandBase{
 
-public class TeleUptake extends CommandBase{
-    private final Uptake uptake;
+    private final Intake intake;
     private final Supplier<Double> voltageSupplier;
 
-    public TeleUptake(Uptake uptake, Supplier<Double> voltageSupplier) {
+    public TeleIntake(Intake intake, Supplier<Double> voltageSupplier) {
+        this.intake = intake;
         this.voltageSupplier = voltageSupplier;
-        this.uptake = uptake;
 
-
-        addRequirements(uptake);
+        addRequirements(intake);
     }
-
+    
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-        uptake.setVoltage(voltage);
+        intake.runIntakeVelocity(voltage);
     }
 
     @Override
     public void end(boolean interupted) {
-        uptake.stop();
+        intake.stop();
     }
 
     @Override

@@ -1,29 +1,37 @@
-package frc.robot.subsystems.flywheel;
+package frc.robot.subsystems.flywheelvarhood;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+
 import edu.wpi.first.math.util.Units;
-
 import frc.robot.Constants;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIO;
 
-public class FlyWheelIONonVariable implements FlyWheelIO {
+public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
     private WPI_TalonFX leftFlyWheel;
     private WPI_TalonFX rightFlyWheel;
     private WPI_TalonFX topFlyWheel;
+    private DoubleSolenoid flyWheelExtender;
 
-    public FlyWheelIONonVariable() {
+    public VarFlyWheelIOFalcon() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
                 this.rightFlyWheel = new WPI_TalonFX(9);
                 this.topFlyWheel = new WPI_TalonFX(10);
+                //arbitrary things
+                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 422, 422);
                 break;
             case ROBOT_2022_PRACTICE:
+                
             default:
                 throw new RuntimeException("Invalid FlyBoi!");
         }
@@ -66,4 +74,24 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
         topFlyWheel.config_kD(0, kD);
     }
 
+    @Override
+    public void switchState(boolean extend) {
+        flyWheelExtender.set(extend ?  Value.kForward : Value.kReverse);
+    }
+
+    @Override
+    public boolean getState() {
+    //     if(flyWheelExtender.get() == Value.kForward) {
+    //         return true;
+    //     } else if(flyWheelExtender.get() == Value.kReverse) {
+    //         return false;
+    //     }
+    // }
+    return (flyWheelExtender.get() == Value.kForward);
+    }
+    
+    @Override
+    public void stop() {
+        leftFlyWheel.stopMotor();
+    }
 }
