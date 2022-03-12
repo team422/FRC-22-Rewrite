@@ -12,7 +12,6 @@ public class FlyWheel extends SubsystemBase {
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward topFF;
-    public static boolean isFlyExtended;
 
     public FlyWheel(FlyWheelIO flyIO) {
         this.flyIO = flyIO;
