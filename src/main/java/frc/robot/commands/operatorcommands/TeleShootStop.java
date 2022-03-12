@@ -26,7 +26,7 @@ public class TeleShootStop extends ParallelCommandGroup{
         this.flyWheel = flyWheel;
 
         addCommands(
-            new TeleFly(flyWheel, 0).withTimeout(10),
+            new TeleFly(flyWheel, 0, 0).withTimeout(10),
             sequence(
                 new WaitCommand(1),
                 new TeleTransversal(transversal, voltageSupplier).withTimeout(8),

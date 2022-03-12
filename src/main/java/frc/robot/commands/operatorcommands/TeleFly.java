@@ -6,15 +6,17 @@ import frc.robot.subsystems.flywheel.FlyWheel;
 
 public class TeleFly extends CommandBase{
     private final FlyWheel flyWheel;
-    private final double speed;
-    public TeleFly(FlyWheel flyWheel, double speed) {
+    private final double speed1;
+    private final double speed2;
+    public TeleFly(FlyWheel flyWheel, double flySpeed, double hoodSpeed) {
         this.flyWheel = flyWheel;
-        this.speed = speed;
+        this.speed1 = flySpeed;
+        this.speed2 = hoodSpeed;
     }
 
     @Override
     public void execute() {
-        flyWheel.flyVelocity(speed, speed);
+        flyWheel.flyVelocity(speed1, speed2);
     }
     
     @Override

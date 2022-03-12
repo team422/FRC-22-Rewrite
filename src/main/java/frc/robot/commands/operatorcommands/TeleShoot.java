@@ -20,17 +20,19 @@ public class TeleShoot extends ParallelCommandGroup{
     private final Uptake uptake;
     private final Supplier<Double> voltageSupplier;
     private final FlyWheel flyWheel;
-    private double tunableNumber;
+    private double tunableNumberFly;
+    private double tunableNumberHood;
 
     public TeleShoot(FlyWheel flyWheel, Transversal transversal, Uptake uptake, Supplier<Double> voltageSupplier) {
         this.transversal = transversal;
         this.uptake = uptake;
         this.voltageSupplier = voltageSupplier;
         this.flyWheel = flyWheel;
-        this.tunableNumber = new TunableNumber("Shooter Tunner", 0.0).get();
-
+        this.tunableNumberFly = new TunableNumber("Shooter Tunner", 0.0).get();
+        this.tunableNumberHood = new TunableNumber("hood Tunner", 0.0).get();
+        
         addCommands(
-            new TeleFly(flyWheel, tunableNumber).withTimeout(10),
+            new TeleFly(flyWheel, tunableNumberFly, tunableNumberHood).withTimeout(10),
             sequence(
                 new WaitCommand(1),
                 parallel(
