@@ -50,21 +50,34 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
                 * encoderTicksPerRev / 10.0;
         double topTicksPer100Ms = Units.radiansToRotations(topWheelRadPerSec)
                 * encoderTicksPerRev / 10.0;
-        System.out.println(String.format("Flywheel: %.2f    Topwheel: %.2f    FlyFF: %.2f    TopFF: %.2f",
-                flyTicksPer100Ms, topTicksPer100Ms, flyFFVolts, topFFVolts));
+        // System.out.println(String.format("Flywheel: %.2f    Topwheel: %.2f    FlyFF: %.2f    TopFF: %.2f",
+        //         flyTicksPer100Ms, topTicksPer100Ms, flyFFVolts, topFFVolts));
         leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms, DemandType.ArbitraryFeedForward, flyFFVolts / 12.0);
         topFlyWheel.set(ControlMode.Velocity, topTicksPer100Ms, DemandType.ArbitraryFeedForward, topFFVolts / 12.0);
     }
 
     @Override
-    public void setPID(double kP, double kI, double kD) {
+    public void setPID(double kP, double kI, double kD, double kF) {
         leftFlyWheel.config_kP(0, kP);
         leftFlyWheel.config_kI(0, kI);
         leftFlyWheel.config_kD(0, kD);
-
+        leftFlyWheel.config_kF(0, kF);
+        
         topFlyWheel.config_kP(0, kP);
         topFlyWheel.config_kI(0, kI);
         topFlyWheel.config_kD(0, kD);
+        leftFlyWheel.config_kF(0, kF);
+    }
+
+    @Override
+    public void setTestVelocity(double fly, double top) {
+        leftFlyWheel.set(ControlMode.Velocity, fly);
+        topFlyWheel.set(ControlMode.Velocity, top);
+    }
+
+    @Override
+    public double getVelocity () {
+        return leftFlyWheel.getSelectedSensorVelocity();
     }
 
 }

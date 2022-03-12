@@ -17,8 +17,12 @@ public class FlyWheel extends SubsystemBase {
         this.flyIO = flyIO;
 
         //not arbitruary values (these exist)
-        leftFF = new SimpleMotorFeedforward(0.89402, 0.34633, 0.058598);
-        topFF = new SimpleMotorFeedforward(0.63145, 0.90343, 0.025781);
+        // leftFF = new SimpleMotorFeedforward(0.89402, 0.34633, 0.058598);
+        // topFF = new SimpleMotorFeedforward(0.63145, 0.90343, 0.025781);
+        leftFF = new SimpleMotorFeedforward(0, 0, 0);
+        topFF = new SimpleMotorFeedforward(0, 0, 0);
+        // leftFF = new SimpleMotorFeedforward(0, 0.1);
+        // topFF = new SimpleMotorFeedforward(0, 0.1);
     }
 
     public void flyVoltage(double flyVoltage, double topVoltage) {
@@ -34,8 +38,21 @@ public class FlyWheel extends SubsystemBase {
 
         flyIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
     }
+    public void flyTestVelocity(double flyVelocity, double topVelocity) {
+
+        flyIO.setTestVelocity(12800, 6100);
+    }
 
     public void stop() {
         flyIO.stop();
     }
+
+    public double getVelocity() {
+        return flyIO.getVelocity();
+    }
+
+    public void setPID(double p, double i, double d, double f) {
+        flyIO.setPID(p, i, d, f);
+    }
+
 }

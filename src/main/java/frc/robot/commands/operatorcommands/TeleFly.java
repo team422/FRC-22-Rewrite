@@ -16,7 +16,8 @@ public class TeleFly extends CommandBase{
 
     @Override
     public void execute() {
-        flyWheel.flyVelocity(speed1, speed2);
+        flyWheel.flyTestVelocity(12800, 6100);
+        flyWheel.getVelocity();
     }
     
     @Override

@@ -10,17 +10,25 @@ public interface FlyWheelIO {
     public default void setVelocity(double flySpeed,
             double topSpeed, double flyFFValue, double topFFValue) {
     }
+    public default void setTestVelocity(
+        double flySpeed, double topSpeed
+    ) {
+    }
 
     /** Change the mode of the motors */
     public default void setBrakeMode(boolean enabled) {
     }
 
     /** Set PID constants */
-    public default void setPID(double kP, double kI, double kD) {
+    public default void setPID(double kP, double kI, double kD, double kF) {
     }
 
     public default void stop() {
 
+    }
+
+    public default double getVelocity () {
+        return 0.0;
     }
 
 }

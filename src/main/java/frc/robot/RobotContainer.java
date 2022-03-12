@@ -44,18 +44,19 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveBase drive = new DriveBase(new DriveIOFalcon());
   private final Climber climber = new Climber(
-      new ClimberIOFalcon(ClimberIOFalcon.leftClimberPort),
-      new ClimberIOFalcon(ClimberIOFalcon.rightClimberPort));
-  private final Intake intake = new Intake(new IntakeIOTalonSRX());
-  private final FlyWheel flyWheel = new FlyWheel(new FlyWheelIONonVariable());
-  private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
-  private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
+    new ClimberIOFalcon(ClimberIOFalcon.leftClimberPort),
+    new ClimberIOFalcon(ClimberIOFalcon.rightClimberPort));
+    private final Intake intake = new Intake(new IntakeIOTalonSRX());
+    private final FlyWheel flyWheel = new FlyWheel(new FlyWheelIONonVariable());
+    private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
+    private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+      // Configure the button bindings
+      flyWheel.setPID(1.956521739130435E-4, 0, 0, 0.1);
+      configureButtonBindings();
   }
 
   /**
