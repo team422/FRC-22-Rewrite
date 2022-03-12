@@ -26,11 +26,11 @@ public class TeleShoot extends ParallelCommandGroup{
         this.flyWheel = flyWheel;
 
         addCommands(
-            new TeleFly(flyWheel),
+            new TeleFly(flyWheel).withTimeout(10),
             sequence(
                 new WaitCommand(1),
-                new TeleTransversal(transversal, voltageSupplier),
-                new TeleUptake(uptake, voltageSupplier)
+                new TeleTransversal(transversal, voltageSupplier).withTimeout(8),
+                new TeleUptake(uptake, voltageSupplier).withTimeout(8)
             )
         );
     }
