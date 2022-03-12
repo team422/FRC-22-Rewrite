@@ -21,12 +21,15 @@ public class DriveIOFalcon implements DriveIO {
     private WPI_TalonFX leftFollower;
     private WPI_TalonFX rightLeader;
     private WPI_TalonFX rightFollower;
+    // initializes the wheels in the middle left, front left and back left, middle right, and front right and back right
 
     private double leftEncoderValue;
     private double rightEncoderValue;
+    // sets th encoder values for the left and right wheels
 
     private ADXRS450_Gyro gyro;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
+    // initializs the gyro and sts a port for it
 
     public DriveIOFalcon() {
         switch (Constants.bot) {
@@ -36,42 +39,53 @@ public class DriveIOFalcon implements DriveIO {
                 this.rightLeader = new WPI_TalonFX(11);
                 this.rightFollower = new WPI_TalonFX(5);
                 break;
+                // sets ports for each of the motors for each of the wheels for comp bot
             case ROBOT_2022_PRACTICE:
                 this.leftLeader = new WPI_TalonFX(4);
                 this.leftFollower = new WPI_TalonFX(2);
                 this.rightLeader = new WPI_TalonFX(3);
                 this.rightFollower = new WPI_TalonFX(1);
                 break;
+                // sets ports for each of the motors for each of the wheels for pbot
             default:
                 throw new RuntimeException("Invalid robot for DriveIOFalcon!");
+                // asks how the heck you got funding for a another robot
+                // just means that the name of the robot is not either of the 2 above
         }
 
         leftFollower.follow(leftLeader);
         rightFollower.follow(rightLeader);
+        // makes the front and back right and left wheels follow the middle wheel on their side
 
         leftLeader.setInverted(true);
         leftFollower.setInverted(InvertType.FollowMaster);
+        // makes the left wheels inverted so all values put into the right wheel can be put into the left wheel for programming convenience
 
         rightLeader.setInverted(false);
         rightFollower.setInverted(InvertType.FollowMaster);
+        // these wheels are not inverted - go forward with positive values (left wheels go backwards with positive values)
 
         leftLeader.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, .5));
         leftFollower.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, .5));
         rightLeader.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, .5));
         rightFollower.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 40, .5));
+        // makes sure that no more than 40 amps of power are going IN TO each motor
 
         leftLeader.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         leftFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightLeader.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
+        // makes sure that no more than 40 amps of power are going OUT OF each motor
 
         this.gyro = new ADXRS450_Gyro(kGyroPort);
+        // initializes a new gyro
     }
 
     @Override
     public void setVoltage(double leftVolts, double rightVolts) {
         leftLeader.set(ControlMode.PercentOutput, leftVolts / 12.0);
         rightLeader.set(ControlMode.PercentOutput, rightVolts / 12.0);
+        // sets the voltage for the middle wheels - the front and back wheels will follow the commands set for the middle wheels on their side
     }
 
     @Override
@@ -81,10 +95,12 @@ public class DriveIOFalcon implements DriveIO {
                 * encoderTicksPerRev / 10.0;
         double rightTicksPer100Ms = Units.radiansToRotations(rightVelocityRadPerSec)
                 * encoderTicksPerRev / 10.0;
+        // gets the numbeer of ticks for every tenth of a sentence for wheels on both sides
         leftLeader.set(ControlMode.Velocity, leftTicksPer100Ms,
                 DemandType.ArbitraryFeedForward, leftFFVolts / 12.0);
         rightLeader.set(ControlMode.Velocity, rightTicksPer100Ms,
                 DemandType.ArbitraryFeedForward, rightFFVolts / 12.0);
+        // sets the velocity of the left and right leader wheels
     }
 
     @Override
@@ -94,6 +110,7 @@ public class DriveIOFalcon implements DriveIO {
         leftFollower.setNeutralMode(mode);
         rightLeader.setNeutralMode(mode);
         rightFollower.setNeutralMode(mode);
+        // sets the wheel speed to - to make them stop - very hard to move wheels
     }
 
     @Override
@@ -105,50 +122,60 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.config_kP(0, kP);
         leftLeader.config_kI(0, kI);
         leftLeader.config_kD(0, kD);
+        // sets the P, I, and D values for the left and right leader wheels, so that PID can be used when driving
     }
 
     @Override
     public double getLeftPosition() {
         return leftLeader.getSelectedSensorPosition(0) - leftEncoderValue;
+        // gets the change in the encoder value for the left wheels since the last time this was run
     }
 
     @Override
     public void resetLeftPosition() {
         leftEncoderValue = leftLeader.getSelectedSensorPosition(0);
+        // resets (sets to 0) the encoder value for the left wheel
     }
 
     @Override
     public double getLeftRate() {
         return leftLeader.getSelectedSensorVelocity(0);
+        // gets the velocity (change in position compared to change in time) of the left wheels based on the encoder values gathered
     }
 
     @Override
     public double getRightPosition() {
         return rightLeader.getSelectedSensorPosition(0) - rightEncoderValue;
+        // gets the change in the encoder value for the right wheels since the last time this was run
     }
 
     @Override
     public void resetRightPosition() {
         rightEncoderValue = rightLeader.getSelectedSensorPosition(0);
+        // resets (sets to 0) the encoder value for the right wheel
     }
 
     @Override
     public double getRightRate() {
         return rightLeader.getSelectedSensorVelocity(0);
+        // gets the velocity (change in position compared to change in time) of the right wheels based on the encoder values gathered
     }
 
     @Override
     public double getGyroAngle() {
         return gyro.getAngle();
+        // gets angle of the gyro
     }
 
     @Override
     public void resetGyroAngle() {
         gyro.reset();
+        // resets the gyro angle (sets it to 0)
     }
 
     @Override
     public double getGyroRate() {
         return gyro.getRate();
+        // gets the rate of change of the gyro angle
     }
 }

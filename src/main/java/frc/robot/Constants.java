@@ -22,15 +22,19 @@ public final class Constants {
 
     public enum BotType {
         ROBOT_2022_COMP, ROBOT_2022_PRACTICE
+        // sets the possible names for robots
     }
 
     public enum DriveMode {
         TANK, ARCADE
+        // sets the possible names for drivemodes
     }
 
     public static final BotType bot = BotType.ROBOT_2022_COMP;
     public static final DriveMode mode = DriveMode.ARCADE;
+    // says that we are running compbot and that compbott is running arcade drive
 
     public static double loopPeriodSecs = 0.02;
     public static boolean tuningMode = false;
+    // Sets how often the main loop runs (in seconds) and says that tuning mode for PID is off
 }

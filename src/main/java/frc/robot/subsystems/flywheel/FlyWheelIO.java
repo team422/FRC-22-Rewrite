@@ -2,11 +2,12 @@ package frc.robot.subsystems.flywheel;
 
 public interface FlyWheelIO {
 
-    /** Sets the voltage of the drivetrain motors (open loop) */
+    /** Sets the voltage of the shooter (hood and shooting) motors (open loop) */
+    // for this and the next command, we use the values for the left shooter wheel
     public default void setVoltage(double leftVolts, double rightVolts) {
     }
 
-    /** Sets the velocity of the drivetrain motors (closed loop) */
+    /** Sets the velocity of the shooter (hood and shooting) motors (closed loop) */
     public default void setVelocity(double flySpeed,
             double topSpeed, double flyFFValue, double topFFValue) {
     }
