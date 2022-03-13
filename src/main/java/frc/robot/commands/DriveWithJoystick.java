@@ -22,8 +22,6 @@ public class DriveWithJoystick extends CommandBase {
     private static final double speedCap = 0.7;
     private static final double rotationCap = 0.4;
 
-    private static final double maxAccel = 0.5;
-
     // private final AxisProcessor leftXProcessor = new AxisProcessor();
     // private final AxisProcessor leftYProcessor = new AxisProcessor();
     // private final AxisProcessor rightXProcessor = new AxisProcessor();
@@ -31,9 +29,6 @@ public class DriveWithJoystick extends CommandBase {
     
     // Remember to put this as TunableNumber
     private static double deadband = 0.1;
-
-    private double lastSpeed = 0.0;
-    private double lastRot = 0.0;
 
     /**
      * Creates a new ExampleCommand.
@@ -80,20 +75,9 @@ public class DriveWithJoystick extends CommandBase {
             case ARCADE:
                 speeds = WheelSpeeds.fromArcade(-speedCap * leftYValue, rotationCap * rightXValue);
                 break;
-            case MATTHEW_MODE:
-                double speedDiff = leftYValue - lastSpeed;
-                double rotDiff = rightXValue - lastRot;
-
-                leftYValue = Math.abs(speedDiff) > maxAccel ? lastSpeed + Math.signum(speedDiff) * maxAccel : leftYValue;
-                rightXValue = Math.abs(rotDiff) > maxAccel ? lastRot + Math.signum(rotDiff) * maxAccel : rightXValue;
-
-                speeds = WheelSpeeds.fromCurvature(-speedCap * leftYValue, rotationCap * rightXValue);
-                break;
         }
 
-        double leftPercent = MathUtil.clamp(speeds.left, -1.0, 1.0);
-        double rightPercent = MathUtil.clamp(speeds.right, -1.0, 1.0);
-        drive.drivePercent(leftPercent, rightPercent);
+        drive.drivePercent(speeds.left, speeds.right);
     }
 
     // Called once the command ends or is interrupted.
@@ -126,46 +110,6 @@ public class DriveWithJoystick extends CommandBase {
         }
 
         public static WheelSpeeds fromArcade(double speed, double rotation) {
-            speed = Math.copySign(
-                Math.pow(MathUtil.clamp(speed, -1.0, 1.0), 2),
-                speed);
-            rotation = Math.copySign(
-                Math.pow(MathUtil.clamp(rotation, -1.0, 1.0), 2),
-                rotation);
-
-            double leftSpeed;
-            double rightSpeed;
-
-            double maxInput = Math.copySign(Math.max(Math.abs(speed), Math.abs(rotation)), speed);
-
-            if (speed >= 0.0) {
-                if (rotation >= 0.0) {
-                    leftSpeed = maxInput;
-                    rightSpeed = speed - rotation;
-                } else {
-                    leftSpeed = speed + rotation;
-                    rightSpeed = maxInput;
-                }
-            } else {
-                if (rotation >= 0.0) {
-                    leftSpeed = speed + rotation;
-                    rightSpeed = maxInput;
-                } else {
-                    leftSpeed = maxInput;
-                    rightSpeed = speed - rotation;
-                }
-            }
-
-            double maxMagnitude = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-            if (maxMagnitude > 1.0) {
-                leftSpeed /= maxMagnitude;
-                rightSpeed /= maxMagnitude;
-            }
-
-            return new WheelSpeeds(leftSpeed, rightSpeed);
-        }
-
-        public static WheelSpeeds fromCurvature(double speed, double rotation) {
             speed = MathUtil.clamp(speed, -1.0, 1.0);
             rotation = MathUtil.clamp(rotation, -1.0, 1.0);
 
