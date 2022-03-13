@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 
+// contains the actual commands as well as the functions of those commands
+
 public class FlyWheelIONonVariable implements FlyWheelIO {
 
     private static final double encoderTicksPerRev = 2048.0;
@@ -30,6 +32,8 @@ public class FlyWheelIONonVariable implements FlyWheelIO {
             default:
                 throw new RuntimeException("Invalid FlyBoi!");
         // Sees which robot is being used and if CompBot is being used, sets up motors to transport the ball
+        // sets up the flywheels for each case (this.flywheel indicates the use or unuse of the initialized flywheels for each case)
+        // Only Compbot uses the flywheels- pbot does not use the flywheels at all and does not have any this.flywheel things since it doesn't use the flywheels
         }
 
         rightFlyWheel.follow(leftFlyWheel);

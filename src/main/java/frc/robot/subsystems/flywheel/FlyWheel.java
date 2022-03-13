@@ -9,6 +9,7 @@ public class FlyWheel extends SubsystemBase {
     // sets the flywheel radius and hood wheel radius
 
     private final FlyWheelIO flyIO;
+    // creates an instance of flywheel from flyIO
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward topFF;
@@ -16,9 +17,12 @@ public class FlyWheel extends SubsystemBase {
 
     public FlyWheel(FlyWheelIO flyIO) {
         this.flyIO = flyIO;
+        // makes it so that we can modify a "copy" of flyIO to our needs without changing the actual flyIO
 
         //not arbitruary values (these exist)
-        leftFF = new SimpleMotorFeedforward(0.89402, 0.34633, 0.058598);
+        leftFF = new SimpleMotorFeedforward(0.89402, aaasdweee\         0.34633, 0.058598);
+        // testingleftFF = new SimpleMotorFeedforward(CHANGE, 0.318, 0.35);
+        // commented thing above contains updatd feedforward values that we may need to implement
         topFF = new SimpleMotorFeedforward(0.63145, 0.90343, 0.025781);
         // sets static gain, velocity gain, and acceleration gain for both feedforwards
     }

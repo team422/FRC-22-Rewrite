@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.SPI;
 // Internal Imports
 import frc.robot.Constants;
 
+// contains the actual commands as well as the functions of those commands
+
 public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;

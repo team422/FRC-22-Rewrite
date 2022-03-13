@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
 
+// contains the actual commands as well as the functions of those commands
+
 public class IntakeIOTalonSRX implements IntakeIO{
     
     private WPI_TalonSRX intakeMotor;
     private DoubleSolenoid intakeArmSolenoid;
+    // initializes intake motor and intake arm solenoid
 
     public IntakeIOTalonSRX(){
         switch(Constants.bot){
@@ -24,7 +27,9 @@ public class IntakeIOTalonSRX implements IntakeIO{
                 break;
             default:
                 throw new RuntimeException("Invalid robot for IntakeIOTalonSRX!");
-        // Sees which robot is being used and if CompBot is being used, sets up a motor for the intake
+        // Sees which robot is being used and if CompBot is being used, sets up a motor for the intake motor and solenoid
+        // uses this.motor and this.solenoid to specify that the settings for each within each case only apply to that case
+        // for example, it sets up the intake motor and solenoid ONLY for compbot and not for pbot or other bots
         }
     }
 
@@ -56,6 +61,6 @@ public class IntakeIOTalonSRX implements IntakeIO{
     @Override
     public void setIntakeSolenoid(boolean extended){
         intakeArmSolenoid.set(extended ? Value.kReverse : Value.kForward);
-        // 
+        // Sets the intake to be extended( boolean extended is true) or not extended (boolean extended is false)
     }
 }

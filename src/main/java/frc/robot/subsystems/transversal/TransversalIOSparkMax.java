@@ -7,9 +7,11 @@ import frc.robot.Constants;
 
 public class TransversalIOSparkMax implements TransversalIO{
     private static final double encoderTicksPerRev = 2048.0;
+    // sets up number of ticks per revolution in a variable
 
     private CANSparkMax leftTransversal;
     private CANSparkMax rightTransversal;
+    // initializes left and right transversal motors
 
     public TransversalIOSparkMax () {
         switch (Constants.bot) {
@@ -22,19 +24,23 @@ public class TransversalIOSparkMax implements TransversalIO{
                 break;
             default:
                 throw new RuntimeException("Transversal does not exist for this robot");
+            // sees which robot is being used - only comp bot has and can use traversal
         }
     }
 
     @Override
     public void setVoltage(double transversalPower) {
         leftTransversal.set(transversalPower / 12.0);
-        rightTransversal.set(transversalPower * 0.667 / 12);
+        rightTransversal.set(transversalPower * 0.667 / 12.0);
+        // gives voltage to run transversal motors. the right transversal is set to a lower voltage so that the balls dont get stuck, which happened
+        // when both traversal wheels had the same voltage
     }
 
     @Override
     public void stop() {
         leftTransversal.stopMotor();
         rightTransversal.stopMotor();
+        // stops transversal motors
     }
 
 }

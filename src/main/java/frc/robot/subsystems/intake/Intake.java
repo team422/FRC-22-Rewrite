@@ -5,11 +5,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
 
     private final IntakeIO intakeIO;
+    // creates an instance of intakeIO
 
     private boolean isExtended;
+    // initializes boolean that cotntains whether the intake is extended or not
 
     public Intake(IntakeIO intakeIO) {
         this.intakeIO = intakeIO;
+        // names this makes it so that we can personalize a copy to intakeIO to our needs without changing the actual intakeIO
     }
 
     /** Run the roller at the specified percentage. */

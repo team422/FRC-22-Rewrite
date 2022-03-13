@@ -10,12 +10,15 @@ public class DriveBase extends SubsystemBase {
     // sets wheel radius and the maximum velocity of the robot per second
 
     private final DriveIO driveIO;
+    // creates an instance of drivebase
 
     private final SimpleMotorFeedforward leftFF;
     private final SimpleMotorFeedforward rightFF;
+    // initializes feedforwards for left and right sets of wheels
 
     public DriveBase(DriveIO driveIO) {
         this.driveIO = driveIO;
+        // creates a verson of driveIO from the instance we got where we can personalize driveIO to our needs
 
         // Arbitrary values for now
         // nice

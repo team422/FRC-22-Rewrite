@@ -1,5 +1,8 @@
 package frc.robot.subsystems.drivetrain;
 
+// holding place to show all commands with their default inputs/outputs
+// just a place to list all of the commands
+
 public interface DriveIO {
 
     /** Sets the voltage of the drivetrain motors (open loop) */

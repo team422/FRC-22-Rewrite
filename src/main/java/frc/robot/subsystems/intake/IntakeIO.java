@@ -1,5 +1,8 @@
 package frc.robot.subsystems.intake;
 
+// holding place to show all commands with their default inputs/outputs
+// just a place to list all of the commands
+
 public interface IntakeIO {
     
     public default void runIntakeVoltage(double volts){}

@@ -1,5 +1,8 @@
 package frc.robot.subsystems.flywheel;
 
+// holding place to show all commands with their default inputs/outputs
+// just a place to list all of the commands
+
 public interface FlyWheelIO {
 
     /** Sets the voltage of the shooter (hood and shooting) motors (open loop) */
