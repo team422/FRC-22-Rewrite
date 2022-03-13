@@ -11,7 +11,6 @@ public class TeleClimbTilt extends CommandBase {
 
     public TeleClimbTilt(Climber climber) {
         this.climber = climber;
-        climber.setBrakeMode(true);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class TeleClimbTilt extends CommandBase {
     }
 
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
 }

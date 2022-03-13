@@ -1,13 +1,20 @@
 package frc.robot.subsystems.climber;
 
-public class Climber {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Climber extends SubsystemBase {
+    public static final double maxEncoderValue = 0.0;
     
     private final ClimberIO rightClimberIO;
     private final ClimberIO leftClimberIO;
+    private final ClimberPistonIO pistonIO;
 
-    public Climber(ClimberIO leftClimberIO, ClimberIO rightClimberIO){
+    public Climber(ClimberIO leftClimberIO, ClimberIO rightClimberIO, ClimberPistonIO pistonIO){
         this.leftClimberIO = leftClimberIO;
         this.rightClimberIO = rightClimberIO;
+        this.pistonIO = pistonIO;
+
+        setBrakeMode(true);
     }
 
     public void setBrakeMode(boolean enable){
@@ -31,11 +38,19 @@ public class Climber {
         rightClimberIO.setPercentPower(percent);
     }
 
+    public void setLeftTarget(double encoderValue) {
+        leftClimberIO.setTargetPoint(encoderValue);
+    }
+
+    public void setRightTarget(double encoderValue) {
+        rightClimberIO.setTargetPoint(encoderValue);
+    }
+
     public void tiltRobot() {
-        if(!leftClimberIO.getTilt()) {
-            leftClimberIO.tiltRobot(true);
-        } else if(leftClimberIO.getTilt()) {
-            leftClimberIO.tiltRobot(false);
+        if (pistonIO.getTilt()) {
+            pistonIO.tiltRobot(false);
+        } else {
+            pistonIO.tiltRobot(true);
         }
     }
 }
