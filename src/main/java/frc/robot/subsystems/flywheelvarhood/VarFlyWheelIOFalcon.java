@@ -28,7 +28,7 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
                 this.rightFlyWheel = new WPI_TalonFX(9);
                 this.topFlyWheel = new WPI_TalonFX(10);
                 //arbitrary things
-                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 422, 422);
+                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
                 break;
             case ROBOT_2022_PRACTICE:
                 

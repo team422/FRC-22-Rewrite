@@ -12,8 +12,8 @@ public class ClimberIOFalcon implements ClimberIO {
     public static final int leftClimberPort = 15;
     public static final int rightClimberPort = 16;
 
-    public static final int climbPistonPortIn = 13;
-    public static final int climbPistonPortout = 12;
+    public static final int climbPistonPortIn = 14;
+    public static final int climbPistonPortout = 1;
     
     private final WPI_TalonFX climberMotor;
     private final DoubleSolenoid climbPiston;
