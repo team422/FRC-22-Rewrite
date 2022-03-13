@@ -40,7 +40,7 @@ public class DriveBase extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometry.update(new Rotation2d(driveIO.getGyroAngle()),
+        odometry.update(new Rotation2d(-driveIO.getGyroAngle()),
             getLeftDistanceMeters(),
             getRightDistanceMeters());
     }
