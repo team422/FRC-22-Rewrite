@@ -15,7 +15,6 @@ public class UptakeIOSparkMax implements UptakeIO {
                 this.uptakeNEO = new CANSparkMax(11, MotorType.kBrushless);
                 break;
             case ROBOT_2022_PRACTICE:
-                break;
             default:
                 throw new RuntimeException("Uptake does not exist for this robot");
         }

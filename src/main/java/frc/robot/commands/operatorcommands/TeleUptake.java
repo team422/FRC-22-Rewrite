@@ -29,6 +29,7 @@ public class TeleUptake extends CommandBase{
         uptake.stop();
     }
 
+    @Override
     public boolean isFinished() {
         return false;
     }

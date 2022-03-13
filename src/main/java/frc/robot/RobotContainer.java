@@ -6,12 +6,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.OneCargoAuto;
-import frc.robot.commands.TestAuto;
-import frc.robot.subsystems.drivetrain.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.oi.*;
+import frc.robot.commands.DriveWithJoystick;
+// import frc.robot.commands.OneCargoAuto;
+import frc.robot.commands.TestAuto;
+// import frc.robot.subsystems.drivetrain.*;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import frc.robot.oi.*;
+import frc.robot.commands.operatorcommands.TeleClimbDown;
+import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.oi.UserControls;
+import frc.robot.oi.XboxUserControls;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.subsystems.drivetrain.DriveBase;
+import frc.robot.subsystems.drivetrain.DriveIOFalcon;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -25,6 +34,9 @@ import frc.robot.oi.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveBase drive = new DriveBase(new DriveIOFalcon());
+  private final Climber climber = new Climber(
+      new ClimberIOFalcon(ClimberIOFalcon.leftClimberPort),
+      new ClimberIOFalcon(ClimberIOFalcon.rightClimberPort));
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -53,11 +65,16 @@ public class RobotContainer {
         () -> controls.getLeftDriveY(),
         () -> controls.getRightDriveX(),
         () -> controls.getRightDriveY());
-    
+
+    TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
+    TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
+
     // Define default commands here
     drive.setDefaultCommand(defaultDriveCommand);
 
     // Define button / command bindings here
+    controls.getClimbUp().whileActiveOnce(climberUpCommand);
+    controls.getClimbDown().whileActiveOnce(climberDownCommand);
   }
 
   /**
