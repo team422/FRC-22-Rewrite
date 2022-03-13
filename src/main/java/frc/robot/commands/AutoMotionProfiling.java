@@ -48,8 +48,8 @@ public class AutoMotionProfiling extends CommandBase {
             case ROBOT_2022_COMP:
             case ROBOT_2022_PRACTICE:
                 maxVoltage = 10.0;
-                maxVelocity = 2.5;
-                maxAcceleration = 20.0;
+                maxVelocity = 0.5;
+                maxAcceleration = 1;
                 maxCentripetalAcceleration = 10.0;
                 break;
             default:
