@@ -2,6 +2,10 @@ package frc.robot.oi;
 
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+// holding place to show all commands with their default inputs/outputs that are triggered by pressing controller buttons
+// just a place to list all of the commands
+// actual commands are in XboxUserControls.java
+
 public interface UserControls {
   public default double getLeftDriveX() {
     return 0.0;

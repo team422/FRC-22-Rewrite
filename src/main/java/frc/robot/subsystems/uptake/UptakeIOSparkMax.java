@@ -8,6 +8,7 @@ import frc.robot.Constants;
 public class UptakeIOSparkMax implements UptakeIO {
 
     private CANSparkMax uptakeNEO;
+    // initalizes Neo motor for uptake
 
     public UptakeIOSparkMax () {
         switch (Constants.bot) {
@@ -18,16 +19,19 @@ public class UptakeIOSparkMax implements UptakeIO {
                 break;
             default:
                 throw new RuntimeException("Uptake does not exist for this robot");
+            // sees which robot is being used and only sets up the neo motor if Compbot is being used
         }
     }
 
     @Override
     public void setVoltage (double voltage) {
         uptakeNEO.set(voltage / 12);
+        // sets voltage as a percent out of 12 volts
     }
 
     @Override
     public void stop() {
         uptakeNEO.stopMotor();
+        // stops the motor
     }
 }
