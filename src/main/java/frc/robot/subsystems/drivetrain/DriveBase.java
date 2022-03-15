@@ -3,15 +3,20 @@ package frc.robot.subsystems.drivetrain;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-    // Static final for now, make sure to change in order to switch between drives
-    private static final double wheelRadiusMeters = Units.inchesToMeters(2);
-    private static final double maxVelocityMetersPerSec = Units.feetToMeters(16.5);
-    private static final double trackWidthMeters = 0.61;
+    // Final for now, make sure to change in order to switch between drives
+    private final double wheelRadiusMeters = Units.inchesToMeters(2);
+    private final double maxVelocityMetersPerSecond = Units.feetToMeters(16.5);
+    private final double maxAccelerationMetersPerSecondSq = 10;
+
+    private final double trackWidthMeters = 0.61;
+    private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
 
     private final DriveIO driveIO;
 
@@ -45,13 +50,18 @@ public class DriveBase extends SubsystemBase {
             getRightDistanceMeters());
     }
 
+    public void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(pose,
+            new Rotation2d(-driveIO.getGyroAngle()));
+    }
+
     public void driveVoltage(double leftVoltage, double rightVoltage) {
         driveIO.setVoltage(leftVoltage, rightVoltage);
     }
 
     public void drivePercent(double leftPercent, double rightPercent) {
-        driveVelocity(leftPercent * maxVelocityMetersPerSec,
-            rightPercent * maxVelocityMetersPerSec);
+        driveVelocity(leftPercent * maxVelocityMetersPerSecond,
+            rightPercent * maxVelocityMetersPerSecond);
     }
 
     public void driveVelocity(double leftVelocity, double rightVelocity) {
@@ -87,7 +97,39 @@ public class DriveBase extends SubsystemBase {
         return trackWidthMeters;
     }
 
-    public DriveIO getDriveIO() {
-        return driveIO;
+    public DifferentialDriveKinematics getKinematics() {
+        return kinematics;
+    }
+
+    public double getkS() {
+        return driveIO.getkS();
+    }
+
+    public double getkV() {
+        return driveIO.getkV();
+    }
+
+    public double getkA() {
+        return driveIO.getkA();
+    }
+
+    public double getkP() {
+        return driveIO.getkP();
+    }
+
+    public double getkD() {
+        return driveIO.getkD();
+    }
+
+    public double getMaxVelocityMetersPerSecond() {
+        return maxVelocityMetersPerSecond;
+    }
+
+    public double getMaxAccelerationMetersPerSecondSq() {
+        return maxAccelerationMetersPerSecondSq;
+    }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds();
     }
 }

@@ -71,4 +71,12 @@ public interface DriveIO {
     public default double getkA() {
         return 0.0;
     }
+
+    public default double getkP() {
+        return 0.0;
+    }
+
+    public default double getkD() {
+        return 0.0;
+    }
 }

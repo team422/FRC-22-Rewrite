@@ -32,6 +32,9 @@ public class DriveIOFalcon implements DriveIO {
     private final double kV;
     private final double kA;
 
+    private final double kP;
+    private final double kD;
+
     public DriveIOFalcon() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
@@ -40,10 +43,13 @@ public class DriveIOFalcon implements DriveIO {
                 this.rightLeader = new WPI_TalonFX(11);
                 this.rightFollower = new WPI_TalonFX(5);
 
-                // TO CHANGE VIA CHARACTERIZATION
+                // TO CHANGE VIA CHARACTERIZATION (kS, kV, kA, kP, kD)
                 this.kS = 0.66569;
                 this.kV = 0.050387;
                 this.kA = 0.0051628;
+
+                this.kP = 0.0;
+                this.kD = 0.0;
                 break;
             case ROBOT_2022_PRACTICE:
                 this.leftLeader = new WPI_TalonFX(4);
@@ -54,6 +60,9 @@ public class DriveIOFalcon implements DriveIO {
                 this.kS = 0.66569;
                 this.kV = 0.050387;
                 this.kA = 0.0051628;
+
+                this.kP = 0.0;
+                this.kD = 0.0;
                 break;
             default:
                 throw new RuntimeException("Invalid robot for DriveIOFalcon!");
@@ -178,5 +187,15 @@ public class DriveIOFalcon implements DriveIO {
     @Override
     public double getkA() {
         return kA;
+    }
+
+    @Override
+    public double getkP() {
+        return kP;
+    }
+
+    @Override
+    public double getkD() {
+        return kD;
     }
 }
