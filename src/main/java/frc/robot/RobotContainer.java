@@ -12,13 +12,16 @@
     import frc.robot.commands.operatorcommands.TeleClimbDown;
     import frc.robot.commands.operatorcommands.TeleClimbTilt;
     import frc.robot.commands.operatorcommands.TeleClimbUp;
-    import frc.robot.oi.UserControls;
+import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.oi.UserControls;
     import frc.robot.oi.XboxUserControls;
     import frc.robot.subsystems.climber.Climber;
     import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.climber.ClimberPistonIO;
 import frc.robot.subsystems.drivetrain.DriveBase;
     import frc.robot.subsystems.drivetrain.DriveIOFalcon;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIOTalonSRX;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -33,9 +36,9 @@ import frc.robot.subsystems.drivetrain.DriveBase;
     // The robot's subsystems and commands are defined here...
     private final DriveBase drive = new DriveBase(new DriveIOFalcon());
     private final Climber climber = new Climber(
-        new ClimberIOFalcon(ClimberIOFalcon.leftClimberPort),
-        new ClimberIOFalcon(ClimberIOFalcon.rightClimberPort),
+        new ClimberIOFalcon(),
         new ClimberPistonIO());
+    private final Intake intake = new Intake(new IntakeIOTalonSRX());
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,6 +71,7 @@ import frc.robot.subsystems.drivetrain.DriveBase;
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
         TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
+        TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -76,6 +80,7 @@ import frc.robot.subsystems.drivetrain.DriveBase;
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
+        controls.getIntakeRetractButton().whileActiveOnce(intakeToggleCommand);
     }
 
     /**
