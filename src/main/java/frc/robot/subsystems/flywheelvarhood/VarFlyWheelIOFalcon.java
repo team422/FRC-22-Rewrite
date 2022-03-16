@@ -28,7 +28,7 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
                 this.rightFlyWheel = new WPI_TalonFX(9);
                 this.topFlyWheel = new WPI_TalonFX(10);
                 //arbitrary things
-                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
+                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 12, 13);
                 break;
             case ROBOT_2022_PRACTICE:
                 
@@ -89,6 +89,7 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
     // }
     return (flyWheelExtender.get() == Value.kForward);
     }
+    // public void pushUpOrStayUp()
     
     @Override
     public void stop() {

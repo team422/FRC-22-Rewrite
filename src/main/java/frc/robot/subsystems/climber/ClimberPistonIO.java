@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class ClimberPistonIO {
-    private static final int pistonIn = 14;
-    private static final int pistonOut = 1;
+    private static final int pistonIn = 1;
+    private static final int pistonOut = 14;
 
     private final DoubleSolenoid climbPiston;
 

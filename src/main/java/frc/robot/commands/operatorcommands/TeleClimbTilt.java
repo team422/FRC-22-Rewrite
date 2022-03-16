@@ -2,6 +2,7 @@ package frc.robot.commands.operatorcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 
 public class TeleClimbTilt extends CommandBase {
 
@@ -16,6 +17,7 @@ public class TeleClimbTilt extends CommandBase {
     @Override
     public void initialize() {
         climber.tiltRobot();
+        System.out.println("command innit");
     }
 
     @Override
@@ -23,7 +25,7 @@ public class TeleClimbTilt extends CommandBase {
     }
 
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
 }
