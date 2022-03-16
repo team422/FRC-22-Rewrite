@@ -21,21 +21,7 @@ public class Intake extends SubsystemBase {
         intakeIO.stopIntake();
     }
 
-    public void extend() {
-        if (isExtended) {
-            return;
-        }
-
-        intakeIO.setIntakeSolenoid(true);
-        isExtended = false;
-    }
-
-    public void retract() {
-        if (!isExtended) {
-            return;
-        }
-
-        intakeIO.setIntakeSolenoid(false);
-        isExtended = true;
+    public void toggle() {
+        intakeIO.setIntakeSolenoid();
     }
 }

@@ -12,6 +12,7 @@
     import frc.robot.commands.operatorcommands.TeleClimbDown;
     import frc.robot.commands.operatorcommands.TeleClimbTilt;
     import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.oi.UserControls;
     import frc.robot.oi.XboxUserControls;
@@ -67,6 +68,8 @@ import frc.robot.subsystems.intake.IntakeIOTalonSRX;
             () -> controls.getLeftDriveY(),
             () -> controls.getRightDriveX(),
             () -> controls.getRightDriveY());
+        TeleIntake defaultIntakeCommand = new TeleIntake(intake,
+        () -> controls.getIntakeSpeed());
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
@@ -75,6 +78,7 @@ import frc.robot.subsystems.intake.IntakeIOTalonSRX;
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
+        intake.setDefaultCommand(defaultIntakeCommand);
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);

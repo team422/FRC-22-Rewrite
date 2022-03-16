@@ -10,7 +10,7 @@ public interface IntakeIO {
 
     public default void setIntakeMotorBrakeMode(boolean enable){}
 
-    public default void setIntakeSolenoid(boolean extended){}
+    public default void setIntakeSolenoid(){}
 
 
 }

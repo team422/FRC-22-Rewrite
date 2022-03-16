@@ -47,7 +47,11 @@ public class IntakeIOTalonSRX implements IntakeIO{
     }
 
     @Override
-    public void setIntakeSolenoid(boolean extended){
-        intakeArmSolenoid.set(extended ? Value.kReverse : Value.kForward);
+    public void setIntakeSolenoid(){
+        if(intakeArmSolenoid.get() == Value.kOff){
+            intakeArmSolenoid.set(Value.kForward);
+        } else {
+            intakeArmSolenoid.toggle();
+        }
     }
 }
