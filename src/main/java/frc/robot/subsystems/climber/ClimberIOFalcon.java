@@ -24,6 +24,7 @@ public class ClimberIOFalcon implements ClimberIO {
     public void setBrakeMode(boolean enable) {
         NeutralMode mode = enable ? NeutralMode.Brake : NeutralMode.Coast;
         leftClimberMotor.setNeutralMode(mode);
+        rightClimberMotor.setNeutralMode(mode);
     }
     
     @Override
