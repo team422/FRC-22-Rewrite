@@ -23,9 +23,8 @@ public class TeleClimbTiltCG extends ParallelCommandGroup{
         this.varFlyWheel = varFlyWheel;
 
         addCommands(
-            new TeleFlyVarUp(varFlyWheel),
             sequence(
-                new WaitCommand(0.5),
+                new TeleFlyVarUp(varFlyWheel),
                 new TeleClimbTilt(climber)
             )
         );

@@ -18,7 +18,7 @@ public class IntakeIOTalonSRX implements IntakeIO{
         switch(Constants.bot){
             case ROBOT_2022_COMP:
                 this.intakeMotor = new WPI_TalonSRX(59);
-                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 12, 13);
+                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 12);
                 break;
             case ROBOT_2022_PRACTICE:
             default:

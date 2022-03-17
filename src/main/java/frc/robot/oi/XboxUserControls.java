@@ -89,7 +89,11 @@ public class XboxUserControls implements UserControls {
     // }
 
     @Override
-    public Trigger getStopFlywheelButton() {
+    public Trigger getFlyWheelUp() {
+        return new Trigger(() -> operatorController.getXButton());
+    }
+    @Override
+    public Trigger getFlyWheeldDown() {
         return new Trigger(() -> operatorController.getAButton());
     }
 
@@ -106,5 +110,15 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getClimbAuto() {
         return new Trigger();
+    }
+
+    @Override
+    public double defaultValue() {
+        return 12*0.9;
+    }
+
+    @Override
+    public double zeroValue() {
+        return 0.0;
     }
 }

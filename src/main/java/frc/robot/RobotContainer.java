@@ -11,9 +11,14 @@
     import frc.robot.commands.OneCargoAuto;
     import frc.robot.commands.operatorcommands.TeleClimbDown;
     import frc.robot.commands.operatorcommands.TeleClimbTilt;
-    import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleClimbTiltCG;
+import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleFlyVar;
+import frc.robot.commands.operatorcommands.TeleFlyVarDown;
+import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.oi.UserControls;
     import frc.robot.oi.XboxUserControls;
     import frc.robot.subsystems.climber.Climber;
@@ -21,8 +26,16 @@ import frc.robot.oi.UserControls;
 import frc.robot.subsystems.climber.ClimberPistonIO;
 import frc.robot.subsystems.drivetrain.DriveBase;
     import frc.robot.subsystems.drivetrain.DriveIOFalcon;
+import frc.robot.subsystems.flywheel.FlyWheelIONonVariable;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIO;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOTalonSRX;
+import frc.robot.subsystems.transversal.Transversal;
+import frc.robot.subsystems.transversal.TransversalIOSparkMax;
+import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.subsystems.uptake.UptakeIOSparkMax;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -40,6 +53,9 @@ import frc.robot.subsystems.intake.IntakeIOTalonSRX;
         new ClimberIOFalcon(),
         new ClimberPistonIO());
     private final Intake intake = new Intake(new IntakeIOTalonSRX());
+    private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
+    private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
+    private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -75,6 +91,9 @@ import frc.robot.subsystems.intake.IntakeIOTalonSRX;
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
         TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
+        TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
+        TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
+        TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -85,6 +104,8 @@ import frc.robot.subsystems.intake.IntakeIOTalonSRX;
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
         controls.getIntakeRetractButton().whileActiveOnce(intakeToggleCommand);
+        controls.getFlyWheelUp().whileActiveOnce(flyUp);
+        controls.getFlyWheeldDown().whileActiveOnce(flyDown);
     }
 
     /**
