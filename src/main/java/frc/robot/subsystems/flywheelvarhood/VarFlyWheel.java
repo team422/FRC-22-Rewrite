@@ -8,6 +8,8 @@ public class VarFlyWheel extends SubsystemBase {
     private static final double flyWheelRadiusMeters = 0.0508;
     private static final double hoodWheelRadiusMeters = 0.028575;
 
+    private static final double maxVelocityRadPerSec = 600;
+
     private final VarFlyWheelIO varFlyWheelIO;
 
     private final SimpleMotorFeedforward leftFF;
@@ -32,6 +34,10 @@ public class VarFlyWheel extends SubsystemBase {
         double topFFValue = topFF.calculate(topVelocityRadPerSec);
 
         varFlyWheelIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
+    }
+
+    public void flyPercent(double flyWheelPercent, double rightPercent) {
+        flyVelocity(-flyWheelPercent * maxVelocityRadPerSec, 0);
     }
 
     public void stop() {

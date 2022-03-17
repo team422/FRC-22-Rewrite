@@ -57,10 +57,12 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
                 * encoderTicksPerRev / 10.0;
         double topTicksPer100Ms = Units.radiansToRotations(topWheelRadPerSec)
                 * encoderTicksPerRev / 10.0;
-        leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms,
-                DemandType.ArbitraryFeedForward, flyFFVolts / 12.0);
-        topFlyWheel.set(ControlMode.Velocity, topTicksPer100Ms,
-                DemandType.ArbitraryFeedForward, topFFVolts / 12.0);
+        // leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms,
+        //         DemandType.ArbitraryFeedForward, flyFFVolts / 12.0);
+        // topFlyWheel.set(ControlMode.Velocity, topTicksPer100Ms,
+        //         DemandType.ArbitraryFeedForward, topFFVolts / 12.0);
+        leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms);
+        topFlyWheel.set(ControlMode.Velocity, topTicksPer100Ms);
     }
 
     @Override

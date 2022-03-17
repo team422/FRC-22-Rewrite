@@ -7,6 +7,9 @@ import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 
 public class TeleFlyVar extends CommandBase{
     private final VarFlyWheel varFlyWheel;
+    private final double upSpeed = 0.3;
+    private final double downSpeed = 0.4;
+
     public TeleFlyVar(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
     }
@@ -14,9 +17,9 @@ public class TeleFlyVar extends CommandBase{
     @Override
     public void execute() {
         if (varFlyWheel.getState()){
-            varFlyWheel.flyVelocity(422, 422);
+            varFlyWheel.flyPercent(downSpeed, downSpeed);
         } else if (!varFlyWheel.getState()) {
-            varFlyWheel.flyVelocity(422/2, 422/2);
+            varFlyWheel.flyPercent(upSpeed, upSpeed);
         }
     }
     

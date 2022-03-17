@@ -19,6 +19,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
+import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.oi.UserControls;
     import frc.robot.oi.XboxUserControls;
     import frc.robot.subsystems.climber.Climber;
@@ -106,6 +107,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getIntakeRetractButton().whileActiveOnce(intakeToggleCommand);
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        controls.getShootButton().whileActiveOnce(shootCommand);
     }
 
     /**

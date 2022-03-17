@@ -86,7 +86,7 @@ public interface UserControls {
   }
 
   public default double defaultValue() {
-    return 0.7;
+    return 7;
   }
 
   public default double zeroValue() {
