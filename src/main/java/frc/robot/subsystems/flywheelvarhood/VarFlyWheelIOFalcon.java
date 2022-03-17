@@ -92,6 +92,11 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
     return (flyWheelExtender.get() == Value.kForward);
     }
     // public void pushUpOrStayUp()
+
+    @Override
+    public Value get() {
+        return flyWheelExtender.get();
+    }
     
     @Override
     public void stop() {

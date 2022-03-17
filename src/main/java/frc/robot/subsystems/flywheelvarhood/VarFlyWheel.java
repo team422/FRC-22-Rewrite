@@ -2,7 +2,7 @@ package frc.robot.subsystems.flywheelvarhood;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class VarFlyWheel extends SubsystemBase {
     private static final double flyWheelRadiusMeters = 0.0508;
@@ -54,7 +54,7 @@ public class VarFlyWheel extends SubsystemBase {
             isFlyExtended = false;
     }
 
-    public boolean getState() {
-        return varFlyWheelIO.getState();
+    public Value get() {
+        return varFlyWheelIO.get();
     }
 }

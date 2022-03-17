@@ -1,5 +1,7 @@
 package frc.robot.subsystems.flywheelvarhood;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 public interface VarFlyWheelIO {
 
     /** Sets the voltage of the drivetrain motors (open loop) */
@@ -25,6 +27,10 @@ public interface VarFlyWheelIO {
 
     public default boolean getState() {
         return false;
+    }
+
+    public default Value get() {
+        return Value.kOff;
     }
 
     public default void stop() {
