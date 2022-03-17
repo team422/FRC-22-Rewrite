@@ -48,7 +48,7 @@ public class DriveIOFalcon implements DriveIO {
                 this.kV = 0.050387;
                 this.kA = 0.0051628;
 
-                this.kP = 0.0;
+                this.kP = 0.064039;
                 this.kD = 0.0;
                 break;
             case ROBOT_2022_PRACTICE:
