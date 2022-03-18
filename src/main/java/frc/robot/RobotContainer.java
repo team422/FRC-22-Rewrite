@@ -86,7 +86,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
             () -> controls.getRightDriveX(),
             () -> controls.getRightDriveY());
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
-        () -> controls.getIntakeSpeed());
+            () -> 7.0 * controls.getIntakeSpeed());
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);

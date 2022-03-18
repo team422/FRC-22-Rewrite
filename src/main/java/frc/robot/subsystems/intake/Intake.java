@@ -17,6 +17,10 @@ public class Intake extends SubsystemBase {
         intakeIO.runIntakeVelocity(velocity);
     }
 
+    public void runIntakeVoltage(double volts) {
+        intakeIO.runIntakeVoltage(volts);
+    }
+
     public void stop() {
         intakeIO.stopIntake();
     }
