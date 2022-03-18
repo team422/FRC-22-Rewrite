@@ -21,13 +21,14 @@ import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.commands.operatorcommands.TeleUptake;
+import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.oi.UserControls;
-    import frc.robot.oi.XboxUserControls;
-    import frc.robot.subsystems.climber.Climber;
-    import frc.robot.subsystems.climber.ClimberIOFalcon;
+import frc.robot.oi.XboxUserControls;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.climber.ClimberPistonIO;
 import frc.robot.subsystems.drivetrain.DriveBase;
-    import frc.robot.subsystems.drivetrain.DriveIOFalcon;
+import frc.robot.subsystems.drivetrain.DriveIOFalcon;
 import frc.robot.subsystems.flywheel.FlyWheelIONonVariable;
 import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIO;
@@ -62,6 +63,7 @@ import com.revrobotics.ColorSensorV3;
     private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
     private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
     private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
+    private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -89,7 +91,8 @@ import com.revrobotics.ColorSensorV3;
             () -> controls.getLeftDriveX(),
             () -> controls.getLeftDriveY(),
             () -> controls.getRightDriveX(),
-            () -> controls.getRightDriveY());
+            () -> controls.getRightDriveY(),
+            () -> controls.getSniperModeButton().get());
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
             () -> 7.0 * controls.getIntakeSpeed());
 
@@ -100,6 +103,7 @@ import com.revrobotics.ColorSensorV3;
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
         TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
+        TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -114,6 +118,7 @@ import com.revrobotics.ColorSensorV3;
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getShootButton().whileActiveOnce(shootCommand);
+        controls.getRevShooter().whileActiveOnce(revCommand);
     }
 
     /**
@@ -125,4 +130,4 @@ import com.revrobotics.ColorSensorV3;
         // An ExampleCommand will run in autonomous
         return new OneCargoAuto(drive);
     }
-    }
+}

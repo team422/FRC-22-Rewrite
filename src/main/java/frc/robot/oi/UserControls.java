@@ -49,6 +49,10 @@ public interface UserControls {
     return new Trigger();
   }
 
+  public default Trigger getRevShooter() {
+    return new Trigger();
+  }
+
   public default Trigger getClimbButton() {
     return new Trigger();
   }

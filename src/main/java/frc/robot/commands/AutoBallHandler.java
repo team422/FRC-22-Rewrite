@@ -24,8 +24,8 @@ public class AutoBallHandler extends ParallelCommandGroup{
         this.intake = intake;
 
         addCommands(
-            new TeleTransversal(transversal, voltageSupplier).withTimeout(5),
-            new TeleUptake(uptake, voltageSupplier).withTimeout(5),
+            new TeleTransversal(transversal, voltageSupplier, true).withTimeout(5),
+            new TeleUptake(uptake, voltageSupplier, true).withTimeout(5),
             new TeleIntake(intake, voltageSupplier).withTimeout(5)
         );
     }
