@@ -5,9 +5,6 @@ import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.intake.Intake;
 
 public class TeleIntakeToggle extends CommandBase {
-
-    // r 16
-
     private final Intake intake;
 
     public TeleIntakeToggle(Intake intake) {
