@@ -3,7 +3,7 @@ package frc.robot.commands.operatorcommands;
 import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.commands.operatorcommands.TeleIntake;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -23,8 +23,9 @@ public class TeleClimbTiltCG extends ParallelCommandGroup{
         this.varFlyWheel = varFlyWheel;
 
         addCommands(
+            new TeleFlyVarUp(varFlyWheel),
             sequence(
-                new TeleFlyVarUp(varFlyWheel),
+                new WaitCommand(0.15),
                 new TeleClimbTilt(climber)
             )
         );

@@ -29,14 +29,10 @@ public class TeleShoot extends ParallelCommandGroup {
         addCommands(
             new TeleFlyVar(varFlyWheel).withTimeout(10),
             sequence(
-                parallel(
-                    new TeleTransversal(transversal, voltageSupplier, false).withTimeout(0.2),
-                    new TeleUptake(uptake, voltageSupplier, false).withTimeout(0.2)
-                ),
                 new WaitCommand(2),
                 parallel(
-                    new TeleTransversal(transversal, voltageSupplier, true).withTimeout(8),
-                    new TeleUptake(uptake, voltageSupplier, true).withTimeout(8)
+                    new TeleTransversal(transversal, voltageSupplier).withTimeout(8),
+                    new TeleUptake(uptake, voltageSupplier).withTimeout(8)
                 )
             )
         );

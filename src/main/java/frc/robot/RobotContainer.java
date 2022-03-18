@@ -98,7 +98,7 @@ import com.revrobotics.ColorSensorV3;
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
-        TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
+        TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
