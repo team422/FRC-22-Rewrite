@@ -4,13 +4,14 @@
 
     package frc.robot;
 
-    import edu.wpi.first.wpilibj.GenericHID;
-    import edu.wpi.first.wpilibj.XboxController;
-    import edu.wpi.first.wpilibj2.command.Command;
-    import frc.robot.commands.DriveWithJoystick;
-    import frc.robot.commands.OneCargoAuto;
-    import frc.robot.commands.operatorcommands.TeleClimbDown;
-    import frc.robot.commands.operatorcommands.TeleClimbTilt;
+
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.OneCargoAuto;
+import frc.robot.commands.operatorcommands.TeleClimbDown;
+import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbTiltCG;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
@@ -37,6 +38,10 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.transversal.TransversalIOSparkMax;
 import frc.robot.subsystems.uptake.Uptake;
 import frc.robot.subsystems.uptake.UptakeIOSparkMax;
+import frc.robot.subsystems.colorSensor.ColorSensor;
+import frc.robot.subsystems.colorSensor.ColorSensorIO;
+import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
+import com.revrobotics.ColorSensorV3;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -99,6 +104,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
+        uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
