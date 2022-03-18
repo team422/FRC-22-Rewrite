@@ -4,7 +4,7 @@ public interface ColorSensorIO {
     public default Color getColor() {
         return Color.kBlack;
     }
-    public default Integer getProximity() {
+    public default int getProximity() {
         return 0;
     }
 
