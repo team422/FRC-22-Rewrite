@@ -14,7 +14,7 @@ public class ColorSensor extends SubsystemBase {
         // NOT FINISHED 
         return colorSensorIO.getColor();
     }
-    public Integer getProximity(){
+    public int getProximity(){
         return colorSensorIO.getProximity();
     }
     
