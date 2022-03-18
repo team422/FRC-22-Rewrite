@@ -10,6 +10,9 @@ public interface DriveIO {
     public default void setVelocity(double leftSpeed,
             double rightSpeed) {
     }
+    public default void setSpeed(double leftSpeed, double rightSpeed){
+
+    }
 
     /** Change the mode of the motors */
     public default void setBrakeMode(boolean enabled) {

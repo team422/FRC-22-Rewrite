@@ -80,7 +80,7 @@ public class DriveWithJoystick extends CommandBase {
 
         System.out.println("Test Number: " + sniperModeSpeedMultiplier.get());
 
-        drive.drivePercent(speeds.left, speeds.right);
+        drive.driveSpeed(speeds.left, speeds.right);
     }
 
     // Called once the command ends or is interrupted.

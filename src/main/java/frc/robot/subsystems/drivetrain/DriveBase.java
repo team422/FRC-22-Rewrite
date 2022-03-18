@@ -20,8 +20,8 @@ public class DriveBase extends SubsystemBase {
 
     private final DriveIO driveIO;
 
-    private final SimpleMotorFeedforward leftFF;
-    private final SimpleMotorFeedforward rightFF;
+    // private final SimpleMotorFeedforward leftFF;
+    // private final SimpleMotorFeedforward rightFF;
 
     private DifferentialDriveOdometry odometry =
         new DifferentialDriveOdometry(new Rotation2d(),
@@ -31,14 +31,14 @@ public class DriveBase extends SubsystemBase {
         this.driveIO = driveIO;
 
         // Arbitrary values for now
-        this.leftFF = new SimpleMotorFeedforward(
-            driveIO.getkS(),
-            driveIO.getkV(),
-            driveIO.getkA());
-        this.rightFF = new SimpleMotorFeedforward(
-            driveIO.getkS(),
-            driveIO.getkV(),
-            driveIO.getkA());
+        // this.leftFF = new SimpleMotorFeedforward(
+        //     driveIO.getkS(),
+        //     driveIO.getkV(),
+        //     driveIO.getkA());
+        // this.rightFF = new SimpleMotorFeedforward(
+        //     driveIO.getkS(),
+        //     driveIO.getkV(),
+        //     driveIO.getkA());
         
         setBrakeMode(false);
     }
@@ -62,6 +62,9 @@ public class DriveBase extends SubsystemBase {
     public void drivePercent(double leftPercent, double rightPercent) {
         driveVelocity(leftPercent * maxVelocityMetersPerSecond,
             rightPercent * maxVelocityMetersPerSecond);
+    }
+    public void driveSpeed(double leftSpeed, double rightSpeed){
+        driveIO.setSpeed(leftSpeed, rightSpeed);
     }
 
     public void driveVelocity(double leftVelocity, double rightVelocity) {
