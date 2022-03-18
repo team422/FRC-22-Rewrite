@@ -8,7 +8,7 @@ public interface DriveIO {
 
     /** Sets the velocity of the drivetrain motors (closed loop) */
     public default void setVelocity(double leftSpeed,
-            double rightSpeed, double leftFFValue, double rightFFValue) {
+            double rightSpeed) {
     }
 
     /** Change the mode of the motors */
