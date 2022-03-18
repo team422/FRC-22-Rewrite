@@ -19,7 +19,6 @@ public class TransversalIOSparkMax implements TransversalIO{
                 rightTransversal.setInverted(true);
                 break;
             case ROBOT_2022_PRACTICE:
-                break;
             default:
                 throw new RuntimeException("Transversal does not exist for this robot");
         }

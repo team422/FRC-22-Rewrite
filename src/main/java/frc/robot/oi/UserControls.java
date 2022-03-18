@@ -1,5 +1,7 @@
 package frc.robot.oi;
 
+import javax.xml.transform.TransformerConfigurationException;
+
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public interface UserControls {
@@ -47,7 +49,7 @@ public interface UserControls {
     return new Trigger();
   }
 
-  public default Trigger getIntakeExtendButton() {
+  public default Trigger getClimbButton() {
     return new Trigger();
   }
 
@@ -63,7 +65,11 @@ public interface UserControls {
     return new Trigger();
   }
 
-  public default Trigger getStopFlywheelButton() {
+  public default Trigger getFlyWheelUp() {
+    return new Trigger();
+  }
+
+  public default Trigger getFlyWheeldDown() {
     return new Trigger();
   }
 
@@ -77,6 +83,14 @@ public interface UserControls {
 
   public default Trigger getClimbAuto() {
     return new Trigger();
+  }
+
+  public default double defaultValue() {
+    return 7;
+  }
+
+  public default double zeroValue() {
+    return 0.0;
   }
 
   public default void setDriverRumble(double percent) {

@@ -71,7 +71,7 @@ public class DriveWithJoystick extends CommandBase {
                 break;
 
             case ARCADE:
-                speeds = WheelSpeeds.fromArcade(leftYValue, rightXValue);
+                speeds = WheelSpeeds.fromArcade(-leftYValue, rightXValue);
                 break;
         }
 

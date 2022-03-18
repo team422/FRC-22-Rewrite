@@ -3,27 +3,29 @@ package frc.robot.commands.operatorcommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
-import frc.robot.subsystems.transversal.Transversal;
+import frc.robot.subsystems.intake.Intake;
 
-public class TeleTransversal extends CommandBase{
-    private final Transversal transversal;
+public class TeleIntake extends CommandBase{
+
+    private final Intake intake;
     private final Supplier<Double> voltageSupplier;
-    public TeleTransversal(Transversal transversal, Supplier<Double> voltageSupplier) {
-        this.transversal = transversal;
+
+    public TeleIntake(Intake intake, Supplier<Double> voltageSupplier) {
+        this.intake = intake;
         this.voltageSupplier = voltageSupplier;
 
-        addRequirements(transversal);
-    }
-
-    @Override
-    public void execute() {
-        double voltage = voltageSupplier.get();
-        transversal.setVoltage(voltage);
+        addRequirements(intake);
     }
     
     @Override
-    public void end(boolean interrupted) {
-        transversal.stop();
+    public void execute() {
+        double voltage = voltageSupplier.get();
+        intake.runIntakeVoltage(voltage);
+    }
+
+    @Override
+    public void end(boolean interupted) {
+        intake.stop();
     }
 
     @Override

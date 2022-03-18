@@ -2,6 +2,7 @@ package frc.robot.subsystems.flywheel;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
 
 public class FlyWheel extends SubsystemBase {
     private static final double flyWheelRadiusMeters = 0.0508;
@@ -32,5 +33,9 @@ public class FlyWheel extends SubsystemBase {
         double topFFValue = topFF.calculate(topVelocityRadPerSec);
 
         flyIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
+    }
+
+    public void stop() {
+        flyIO.stop();
     }
 }

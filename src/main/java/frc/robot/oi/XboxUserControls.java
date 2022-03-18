@@ -1,7 +1,7 @@
 package frc.robot.oi;
 
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class XboxUserControls implements UserControls {
     private final XboxController driverController;
@@ -35,8 +35,9 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getSniperModeButton() {
         return new Trigger(() -> driverController.getRightBumper());
-    
+
     }
+
     @Override
     public Trigger getSpeedModeButton() {
         return new Trigger(() -> driverController.getLeftBumper());
@@ -58,7 +59,7 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getIntakeExtendButton() {
+    public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
     }
 
@@ -88,7 +89,11 @@ public class XboxUserControls implements UserControls {
     // }
 
     @Override
-    public Trigger getStopFlywheelButton() {
+    public Trigger getFlyWheelUp() {
+        return new Trigger(() -> operatorController.getXButton());
+    }
+    @Override
+    public Trigger getFlyWheeldDown() {
         return new Trigger(() -> operatorController.getAButton());
     }
 
@@ -105,5 +110,15 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getClimbAuto() {
         return new Trigger();
+    }
+
+    @Override
+    public double defaultValue() {
+        return 12*0.9;
+    }
+
+    @Override
+    public double zeroValue() {
+        return 0.0;
     }
 }

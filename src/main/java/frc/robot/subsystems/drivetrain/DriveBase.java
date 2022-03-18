@@ -17,8 +17,8 @@ public class DriveBase extends SubsystemBase {
         this.driveIO = driveIO;
 
         // Arbitrary values for now
-        leftFF = new SimpleMotorFeedforward(0.01, 0.01);
-        rightFF = new SimpleMotorFeedforward(0.01, 0.01);
+        leftFF = new SimpleMotorFeedforward(getkS(), getkV(), getkA());
+        rightFF = new SimpleMotorFeedforward(getkS(), getkV(), getkA());
     }
 
     public void driveVoltage(double leftVoltage, double rightVoltage) {
@@ -41,5 +41,25 @@ public class DriveBase extends SubsystemBase {
 
     public void setBrakeMode(boolean enable) {
         driveIO.setBrakeMode(enable);
+    }
+
+    public double getkS() {
+        return driveIO.getkS();
+    }
+
+    public double getkV() {
+        return driveIO.getkV();
+    }
+
+    public double getkA() {
+        return driveIO.getkA();
+    }
+
+    public double getkP() {
+        return driveIO.getkP();
+    }
+
+    public double getkD() {
+        return driveIO.getkD();
     }
 }

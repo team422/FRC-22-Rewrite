@@ -18,10 +18,9 @@ public class IntakeIOTalonSRX implements IntakeIO{
         switch(Constants.bot){
             case ROBOT_2022_COMP:
                 this.intakeMotor = new WPI_TalonSRX(59);
-                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 15);
+                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 12);
                 break;
             case ROBOT_2022_PRACTICE:
-                break;
             default:
                 throw new RuntimeException("Invalid robot for IntakeIOTalonSRX!");
         }
@@ -48,7 +47,11 @@ public class IntakeIOTalonSRX implements IntakeIO{
     }
 
     @Override
-    public void setIntakeSolenoid(boolean extended){
-        intakeArmSolenoid.set(extended ? Value.kReverse : Value.kForward);
+    public void setIntakeSolenoid(){
+        if(intakeArmSolenoid.get() == Value.kOff){
+            intakeArmSolenoid.set(Value.kForward);
+        } else {
+            intakeArmSolenoid.toggle();
+        }
     }
 }
