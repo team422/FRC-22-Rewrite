@@ -104,7 +104,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
-        controls.getIntakeRetractButton().whileActiveOnce(intakeToggleCommand);
+        controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getShootButton().whileActiveOnce(shootCommand);
