@@ -15,7 +15,7 @@ public class TeleClimbTilt extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         climber.tiltRobot();
         System.out.println("command innit");
     }
