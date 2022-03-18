@@ -12,7 +12,7 @@ public class TeleIntakeToggle extends CommandBase {
     }
 
     @Override
-    public void initialize() {
+    public void execute() {
         intake.toggle();
     }
 
