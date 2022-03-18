@@ -83,8 +83,24 @@ public class DriveBase extends SubsystemBase {
         return driveIO.getLeftPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
     }
 
+    public void resetLeftPosition() {
+        driveIO.resetLeftPosition();
+    }
+
     public double getRightDistanceMeters() {
         return driveIO.getRightPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
+    }
+
+    public void resetRightPosition() {
+        driveIO.resetRightPosition();
+    }
+
+    public double getGyroAngle() {
+        return driveIO.getGyroAngle();
+    }
+
+    public void resetGyro() {
+        driveIO.resetGyroAngle();
     }
 
     public Pose2d getPose() {
