@@ -18,7 +18,7 @@ public class ColorSensorIORevV3 implements ColorSensorIO {
         this.m_colorMatcher = new ColorMatch();
 
     }
-    public Integer getProximity(){
+    public int getProximity(){
         return m_colorSensor.getProximity();
     }
     public Color getColor(){
