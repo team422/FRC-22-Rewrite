@@ -16,12 +16,12 @@ public class TeleClimbDown extends CommandBase {
 
     @Override
     public void execute() {
-        climber.setLeftPercent(-0.7);
+        climber.setPercent(-0.7);
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setLeftVelocity(0);
+        climber.setPercent(0);
     }
 
     public boolean isFinished() {

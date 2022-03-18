@@ -19,7 +19,7 @@ public class Climber extends SubsystemBase {
         leftClimberIO.setBrakeMode(enable);
     }
 
-    public void setLeftVelocity(double velocity){
+    public void setVelocity(double velocity){
         leftClimberIO.setVelocity(velocity);
     }
 
@@ -27,7 +27,7 @@ public class Climber extends SubsystemBase {
     //     rightClimberIO.setVelocity(velocity);
     // }
 
-    public void setLeftPercent(double percent){
+    public void setPercent(double percent){
         leftClimberIO.setPercentPower(percent);
     }
 
@@ -35,7 +35,7 @@ public class Climber extends SubsystemBase {
     //     rightClimberIO.setPercentPower(percent);
     // }
 
-    public void setLeftTarget(double encoderValue) {
+    public void SetTarget(double encoderValue) {
         leftClimberIO.setTargetPoint(encoderValue);
     }
 

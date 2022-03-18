@@ -18,7 +18,6 @@ public class TeleFlyVarUp extends CommandBase{
     
     @Override
     public void end(boolean interrupted) {
-        varFlyWheel.stop();
     }
 
     @Override
