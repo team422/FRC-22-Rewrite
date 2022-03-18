@@ -11,8 +11,8 @@ import frc.robot.Constants;
 public class ColorSensorIORevV3 implements ColorSensorIO {
     ColorSensorV3 m_colorSensor;
     ColorMatch m_colorMatcher;
-    private final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
-    private final Color kRedTarget = new Color(0.561, 0.232, 0.114);
+    private static final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
+    private static final Color kRedTarget = new Color(0.561, 0.232, 0.114);
     public ColorSensorIORevV3(){
         this.m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
         this.m_colorMatcher = new ColorMatch();
