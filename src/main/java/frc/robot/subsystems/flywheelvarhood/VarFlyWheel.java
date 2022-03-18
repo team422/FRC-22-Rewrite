@@ -24,8 +24,8 @@ public class VarFlyWheel extends SubsystemBase {
         topFF = new SimpleMotorFeedforward(0.63145, 0.90343, 0.025781);
     }
 
-    public void flyVoltage(double flyVoltage, double topVoltage) {
-        varFlyWheelIO.setVoltage(flyVoltage, topVoltage);
+    public void flyVoltage(double flyVoltage) {
+        varFlyWheelIO.setVoltage(flyVoltage);
     }
 
     public void flyVelocity(double flyVelocityRadPerSec, double topVelocityRadPerSec) {
@@ -33,7 +33,7 @@ public class VarFlyWheel extends SubsystemBase {
         double flyFFValue = leftFF.calculate(flyVelocityRadPerSec);
         double topFFValue = topFF.calculate(topVelocityRadPerSec);
 
-        varFlyWheelIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
+        varFlyWheelIO.setVelocity(flyVelocityRadPerSec, flyFFValue);
     }
 
     public void flyPercent(double flyWheelPercent, double rightPercent) {

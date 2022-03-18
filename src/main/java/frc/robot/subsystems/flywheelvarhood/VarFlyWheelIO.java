@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public interface VarFlyWheelIO {
 
     /** Sets the voltage of the drivetrain motors (open loop) */
-    public default void setVoltage(double leftVolts, double rightVolts) {
+    public default void setVoltage(double leftVolts) {
     }
 
     /** Sets the velocity of the drivetrain motors (closed loop) */
     public default void setVelocity(double flySpeed,
-            double topSpeed, double flyFFValue, double topFFValue) {
+            double flyFFValue) {
     }
 
     /** Change the mode of the motors */
