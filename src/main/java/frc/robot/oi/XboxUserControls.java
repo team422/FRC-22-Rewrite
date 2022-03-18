@@ -55,11 +55,16 @@ public class XboxUserControls implements UserControls {
 
     @Override
     public Trigger getShootButton() {
-        return new Trigger(() -> operatorController.getRightBumper());
+        return new Trigger(() -> driverController.getLeftTriggerAxis()>=0.4);
     }
 
     @Override
-    public Trigger getIntakeExtendButton() {
+    public Trigger getRevShooter() {
+        return new Trigger(() -> driverController.getRightTriggerAxis()>=0.4);
+    }
+
+    @Override
+    public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
     }
 
@@ -89,8 +94,12 @@ public class XboxUserControls implements UserControls {
     // }
 
     @Override
-    public Trigger getStopFlywheelButton() {
-        return new Trigger(() -> operatorController.getAButton());
+    public Trigger getFlyWheelUp() {
+        return new Trigger(() -> driverController.getYButton());
+    }
+    @Override
+    public Trigger getFlyWheeldDown() {
+        return new Trigger(() -> driverController.getBButton());
     }
 
     @Override
@@ -106,5 +115,15 @@ public class XboxUserControls implements UserControls {
     @Override
     public Trigger getClimbAuto() {
         return new Trigger();
+    }
+
+    @Override
+    public double defaultValue() {
+        return 12*0.9;
+    }
+
+    @Override
+    public double zeroValue() {
+        return 0.0;
     }
 }

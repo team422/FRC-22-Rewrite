@@ -18,7 +18,6 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
     private WPI_TalonFX leftFlyWheel;
     private WPI_TalonFX rightFlyWheel;
-    private WPI_TalonFX topFlyWheel;
     private DoubleSolenoid flyWheelExtender;
 
     public VarFlyWheelIOFalcon() {
@@ -26,9 +25,8 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
             case ROBOT_2022_COMP:
                 this.leftFlyWheel = new WPI_TalonFX(8);
                 this.rightFlyWheel = new WPI_TalonFX(9);
-                this.topFlyWheel = new WPI_TalonFX(10);
                 //arbitrary things
-                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 422, 422);
+                this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 15, 0);
                 break;
             case ROBOT_2022_PRACTICE:
                 
@@ -38,29 +36,23 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
         rightFlyWheel.follow(leftFlyWheel);
         leftFlyWheel.setInverted(true);
-        topFlyWheel.setInverted(true);
         leftFlyWheel.setNeutralMode(NeutralMode.Coast);
         rightFlyWheel.setNeutralMode(NeutralMode.Coast);
-        topFlyWheel.setNeutralMode(NeutralMode.Coast);
     }
 
     @Override
-    public void setVoltage(double flyVolts, double topVolts) {
+    public void setVoltage(double flyVolts) {
         leftFlyWheel.set(ControlMode.PercentOutput, flyVolts / 12.0);
-        topFlyWheel.set(ControlMode.PercentOutput, topVolts / 12.0);
     }
 
     @Override
     public void setVelocity(double flyWheelRadPerSec,
-            double topWheelRadPerSec, double flyFFVolts, double topFFVolts) {
+           double flyFFVolts) {
         double flyTicksPer100Ms = Units.radiansToRotations(flyWheelRadPerSec)
                 * encoderTicksPerRev / 10.0;
-        double topTicksPer100Ms = Units.radiansToRotations(topWheelRadPerSec)
-                * encoderTicksPerRev / 10.0;
-        leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms,
-                DemandType.ArbitraryFeedForward, flyFFVolts / 12.0);
-        topFlyWheel.set(ControlMode.Velocity, topTicksPer100Ms,
-                DemandType.ArbitraryFeedForward, topFFVolts / 12.0);
+        // leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms,
+        //         DemandType.ArbitraryFeedForward, flyFFVolts / 12.0);
+        leftFlyWheel.set(ControlMode.Velocity, flyTicksPer100Ms);
     }
 
     @Override
@@ -69,9 +61,6 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
         leftFlyWheel.config_kI(0, kI);
         leftFlyWheel.config_kD(0, kD);
 
-        topFlyWheel.config_kP(0, kP);
-        topFlyWheel.config_kI(0, kI);
-        topFlyWheel.config_kD(0, kD);
     }
 
     @Override
@@ -81,13 +70,13 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
     @Override
     public boolean getState() {
-    //     if(flyWheelExtender.get() == Value.kForward) {
-    //         return true;
-    //     } else if(flyWheelExtender.get() == Value.kReverse) {
-    //         return false;
-    //     }
-    // }
     return (flyWheelExtender.get() == Value.kForward);
+    }
+    // public void pushUpOrStayUp()
+
+    @Override
+    public Value get() {
+        return flyWheelExtender.get();
     }
     
     @Override

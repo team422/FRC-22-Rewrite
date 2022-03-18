@@ -2,11 +2,13 @@ package frc.robot.subsystems.flywheelvarhood;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class VarFlyWheel extends SubsystemBase {
     private static final double flyWheelRadiusMeters = 0.0508;
     private static final double hoodWheelRadiusMeters = 0.028575;
+
+    private static final double maxVelocityRadPerSec = 600;
 
     private final VarFlyWheelIO varFlyWheelIO;
 
@@ -22,8 +24,8 @@ public class VarFlyWheel extends SubsystemBase {
         topFF = new SimpleMotorFeedforward(0.63145, 0.90343, 0.025781);
     }
 
-    public void flyVoltage(double flyVoltage, double topVoltage) {
-        varFlyWheelIO.setVoltage(flyVoltage, topVoltage);
+    public void flyVoltage(double flyVoltage) {
+        varFlyWheelIO.setVoltage(flyVoltage);
     }
 
     public void flyVelocity(double flyVelocityRadPerSec, double topVelocityRadPerSec) {
@@ -31,7 +33,11 @@ public class VarFlyWheel extends SubsystemBase {
         double flyFFValue = leftFF.calculate(flyVelocityRadPerSec);
         double topFFValue = topFF.calculate(topVelocityRadPerSec);
 
-        varFlyWheelIO.setVelocity(flyVelocityRadPerSec, topVelocityRadPerSec, flyFFValue, topFFValue);
+        varFlyWheelIO.setVelocity(flyVelocityRadPerSec, flyFFValue);
+    }
+
+    public void flyPercent(double flyWheelPercent, double rightPercent) {
+        flyVelocity(-flyWheelPercent * maxVelocityRadPerSec, 0);
     }
 
     public void stop() {
@@ -48,7 +54,7 @@ public class VarFlyWheel extends SubsystemBase {
             isFlyExtended = false;
     }
 
-    public boolean getState() {
-        return varFlyWheelIO.getState();
+    public Value get() {
+        return varFlyWheelIO.get();
     }
 }

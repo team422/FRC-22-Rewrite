@@ -17,25 +17,15 @@ public class Intake extends SubsystemBase {
         intakeIO.runIntakeVelocity(velocity);
     }
 
+    public void runIntakeVoltage(double volts) {
+        intakeIO.runIntakeVoltage(volts);
+    }
+
     public void stop() {
         intakeIO.stopIntake();
     }
 
-    public void extend() {
-        if (isExtended) {
-            return;
-        }
-
-        intakeIO.setIntakeSolenoid(true);
-        isExtended = false;
-    }
-
-    public void retract() {
-        if (!isExtended) {
-            return;
-        }
-
-        intakeIO.setIntakeSolenoid(false);
-        isExtended = true;
+    public void toggle() {
+        intakeIO.setIntakeSolenoid();
     }
 }
