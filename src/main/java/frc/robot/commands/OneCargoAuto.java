@@ -30,6 +30,7 @@ public class OneCargoAuto extends SequentialCommandGroup {
             new WaitCommand(1),
             //start intake,transversal, and cell stop command,
             parallel( //drive straight command,
+                // new DriveStraight(DriveBase, meters, speed)
                 //stop shooter command
             )
             //command to turn towards nearest ball? 

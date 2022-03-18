@@ -95,14 +95,23 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.set(ControlMode.PercentOutput, leftVolts / 12.0);
         rightLeader.set(ControlMode.PercentOutput, rightVolts / 12.0);
     }
+    @Override
+    public void setSpeed(double leftSpeed, double rightSpeed){
+        // controlmode.setSpeed
+        leftLeader.set(ControlMode.PercentOutput, leftSpeed);
+        rightLeader.set(ControlMode.PercentOutput, rightSpeed);
+    }
 
     @Override
     public void setVelocity(double leftVelocityRadPerSec,
             double rightVelocityRadPerSec) {
+        
         double leftTicksPer100Ms = Units.radiansToRotations(leftVelocityRadPerSec)
                 * encoderTicksPerRev / 10.0;
         double rightTicksPer100Ms = Units.radiansToRotations(rightVelocityRadPerSec)
                 * encoderTicksPerRev / 10.0;
+        System.out.println("Left Ticks per 100 ms:" + leftTicksPer100Ms);
+        System.out.println("Right Ticks per 100 ms:" + rightTicksPer100Ms);
         leftLeader.set(ControlMode.Velocity, leftTicksPer100Ms);
         rightLeader.set(ControlMode.Velocity, rightTicksPer100Ms);
     }
