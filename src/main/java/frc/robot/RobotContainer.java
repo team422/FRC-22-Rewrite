@@ -43,6 +43,10 @@ import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.colorSensor.ColorSensorIO;
 import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -64,6 +68,9 @@ import com.revrobotics.ColorSensorV3;
     private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
     private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
     private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
+    private  UsbCamera intakeCamera = CameraServer.startAutomaticCapture(0);
+    private  VideoSink displayedCameraSink;
+    
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -71,6 +78,9 @@ import com.revrobotics.ColorSensorV3;
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        intakeCamera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+        displayedCameraSink = CameraServer.addSwitchedCamera("Camera feeds");
+        displayedCameraSink.setSource(intakeCamera);
     }
 
     /**

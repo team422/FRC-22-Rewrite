@@ -25,7 +25,7 @@ public class TeleClimbTiltCG extends ParallelCommandGroup{
         addCommands(
             new TeleFlyVarUp(varFlyWheel),
             sequence(
-                new WaitCommand(0.15),
+                new WaitCommand(1),
                 new TeleClimbTilt(climber)
             )
         );
