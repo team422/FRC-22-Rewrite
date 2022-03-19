@@ -20,7 +20,7 @@ public class TeleIntake extends CommandBase{
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-        intake.runIntakeVoltage(-voltage);
+        intake.runIntakeVoltage(voltage);
     }
 
     @Override

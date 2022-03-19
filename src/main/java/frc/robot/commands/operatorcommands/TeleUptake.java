@@ -9,12 +9,10 @@ import frc.robot.subsystems.uptake.Uptake;
 public class TeleUptake extends CommandBase{
     private final Uptake uptake;
     private final Supplier<Double> voltageSupplier;
-    private final boolean isForward;
 
-    public TeleUptake(Uptake uptake, Supplier<Double> voltageSupplier, boolean isForward) {
+    public TeleUptake(Uptake uptake, Supplier<Double> voltageSupplier) {
         this.voltageSupplier = voltageSupplier;
         this.uptake = uptake;
-        this.isForward = isForward;
 
         addRequirements(uptake);
     }
@@ -22,11 +20,7 @@ public class TeleUptake extends CommandBase{
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-        if(isForward){
             uptake.setVoltage(voltage);
-        } else if(!isForward) {
-            uptake.setVoltage(-voltage);
-        }
     }
 
     @Override

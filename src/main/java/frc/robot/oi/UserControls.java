@@ -49,7 +49,7 @@ public interface UserControls {
     return new Trigger();
   }
 
-  public default Trigger getRevShooter() {
+  public default Trigger getRevButton() {
     return new Trigger();
   }
 

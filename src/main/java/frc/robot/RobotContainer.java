@@ -48,6 +48,10 @@ import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.colorSensor.ColorSensorIO;
 import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -69,6 +73,8 @@ import com.revrobotics.ColorSensorV3;
     private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
     private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
     private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
+    private  UsbCamera camera;
+    
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -76,6 +82,8 @@ import com.revrobotics.ColorSensorV3;
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        camera = CameraServer.startAutomaticCapture();
+        camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
     }
 
     /**
@@ -103,7 +111,7 @@ import com.revrobotics.ColorSensorV3;
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
-        TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
+        TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
@@ -113,7 +121,7 @@ import com.revrobotics.ColorSensorV3;
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
-        // uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
+        uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
