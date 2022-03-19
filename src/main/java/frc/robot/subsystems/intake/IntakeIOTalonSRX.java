@@ -52,7 +52,8 @@ public class IntakeIOTalonSRX implements IntakeIO{
         if(intakeArmSolenoid.get() == Value.kOff){
             intakeArmSolenoid.set(Value.kForward);
         } else {
-            intakeArmSolenoid.toggle();
+            // intakeArmSolenoid.toggle();
+            intakeArmSolenoid.set(intakeArmSolenoid.get() == Value.kForward ? Value.kReverse : Value.kForward);
         }
     }
 }

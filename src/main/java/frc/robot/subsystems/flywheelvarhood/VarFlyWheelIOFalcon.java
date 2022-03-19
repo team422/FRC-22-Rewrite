@@ -69,6 +69,11 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
     }
 
     @Override
+    public void toggleState() {
+        flyWheelExtender.set(get() == Value.kForward ? Value.kReverse : Value.kForward);
+    }
+
+    @Override
     public boolean getState() {
     return (flyWheelExtender.get() == Value.kForward);
     }

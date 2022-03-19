@@ -44,9 +44,15 @@ public class VarFlyWheel extends SubsystemBase {
         varFlyWheelIO.stop();
     }
 
+    public void switchFlyState(){
+        varFlyWheelIO.toggleState();
+    }
+
     public void extendFly() {
+        if(isFlyExtended != true){
             varFlyWheelIO.switchState(true);
             isFlyExtended = true;
+        }
     }
 
     public void retractFly() {
