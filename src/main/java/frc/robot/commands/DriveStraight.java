@@ -26,10 +26,10 @@ public class DriveStraight extends CommandBase {
 
     @Override
     public void execute() {
-        double correction = drive.getGyroAngle() * 0.05 + 1.0;
+        // double correction = -drive.getGyroAngle() * 0.05 + 1.0;
         System.out.println(drive.getLeftDistanceMeters());
         System.out.println(drive.getRightDistanceMeters());
-        drive.driveSpeed(speed, speed * correction);
+        drive.driveSpeed(speed, speed);
     }
 
     @Override

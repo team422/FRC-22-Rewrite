@@ -113,7 +113,7 @@ import com.revrobotics.ColorSensorV3;
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
-        uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
+        // uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
@@ -135,6 +135,7 @@ import com.revrobotics.ColorSensorV3;
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        drive.setBrakeMode(true);
+        return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel)).andThen(() -> drive.setBrakeMode(false));
     }
 }
