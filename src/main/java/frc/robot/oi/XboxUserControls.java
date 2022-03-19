@@ -59,7 +59,7 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getRevShooter() {
+    public Trigger getRevButton() {
         return new Trigger(() -> driverController.getRightTriggerAxis()>=0.4);
     }
 

@@ -74,7 +74,7 @@ public class DriveWithJoystick extends CommandBase {
                     leftYValue *= mult;
                     rightXValue *= mult;
                 }
-                speeds = WheelSpeeds.fromArcade(-maxSpeed.get() * leftYValue, maxTurnSpeed.get() * rightXValue);
+                speeds = WheelSpeeds.fromArcade(leftYValue,rightXValue);
                 break;
         }
 
