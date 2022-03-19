@@ -2,30 +2,26 @@ package frc.robot.commands.operatorcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.intake.Intake;
 
-public class TeleClimbDown extends CommandBase {
+public class TeleIntakeToggle extends CommandBase {
+    private final Intake intake;
 
-    // r 16
-
-    private final Climber climber;
-
-    public TeleClimbDown(Climber climber) {
-        this.climber = climber;
-        climber.setBrakeMode(true);
+    public TeleIntakeToggle(Intake intake) {
+        this.intake = intake;
     }
 
     @Override
     public void execute() {
-        climber.setPercent(-0.7);
+        intake.toggle();
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setPercent(0);
     }
 
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
 }

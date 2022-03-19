@@ -3,7 +3,9 @@ package frc.robot.commands.operatorcommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.flywheel.FlyWheel;
-
+/**
+ * Obsolete DO NOT USE
+ */
 public class TeleFly extends CommandBase{
     private final FlyWheel flyWheel;
     public TeleFly(FlyWheel flyWheel) {

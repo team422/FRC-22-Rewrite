@@ -18,7 +18,7 @@ public class TeleTransversal extends CommandBase{
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-        transversal.setVoltage(voltage);
+            transversal.setVoltage(voltage);
     }
     
     @Override

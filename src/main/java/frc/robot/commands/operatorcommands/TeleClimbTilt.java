@@ -2,30 +2,30 @@ package frc.robot.commands.operatorcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 
-public class TeleClimbDown extends CommandBase {
+public class TeleClimbTilt extends CommandBase {
 
     // r 16
 
     private final Climber climber;
 
-    public TeleClimbDown(Climber climber) {
+    public TeleClimbTilt(Climber climber) {
         this.climber = climber;
-        climber.setBrakeMode(true);
     }
 
     @Override
     public void execute() {
-        climber.setPercent(-0.7);
+        climber.tiltRobot();
+        System.out.println("command innit");
     }
 
     @Override
     public void end(boolean interrupted) {
-        climber.setPercent(0);
     }
 
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
 }

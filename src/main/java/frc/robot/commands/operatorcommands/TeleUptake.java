@@ -14,14 +14,13 @@ public class TeleUptake extends CommandBase{
         this.voltageSupplier = voltageSupplier;
         this.uptake = uptake;
 
-
         addRequirements(uptake);
     }
 
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-        uptake.setVoltage(voltage);
+            uptake.setVoltage(voltage);
     }
 
     @Override
