@@ -17,9 +17,9 @@ public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
-    private WPI_TalonFX leftLeader;
+    public static WPI_TalonFX leftLeader;
     private WPI_TalonFX leftFollower;
-    private WPI_TalonFX rightLeader;
+    public static WPI_TalonFX rightLeader;
     private WPI_TalonFX rightFollower;
 
     private double leftEncoderValue;
@@ -88,6 +88,16 @@ public class DriveIOFalcon implements DriveIO {
         rightFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
 
         this.gyro = new ADXRS450_Gyro(kGyroPort);
+    }
+
+    @Override
+    public WPI_TalonFX getLeftLeader() {
+        return leftLeader;
+    }
+
+    @Override
+    public WPI_TalonFX getRightLeader() {
+        return rightLeader;
     }
 
     @Override
