@@ -8,6 +8,7 @@ import frc.robot.subsystems.transversal.Transversal;
 public class TeleTransversal extends CommandBase{
     private final Transversal transversal;
     private final Supplier<Double> voltageSupplier;
+    private final boolean isForward;
     public TeleTransversal(Transversal transversal, Supplier<Double> voltageSupplier) {
         this.transversal = transversal;
         this.voltageSupplier = voltageSupplier;

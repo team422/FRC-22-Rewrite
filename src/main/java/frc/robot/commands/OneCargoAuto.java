@@ -4,27 +4,45 @@
 
 package frc.robot.commands;
 
+import frc.robot.commands.operatorcommands.TeleFlyVar;
+import frc.robot.commands.operatorcommands.TeleFlyVarUp;
+import frc.robot.commands.operatorcommands.TeleIntake;
+import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleTransversal;
+import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.subsystems.drivetrain.DriveBase;
-
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.transversal.Transversal;
+import frc.robot.subsystems.uptake.Uptake;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 /** An example command that uses an example subsystem. */
-public class OneCargoAuto extends SequentialCommandGroup {
+public class OneCargoAuto extends ParallelCommandGroup {
 
-    public OneCargoAuto(DriveBase drive) {
+    public OneCargoAuto(DriveBase drive,
+        Intake intake,
+        Transversal transversal,
+        Uptake uptake,
+        VarFlyWheel varFlyWheel) {
 
         addCommands(
-            parallel( //intake down command,
-                //start fly wheel command,
+            sequence(
+                new TeleIntakeToggle(intake),
+                new TeleIntake(intake, () -> 7.0)
             ),
-            new WaitCommand(1),
-            //start intake,transversal, and cell stop command,
-            parallel( //drive straight command,
-                //stop shooter command
+            sequence(
+                new TeleFlyVarUp(varFlyWheel),
+                new TeleFlyVar(varFlyWheel)
+            ),
+            sequence(
+                new DriveStraight(drive, Units.feetToMeters(8), 0.5),
+                parallel(
+                    new TeleTransversal(transversal, () -> 7.0, true),
+                    new TeleUptake(uptake, () -> 7.0, true)
+                )
             )
-            //command to turn towards nearest ball? 
         );
     }
 }

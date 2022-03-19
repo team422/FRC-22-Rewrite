@@ -11,8 +11,13 @@ import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AutoMotionProfiler;
+import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
+// import frc.robot.subsystems.drivetrain.*;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import frc.robot.oi.*;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -132,7 +137,9 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
-        controls.getRevButton().whileActiveOnce(revCommand);
+        controls.getRevShooter().whileActiveOnce(revCommand);
+        drive.resetLeftPosition();
+        drive.resetRightPosition();
     }
 
     /**
@@ -142,6 +149,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new OneCargoAuto(drive);
+        drive.setBrakeMode(true);
+        return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel)).andThen(() -> drive.setBrakeMode(false));
     }
 }
