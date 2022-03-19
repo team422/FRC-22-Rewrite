@@ -11,7 +11,6 @@ import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutoMotionProfiler;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
@@ -91,14 +90,13 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         UserControls controls = new XboxUserControls(0, 1);
 
         // Define commands here
-        DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(
-            drive,
-            () -> Constants.mode,
-            () -> controls.getLeftDriveX(),
-            () -> controls.getLeftDriveY(),
-            () -> controls.getRightDriveX(),
-            () -> controls.getRightDriveY(),
-            () -> controls.getSniperModeButton().get());
+        DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(drive,
+        () -> Constants.mode,
+        () -> controls.getLeftDriveX(),
+        () -> controls.getLeftDriveY(),
+        () -> controls.getRightDriveX(),
+        () -> controls.getRightDriveY(),
+        () -> controls.getSniperModeButton().get());
         
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
             () -> 7.0 * controls.getIntakeSpeed());
@@ -137,7 +135,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
-        controls.getRevShooter().whileActiveOnce(revCommand);
+        controls.getRevButton().whileActiveOnce(revCommand);
         drive.resetLeftPosition();
         drive.resetRightPosition();
     }

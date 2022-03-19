@@ -1,5 +1,7 @@
 package frc.robot.subsystems.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -8,18 +10,23 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import frc.robot.Constants;
 
 public class DriveBase extends SubsystemBase {
     // Final for now, make sure to change in order to switch between drives
     private final double wheelRadiusMeters = Units.inchesToMeters(2);
-    private final double maxVelocityMetersPerSecond = Units.feetToMeters(16.5);
     private final double maxAccelerationMetersPerSecondSq = 10;
 
     private final double trackWidthMeters = 0.61;
     private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(trackWidthMeters);
 
     private final DriveIO driveIO;
+    private final WPI_TalonFX left;
+    private final WPI_TalonFX right;
+
+    public DifferentialDrive driveBase;
 
     // private final SimpleMotorFeedforward leftFF;
     // private final SimpleMotorFeedforward rightFF;
@@ -31,6 +38,10 @@ public class DriveBase extends SubsystemBase {
     public DriveBase(DriveIO driveIO) {
         this.driveIO = driveIO;
 
+        this.left = driveIO.getLeftLeader();
+        this.right = driveIO.getRightLeader();
+
+        this.driveBase = new DifferentialDrive(left, right);
         // Arbitrary values for now
         // this.leftFF = new SimpleMotorFeedforward(
         //     driveIO.getkS(),
@@ -61,9 +72,10 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void drivePercent(double leftPercent, double rightPercent) {
-        driveVelocity(leftPercent * maxVelocityMetersPerSecond,
-            rightPercent * maxVelocityMetersPerSecond);
+        driveIO.setSpeed(leftPercent,
+            rightPercent);
     }
+
     public void driveSpeed(double leftSpeed, double rightSpeed){
         driveIO.setSpeed(leftSpeed, rightSpeed);
     }
@@ -137,10 +149,6 @@ public class DriveBase extends SubsystemBase {
 
     public double getkD() {
         return driveIO.getkD();
-    }
-
-    public double getMaxVelocityMetersPerSecond() {
-        return maxVelocityMetersPerSecond;
     }
 
     public double getMaxAccelerationMetersPerSecondSq() {

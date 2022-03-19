@@ -39,8 +39,8 @@ public class OneCargoAuto extends ParallelCommandGroup {
             sequence(
                 new DriveStraight(drive, Units.feetToMeters(8), 0.5),
                 parallel(
-                    new TeleTransversal(transversal, () -> 7.0, true),
-                    new TeleUptake(uptake, () -> 7.0, true)
+                    new TeleTransversal(transversal, () -> 7.0),
+                    new TeleUptake(uptake, () -> 7.0)
                 )
             )
         );
