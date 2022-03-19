@@ -78,7 +78,7 @@ public class DriveWithJoystick extends CommandBase {
                 break;
         }
 
-        System.out.println("Test Number: " + sniperModeSpeedMultiplier.get());
+        // System.out.println("Test Number: " + sniperModeSpeedMultiplier.get());
 
         drive.drivePercent(speeds.left, speeds.right);
     }

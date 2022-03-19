@@ -5,6 +5,9 @@
     package frc.robot;
 
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,26 +15,24 @@ import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
-import frc.robot.commands.operatorcommands.TeleClimbTiltCG;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
-import frc.robot.commands.operatorcommands.TeleFlyVarDown;
+import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
+import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
-import frc.robot.commands.operatorcommands.TeleUptake;
-import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.oi.UserControls;
 import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.climber.ClimberPistonIO;
+import frc.robot.subsystems.colorSensor.ColorSensor;
+import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.drivetrain.DriveIOFalcon;
-import frc.robot.subsystems.flywheel.FlyWheelIONonVariable;
 import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
-import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIO;
 import frc.robot.subsystems.flywheelvarhood.VarFlyWheelIOFalcon;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOTalonSRX;
@@ -39,14 +40,6 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.transversal.TransversalIOSparkMax;
 import frc.robot.subsystems.uptake.Uptake;
 import frc.robot.subsystems.uptake.UptakeIOSparkMax;
-import frc.robot.subsystems.colorSensor.ColorSensor;
-import frc.robot.subsystems.colorSensor.ColorSensorIO;
-import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSink;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.VideoSource;
 
     /**
      * This class is where the bulk of the robot should be declared. Since
@@ -101,30 +94,43 @@ import edu.wpi.first.cscore.VideoSource;
             () -> controls.getRightDriveX(),
             () -> controls.getRightDriveY(),
             () -> controls.getSniperModeButton().get());
+        
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
             () -> 7.0 * controls.getIntakeSpeed());
+        
+        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
-        TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
+        // TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
+        TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
+        
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
+        // Tele uptakeTraversalCommand = new TeleIntakeToggle(intake);
+        
+        TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
-        TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
+        // TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
+
         TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
         TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
-        uptake.setDefaultCommand(new TeleIndexer(transversal, uptake, colorSensor));
+        uptake.setDefaultCommand(defaultIndexCommand);
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
+        
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
+        
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
-        controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        // controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
+
         controls.getShootButton().whileActiveOnce(shootCommand);
         controls.getRevButton().whileActiveOnce(revCommand);
     }
