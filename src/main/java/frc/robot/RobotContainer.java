@@ -68,8 +68,7 @@ import edu.wpi.first.cscore.VideoSource;
     private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
     private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
     private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
-    private  UsbCamera intakeCamera = CameraServer.startAutomaticCapture(0);
-    private  VideoSink displayedCameraSink;
+    private  UsbCamera camera;
     
 
     /**
@@ -78,9 +77,8 @@ import edu.wpi.first.cscore.VideoSource;
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
-        intakeCamera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
-        displayedCameraSink = CameraServer.addSwitchedCamera("Camera feeds");
-        displayedCameraSink.setSource(intakeCamera);
+        camera = CameraServer.startAutomaticCapture();
+        camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
     }
 
     /**
@@ -128,7 +126,7 @@ import edu.wpi.first.cscore.VideoSource;
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getShootButton().whileActiveOnce(shootCommand);
-        controls.getRevShooter().whileActiveOnce(revCommand);
+        controls.getRevButton().whileActiveOnce(revCommand);
     }
 
     /**
