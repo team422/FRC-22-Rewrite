@@ -73,8 +73,12 @@ public interface UserControls {
     return new Trigger();
   }
 
-  public default Trigger getFlyWheeldDown() {
-    return new Trigger();
+  // public default Trigger getFlyWheeldDown() {
+  //   return new Trigger();
+  // }
+
+  public default Trigger getFlyWheelToggle() {
+      return new Trigger();
   }
 
   public default Trigger getClimbUp() {
