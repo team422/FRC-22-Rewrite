@@ -133,7 +133,6 @@ import com.revrobotics.ColorSensorV3;
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        drive.setBrakeMode(true);
-        return new DriveStraight(drive, 3, 0.5);
+        return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 }

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.commands.operatorcommands.TeleFlyVar;
+import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleTransversal;
@@ -16,8 +17,6 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /** An example command that uses an example subsystem. */
 public class OneCargoAuto extends ParallelCommandGroup {
@@ -33,7 +32,10 @@ public class OneCargoAuto extends ParallelCommandGroup {
                 new TeleIntakeToggle(intake),
                 new TeleIntake(intake, () -> 7.0)
             ),
-            new TeleFlyVar(varFlyWheel),
+            sequence(
+                new TeleFlyVarUp(varFlyWheel),
+                new TeleFlyVar(varFlyWheel)
+            ),
             sequence(
                 new DriveStraight(drive, Units.feetToMeters(9), 0.5),
                 parallel(
