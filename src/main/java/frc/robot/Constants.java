@@ -30,7 +30,7 @@ public final class Constants {
 
     public static final BotType bot = BotType.ROBOT_2022_COMP;
     public static final DriveMode mode = DriveMode.ARCADE;
-
+    public static double driveGearRatio = 6.75;
     public static double loopPeriodSecs = 0.02;
     public static boolean tuningMode = false;
 }

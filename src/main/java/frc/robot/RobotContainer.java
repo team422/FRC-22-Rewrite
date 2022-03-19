@@ -124,6 +124,8 @@ import com.revrobotics.ColorSensorV3;
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getShootButton().whileActiveOnce(shootCommand);
         controls.getRevShooter().whileActiveOnce(revCommand);
+        drive.resetLeftPosition();
+        drive.resetRightPosition();
     }
 
     /**
@@ -134,6 +136,8 @@ import com.revrobotics.ColorSensorV3;
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         drive.setBrakeMode(true);
+        
+        // drive.setBrakeMode(false);
         return new DriveStraight(drive, 3, 0.5);
     }
 }

@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class DriveBase extends SubsystemBase {
     // Final for now, make sure to change in order to switch between drives
@@ -83,7 +84,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getLeftDistanceMeters() {
-        return driveIO.getLeftPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
+        return (driveIO.getLeftPosition() / 2048) * (2 * Math.PI) * wheelRadiusMeters * (1/Constants.driveGearRatio);
     }
 
     public void resetLeftPosition() {
@@ -91,7 +92,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getRightDistanceMeters() {
-        return driveIO.getRightPosition() / 2048 * (2 * Math.PI) * wheelRadiusMeters;
+        return (driveIO.getRightPosition() / 2048) * (2 * Math.PI) * wheelRadiusMeters * (1/Constants.driveGearRatio);
     }
 
     public void resetRightPosition() {
