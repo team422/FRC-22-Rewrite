@@ -124,6 +124,8 @@ import com.revrobotics.ColorSensorV3;
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getShootButton().whileActiveOnce(shootCommand);
         controls.getRevShooter().whileActiveOnce(revCommand);
+        drive.resetLeftPosition();
+        drive.resetRightPosition();
     }
 
     /**
