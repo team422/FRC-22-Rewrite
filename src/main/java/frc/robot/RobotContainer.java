@@ -29,6 +29,7 @@ import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
+import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.oi.UserControls;
 import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
@@ -112,6 +113,9 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
         // Tele uptakeTraversalCommand = new TeleIntakeToggle(intake);
+
+        TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
+        TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
         
         TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
@@ -129,7 +133,10 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
-        
+
+        controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
+        controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
+
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
         
         controls.getFlyWheelUp().whileActiveOnce(flyUp);

@@ -95,6 +95,16 @@ public class XboxUserControls implements UserControls {
     // }
 
     @Override
+    public Trigger getUptakeUpTrigger() {
+        return new Trigger(() -> (operatorController.getLeftY()>0.2));
+    }
+
+    @Override
+    public Trigger getUptakeDownTrigger() {
+        return new Trigger(() -> (operatorController.getLeftY()<-0.2));
+    }
+
+    @Override
     public Trigger getFlyWheelUp() {
         return new Trigger(() -> operatorController.getXButton());
     }
