@@ -37,8 +37,8 @@ public class OneCargoAuto extends ParallelCommandGroup {
                 new WaitCommand(1),
                 parallel( 
                     
-                        new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
-                        new TeleUptake(uptake, () -> 7.0).withTimeout(1)
+                        // new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
+                        // new TeleUptake(uptake, () -> 7.0).withTimeout(1)
                 ),
                 
                 parallel(
@@ -46,17 +46,17 @@ public class OneCargoAuto extends ParallelCommandGroup {
                         new TeleIntakeToggle(intake),
                         new TeleIntake(intake, () -> -7.0)
                     ),
-                    sequence(
-                        // new TeleFlyVarUp(varFlyWheel).withTimeout(0.1),
-                        // new AutoFlyVar(varFlyWheel)
-                    ),
+                    // sequence(
+                    //     new TeleFlyVarUp(varFlyWheel).withTimeout(0.1),
+                    //     new AutoFlyVar(varFlyWheel)
+                    // ),
                     sequence(
                         new DriveStraight(drive, Units.feetToMeters(6.25), 0.5),
-                        new WaitCommand(1),
-                        parallel(
-                            new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
-                            new TeleUptake(uptake, () -> 7.0).withTimeout(1)
-                        )
+                        new WaitCommand(1)
+                        // parallel(
+                        //     new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
+                        //     new TeleUptake(uptake, () -> 7.0).withTimeout(1)
+                        // )
 
                     )
                 )
