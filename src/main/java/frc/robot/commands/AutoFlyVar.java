@@ -10,7 +10,7 @@ import frc.robot.util.TunableNumber;
 public class AutoFlyVar extends CommandBase{
     private final VarFlyWheel varFlyWheel;
     private final double upSpeed = 0.2075; // Distance is x feet to close bumper
-    private final double downSpeed = 0.19;
+    private final double downSpeed = 0.1925;
 
     public AutoFlyVar(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
