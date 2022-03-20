@@ -187,7 +187,7 @@ public class DriveIOFalcon implements DriveIO {
 
     @Override
     public double getGyroAngle() {
-        return Units.degreesToRadians(gyro.getAngle());
+        return (gyro.getAngle());
     }
 
     @Override
