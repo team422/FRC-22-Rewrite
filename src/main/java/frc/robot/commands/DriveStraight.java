@@ -30,7 +30,7 @@ public class DriveStraight extends CommandBase {
         double correction = (drive.getGyroAngle() * 0.05) + 1.0;
         System.out.println(drive.getLeftDistanceMeters());
         System.out.println(drive.getRightDistanceMeters());
-        drive.driveSpeed(speed*correction, -correction*speed);
+        drive.driveSpeed(speed, speed);
 
 
     }
