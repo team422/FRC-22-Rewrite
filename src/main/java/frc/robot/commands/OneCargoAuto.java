@@ -43,15 +43,15 @@ public class OneCargoAuto extends ParallelCommandGroup {
                 
                 parallel(
                     sequence(
-                        new TeleIntake(intake, () -> -7.0),
-                        new TeleIntakeToggle(intake)
+                        new TeleIntakeToggle(intake),
+                        new TeleIntake(intake, () -> -7.0)
                     ),
                     sequence(
                         new TeleFlyVarUp(varFlyWheel).withTimeout(0.1),
                         new AutoFlyVar(varFlyWheel)
                     ),
                     sequence(
-                        new DriveStraight(drive, Units.feetToMeters(6), 0.5),
+                        new DriveStraight(drive, Units.feetToMeters(6.25), 0.5),
                         new WaitCommand(1),
                         parallel(
                             new TeleTransversal(transversal, () -> 7.0).withTimeout(1),

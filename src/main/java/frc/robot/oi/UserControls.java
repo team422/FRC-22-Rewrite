@@ -80,6 +80,9 @@ public interface UserControls {
   public default Trigger getFlyWheelUp() {
     return new Trigger();
   }
+  public default Trigger getDriverFlyWheelUp() {
+    return new Trigger();
+  }
 
   public default Trigger getFlyWheeldDown() {
     return new Trigger();

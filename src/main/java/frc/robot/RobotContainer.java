@@ -140,8 +140,9 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
         
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
+        controls.getDriverFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
-        controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
+        // controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
         controls.getRevButton().whileActiveOnce(revCommand);
