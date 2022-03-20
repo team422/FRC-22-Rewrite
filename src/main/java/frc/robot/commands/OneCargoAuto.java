@@ -31,14 +31,14 @@ public class OneCargoAuto extends ParallelCommandGroup {
         VarFlyWheel varFlyWheel) {
 
         addCommands(
-            // new TeleFlyVarDown(varFlyWheel).withTimeout(0.1),
-            // new AutoFlyVar(varFlyWheel).withTimeout(10),
+            new TeleFlyVarDown(varFlyWheel).withTimeout(0.1),
+            new AutoFlyVar(varFlyWheel).withTimeout(10),
             sequence(
                 new WaitCommand(1),
                 parallel( 
                     
-                        // new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
-                        // new TeleUptake(uptake, () -> 7.0).withTimeout(1)
+                        new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
+                        new TeleUptake(uptake, () -> 7.0).withTimeout(1)
                 ),
                 
                 parallel(
