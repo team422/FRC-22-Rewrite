@@ -31,8 +31,8 @@ public class OneCargoAuto extends ParallelCommandGroup {
         VarFlyWheel varFlyWheel) {
 
         addCommands(
-            new TeleFlyVarDown(varFlyWheel).withTimeout(0.1),
-            new AutoFlyVar(varFlyWheel).withTimeout(10),
+            // new TeleFlyVarDown(varFlyWheel).withTimeout(0.1),
+            // new AutoFlyVar(varFlyWheel).withTimeout(10),
             sequence(
                 new WaitCommand(1),
                 parallel( 
@@ -47,8 +47,8 @@ public class OneCargoAuto extends ParallelCommandGroup {
                         new TeleIntake(intake, () -> -7.0)
                     ),
                     sequence(
-                        new TeleFlyVarUp(varFlyWheel).withTimeout(0.1),
-                        new AutoFlyVar(varFlyWheel)
+                        // new TeleFlyVarUp(varFlyWheel).withTimeout(0.1),
+                        // new AutoFlyVar(varFlyWheel)
                     ),
                     sequence(
                         new DriveStraight(drive, Units.feetToMeters(6.25), 0.5),

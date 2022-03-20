@@ -10,6 +10,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
@@ -28,6 +29,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.oi.UserControls;
@@ -93,7 +95,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         UserControls controls = new XboxUserControls(0, 1);
 
         // Define commands here
-        DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(drive,
+        ArcadeDrive defaultDriveCommand = new ArcadeDrive(drive,
         () -> Constants.mode,
         () -> controls.getLeftDriveX(),
         () -> controls.getLeftDriveY(),

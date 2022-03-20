@@ -9,7 +9,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class DriveWithJoystick extends CommandBase {
+public class ArcadeDrive extends CommandBase {
     private final DriveBase drive;
     private final Supplier<Boolean> sniperMode;
     private final Supplier<Constants.DriveMode> modeSupplier;
@@ -32,7 +32,7 @@ public class DriveWithJoystick extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public DriveWithJoystick(DriveBase drive, Supplier<Constants.DriveMode> modeSupplier,
+    public ArcadeDrive(DriveBase drive, Supplier<Constants.DriveMode> modeSupplier,
         Supplier<Double> leftXSupplier, Supplier<Double> leftYSupplier,
         Supplier<Double> rightXSupplier, Supplier<Double> rightYSupplier, Supplier<Boolean> sniperMode) {
         addRequirements(drive);
@@ -67,23 +67,18 @@ public class DriveWithJoystick extends CommandBase {
         double rightYValue = rightYSupplier.get();
         boolean isSniperMode = sniperMode.get();
         double mult = 1;
+        double leftSpeed;
+        double rightSpeed;
 
-        WheelSpeeds speeds = new WheelSpeeds(0.0, 0.0);
-        switch(modeSupplier.get()) {
-            case TANK:
-                speeds = new WheelSpeeds(leftYValue, rightYValue);
-                break;
-            case ARCADE:
-                speeds = WheelSpeeds.fromArcade(-leftYValue,rightXValue);
-                break;
-        }
-        if(isSniperMode) {
-            mult = 0.1;
+        if(isSniperMode){
+            leftSpeed = leftYValue*0.1;
+            rightSpeed = rightXValue*0.1;
         } else {
-            mult = 1;
+            leftSpeed = leftYValue;
+            rightSpeed = rightXValue;
         }
-        System.out.println("Input Speed" + speeds.left);
-        drive.drivePercent(mult * speeds.left, mult *  speeds.right);
+        
+        drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
     }
 
     // Called once the command ends or is interrupted.
