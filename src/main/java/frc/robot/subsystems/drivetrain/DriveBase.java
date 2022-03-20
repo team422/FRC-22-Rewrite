@@ -87,6 +87,10 @@ public class DriveBase extends SubsystemBase {
         driveIO.setVelocity(leftVelocityRadPerSec, rightVelocityRadPerSec);
     }
 
+    public void setPosition(double positionFeet) {
+        driveIO.setPosition(positionFeet);
+    }
+
     public void stop() {
         drivePercent(0, 0);
     }

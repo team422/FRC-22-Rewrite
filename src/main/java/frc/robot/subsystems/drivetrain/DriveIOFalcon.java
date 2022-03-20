@@ -1,5 +1,7 @@
 package frc.robot.subsystems.drivetrain;
 
+import java.util.ResourceBundle.Control;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -125,6 +127,13 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.set(ControlMode.Velocity, leftTicksPer100Ms);
         rightLeader.set(ControlMode.Velocity, rightTicksPer100Ms);
     }
+
+    // @Override
+    // public void setPosition (double positionFeet) {
+    //     double positionTicks = positionFeet;
+    //     leftLeader.set(ControlMode.Position, positionTicks);
+        
+    // }
 
     @Override
     public void setBrakeMode(boolean enable) {

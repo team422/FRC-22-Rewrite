@@ -24,6 +24,10 @@ public interface DriveIO {
 
     }
 
+    public default void setPosition(double positionFeet) {
+        
+    }
+
     /** Change the mode of the motors */
     public default void setBrakeMode(boolean enabled) {
     }
