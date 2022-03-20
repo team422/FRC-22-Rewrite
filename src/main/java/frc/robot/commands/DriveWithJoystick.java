@@ -54,6 +54,7 @@ public class DriveWithJoystick extends CommandBase {
         leftYSupplier.get();
         rightXSupplier.get();
         rightYSupplier.get();
+        drive.setBrakeMode(false);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

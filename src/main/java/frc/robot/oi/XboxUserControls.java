@@ -98,10 +98,10 @@ public class XboxUserControls implements UserControls {
     public Trigger getFlyWheelUp() {
         return new Trigger(() -> operatorController.getXButton());
     }
-    // @Override
-    // public Trigger getFlyWheeldDown() {
-    //     return new Trigger(() -> driverController.getBButton());
-    // }
+    @Override
+    public Trigger getFlyWheeldDown() {
+        return new Trigger(() -> driverController.getBButton());
+    }
     @Override
     public Trigger getFlyWheelToggle() {
         return new Trigger(() -> driverController.getYButton());

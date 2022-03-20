@@ -73,9 +73,9 @@ public interface UserControls {
     return new Trigger();
   }
 
-  // public default Trigger getFlyWheeldDown() {
-  //   return new Trigger();
-  // }
+  public default Trigger getFlyWheeldDown() {
+    return new Trigger();
+  }
 
   public default Trigger getFlyWheelToggle() {
       return new Trigger();
@@ -94,7 +94,7 @@ public interface UserControls {
   }
 
   public default double defaultValue() {
-    return 7;
+    return 9;
   }
 
   public default double zeroValue() {

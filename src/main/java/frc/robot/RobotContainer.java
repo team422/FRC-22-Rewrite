@@ -20,9 +20,11 @@ import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
+import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
@@ -113,7 +115,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         
         TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
-        // TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
+        TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
         TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
         TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
@@ -131,7 +133,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
         
         controls.getFlyWheelUp().whileActiveOnce(flyUp);
-        // controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
