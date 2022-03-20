@@ -51,7 +51,7 @@ public class OneCargoAuto extends ParallelCommandGroup {
                     //     new AutoFlyVar(varFlyWheel)
                     // ),
                     sequence(
-                        new DriveStraight(drive, Units.feetToMeters(27), 0.5),
+                        new DriveStraight(drive, Units.feetToMeters(20), 0.5),
                         new WaitCommand(1)
                         // parallel(
                         //     new TeleTransversal(transversal, () -> 7.0).withTimeout(1),
