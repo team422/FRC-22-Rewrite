@@ -104,7 +104,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         () -> controls.getSniperModeButton().get());
         
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
-            () -> 7.0 * controls.getIntakeSpeed());
+            () -> 12.0 * controls.getIntakeSpeed());
         
         TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
 
