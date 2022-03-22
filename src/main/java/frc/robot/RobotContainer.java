@@ -137,7 +137,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
-        controls.getRevShooter().whileActiveOnce(revCommand);
+        // controls.getRevShooter().whileActiveOnce(revCommand);
         drive.resetLeftPosition();
         drive.resetRightPosition();
     }
