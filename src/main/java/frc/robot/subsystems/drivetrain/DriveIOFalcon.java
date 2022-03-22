@@ -92,9 +92,10 @@ public class DriveIOFalcon implements DriveIO {
 
     @Override
     public void setVoltage(double leftVolts, double rightVolts) {
-        leftLeader.set(ControlMode.PercentOutput, leftVolts / 12.0);
-        rightLeader.set(ControlMode.PercentOutput, rightVolts / 12.0);
+        leftLeader.setVoltage(leftVolts);
+        rightLeader.setVoltage(rightVolts);
     }
+
     @Override
     public void setSpeed(double leftSpeed, double rightSpeed){
         // controlmode.setSpeed
