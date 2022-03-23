@@ -21,24 +21,39 @@ public class DriveStraight extends CommandBase {
         drive.resetLeftPosition();
         drive.resetRightPosition();
         drive.getGyroAngle();
+        drive.resetGyro();
         System.out.println("Driving!!");
     }
 
     @Override
     public void execute() {
-        // double correction = -drive.getGyroAngle() * 0.05 + 1.0;
-        System.out.println(drive.getLeftDistanceMeters());
-        System.out.println(drive.getRightDistanceMeters());
-        drive.driveSpeed(speed, speed);
+        double correction = drive.getGyroAngle()*0.3/180;
+        // correction = 0.0;
+        System.out.println("Start Frame:");
+        System.out.println("Left Distance:"+drive.getLeftDistanceMeters());
+        System.out.println("right Distance:"+drive.getRightDistanceMeters());
+        System.out.println(drive.getGyroAngle());
+        System.out.println(speed);
+        System.out.println(speed - correction);
+        System.out.println("end Frame:");
+        if(speed>0.0){
+            drive.driveSpeed(speed,speed - correction );
+        }else{
+            drive.driveSpeed(speed, speed + correction);
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        drive.drivePercent(0.0, 0.0);
+        drive.driveSpeed(0.0, 0.0);
+        drive.setBrakeMode(true);
     }
 
     @Override
     public boolean isFinished() {
+        System.out.println(drive.getGyroAngle());
+        System.out.println("Left Distance:"+drive.getLeftDistanceMeters());
+        System.out.println("right Distance:"+drive.getRightDistanceMeters());
         return ((drive.getLeftDistanceMeters() > this.meters) || (drive.getRightDistanceMeters() > this.meters));
     }
 

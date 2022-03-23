@@ -138,8 +138,11 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         controls.getRevButton().whileActiveOnce(revCommand);
         drive.resetLeftPosition();
         drive.resetRightPosition();
+        drive.setBrakeMode(false);
     }
-
+    public void disableBrakeMode(){
+        drive.setBrakeMode(false);
+    }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -149,5 +152,6 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         // An ExampleCommand will run in autonomous
         drive.setBrakeMode(true);
         return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel)).andThen(() -> drive.setBrakeMode(false));
+        // return (new DriveStraight(drive,3,0.5));
     }
 }
