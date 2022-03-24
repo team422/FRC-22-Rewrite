@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.util.Units;
 
 public class GeomUtil {
     public static Map<String, Double> startToEndValues(Pose2d startPose,
@@ -28,7 +29,7 @@ public class GeomUtil {
             Math.atan2(endPose.getY() - startPose.getY(),
                 endPose.getX() - endPose.getX());
         
-        return convertRadiansToPositive(rot);
+        return Units.radiansToDegrees(convertRadiansToPositive(rot));
     }
 
     private static double getDistance(Pose2d startPose, Pose2d endPose) {
@@ -40,7 +41,7 @@ public class GeomUtil {
         double rot = getFirstRotation(startPose, endPose)
             - endPose.getRotation().getRadians();
 
-        return convertRadiansToPositive(rot);
+        return Units.radiansToDegrees(convertRadiansToPositive(rot));
     }
 
     private static double convertRadiansToPositive(double rot) {
