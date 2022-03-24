@@ -19,6 +19,7 @@ import frc.robot.commands.AutoMotionProfiling;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
+import frc.robot.commands.Turn;
 // import frc.robot.subsystems.drivetrain.*;
 // import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.oi.*;
@@ -62,15 +63,16 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
     public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveBase drive = new DriveBase(new DriveIOFalcon());
-    private final Climber climber = new Climber(
-        new ClimberIOFalcon(),
-        new ClimberPistonIO());
-    private final Intake intake = new Intake(new IntakeIOTalonSRX());
-    private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
-    private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
-    private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
-    private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
-    private  UsbCamera camera;
+    // private final Climber climber = new Climber(
+    //     new ClimberIOFalcon(),
+    //     new ClimberPistonIO());
+    // private final Intake intake = new Intake(new IntakeIOTalonSRX());
+    // private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
+    // private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
+    // private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
+    // private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
+    // private  UsbCamera camera;
+    
     
 
     /**
@@ -78,9 +80,9 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
      */
     public RobotContainer() {
         // Configure the button bindings
-        configureButtonBindings();
-        camera = CameraServer.startAutomaticCapture();
-        camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+        // configureButtonBindings();
+        // camera = CameraServer.startAutomaticCapture();
+        // camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
     }
 
     /**
@@ -103,53 +105,61 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         () -> controls.getRightDriveY(),
         () -> controls.getSniperModeButton().get());
         
-        TeleIntake defaultIntakeCommand = new TeleIntake(intake,
-            () -> 7.0 * controls.getIntakeSpeed());
+        // TeleIntake defaultIntakeCommand = new TeleIntake(intake,
+        //     () -> 7.0 * controls.getIntakeSpeed());
         
-        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
+        // // TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
 
-        TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
-        TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
-        // TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
-        TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
+        // // TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
+        // // TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
+        // // TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
+        // // TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
         
-        TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
-        // Tele uptakeTraversalCommand = new TeleIntakeToggle(intake);
+        // TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
+        // // Tele uptakeTraversalCommand = new TeleIntakeToggle(intake);
         
-        TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
-        TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
-        // TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
+        // TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
+        // TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
+        // // TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
-        TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
-        TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
+        // // TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultValue());
+        // TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
 
-        // Define default commands here
-        drive.setDefaultCommand(defaultDriveCommand);
-        intake.setDefaultCommand(defaultIntakeCommand);
-        uptake.setDefaultCommand(defaultIndexCommand);
+        // // Define default commands here
+        // drive.setDefaultCommand(defaultDriveCommand);
+        // intake.setDefaultCommand(defaultIntakeCommand);
+        // // uptake.setDefaultCommand(defaultIndexCommand);
 
-        // Define button / command bindings here
-        controls.getClimbUp().whileActiveOnce(climberUpCommand);
-        controls.getClimbDown().whileActiveOnce(climberDownCommand);
-        controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
+        // // Define button / command bindings here
+        // // controls.getClimbUp().whileActiveOnce(climberUpCommand);
+        // // controls.getClimbDown().whileActiveOnce(climberDownCommand);
+        // // controls.getClimbButton().whileActiveOnce(climmberTiltCommand);
         
-        controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
+        // controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
         
-        controls.getFlyWheelUp().whileActiveOnce(flyUp);
-        // controls.getFlyWheeldDown().whileActiveOnce(flyDown);
-        controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
+        // controls.getFlyWheelUp().whileActiveOnce(flyUp);
+        // // controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        // controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
-        controls.getShootButton().whileActiveOnce(shootCommand);
-        // controls.getRevShooter().whileActiveOnce(revCommand);
+        // controls.getShootButton().whileActiveOnce(shootCommand);
+        // controls.getRevButton().whileActiveOnce(revCommand);
         drive.resetLeftPosition();
         drive.resetRightPosition();
+        drive.setBrakeMode(false);
     }
-
+    public void disableBrakeMode(){
+        drive.setBrakeMode(false);
+    }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
+    public void printSpeedValue(){
+        
+        System.out.println(drive.getLeftSpeedEncoderPerSecond());
+        System.out.println(drive.getRightSpeedEncoderPerSecond());
+    }
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         drive.setBrakeMode(true);

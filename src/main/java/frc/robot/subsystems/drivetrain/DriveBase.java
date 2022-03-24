@@ -42,7 +42,7 @@ public class DriveBase extends SubsystemBase {
         this.left = driveIO.getLeftLeader();
         this.right = driveIO.getRightLeader();
 
-        this.driveBase = new DifferentialDrive(left, right);
+        // this.driveBase = new DifferentialDrive(left, right);
         // Arbitrary values for now
         // this.leftFF = new SimpleMotorFeedforward(
         //     driveIO.getkS(),
@@ -61,11 +61,17 @@ public class DriveBase extends SubsystemBase {
         odometry.update(new Rotation2d(-driveIO.getGyroAngle()),
             getLeftDistanceMeters(),
             getRightDistanceMeters());
+        driveIO.findSpeed();
     }
-
+    // public void setLeftAndRightSpeedValue(){
+    //     if()
+    // }
     public void resetOdometry(Pose2d pose) {
         odometry.resetPosition(pose,
             new Rotation2d(-driveIO.getGyroAngle()));
+    }
+    public double getMaxRotationsPerMinute(){
+        return driveIO.getMaxRotationsPerMinute();
     }
 
     public void driveVoltage(double leftVoltage, double rightVoltage) {
@@ -95,7 +101,12 @@ public class DriveBase extends SubsystemBase {
     public void setBrakeMode(boolean enable) {
         driveIO.setBrakeMode(enable);
     }
-
+    public double getLeftSpeedEncoderPerSecond(){
+        return driveIO.getLeftSpeedEncoderPerSecond();
+    }
+    public double getRightSpeedEncoderPerSecond(){
+        return driveIO.getRightSpeedEncoderPerSecond();
+    }
     public double getLeftDistanceMeters() {
         return (driveIO.getLeftPosition() / 2048) * (2 * Math.PI) * wheelRadiusMeters * (1/Constants.driveGearRatio);
     }
@@ -162,5 +173,11 @@ public class DriveBase extends SubsystemBase {
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds();
+    }
+    public double getRightWheelSpeed(){
+        return driveIO.getRightRate();
+    }
+    public double getLeftWheelSpeed(){
+        return driveIO.getLeftRate();
     }
 }
