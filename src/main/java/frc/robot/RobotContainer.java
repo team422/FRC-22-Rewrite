@@ -8,10 +8,12 @@
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutoMotionProfiler;
+import frc.robot.commands.AutoMotionProfiling;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.OneCargoAuto;
@@ -150,6 +152,11 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         drive.setBrakeMode(true);
-        return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel)).andThen(() -> drive.setBrakeMode(false));
+        return new AutoMotionProfiling(drive,
+            new Pose2d(0, 0, new Rotation2d(0)),
+            new Pose2d(2, 0, new Rotation2d(0))
+        ).andThen(() -> drive.setBrakeMode(false));
+        // return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel))
+        //     .andThen(() -> drive.setBrakeMode(false));
     }
 }
