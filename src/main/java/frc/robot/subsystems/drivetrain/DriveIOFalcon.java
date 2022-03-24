@@ -139,12 +139,6 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.set(ControlMode.PercentOutput, leftSpeed);
         rightLeader.set(ControlMode.PercentOutput, rightSpeed);
     }
-    @Override
-    public void setSpeed(double leftSpeed, double rightSpeed){
-        // controlmode.setSpeed
-        leftLeader.set(ControlMode.PercentOutput, leftSpeed);
-        rightLeader.set(ControlMode.PercentOutput, rightSpeed);
-    }
 
     @Override
     public void setVelocity(double leftVelocityRadPerSec,
