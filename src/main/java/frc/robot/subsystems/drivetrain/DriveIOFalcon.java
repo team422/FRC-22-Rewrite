@@ -133,7 +133,6 @@ public class DriveIOFalcon implements DriveIO {
         rightLeader.setVoltage(rightVolts);
     }
 
-    
     @Override
     public void setSpeed(double leftSpeed, double rightSpeed){
         // controlmode.setSpeed
