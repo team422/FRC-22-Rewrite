@@ -8,8 +8,10 @@ public class Turn extends CommandBase {
     double turnDegrees;
     DriveBase drive;
     double speed;
+    private static double maxSpeed = 0.15;
     double targetGyroAngle;
     public Turn(DriveBase drive,double turnDegrees, double speed){
+        addRequirements(drive);
         this.drive = drive;
         this.turnDegrees = turnDegrees;
         this.speed = speed;
@@ -30,6 +32,7 @@ public class Turn extends CommandBase {
     @Override
     public void execute(){
         double turnSpeed = findCompletionValue(drive.getGyroAngle(), targetGyroAngle) * speed+0.1;
+        turnSpeed = MathUtil.clamp(turnSpeed, -maxSpeed,maxSpeed );
         System.out.println("TURN SPEED:" + turnSpeed);
         System.out.println("TARGET ANGLE: " + targetGyroAngle);
         System.out.println("CURRENT ANGLE: " + drive.getGyroAngle());
