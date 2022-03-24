@@ -1,4 +1,4 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;

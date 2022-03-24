@@ -1,14 +1,13 @@
 package frc.robot.commands;
 
-import frc.robot.commands.operatorcommands.TeleTransversal;
-import frc.robot.commands.operatorcommands.TeleUptake;
-import frc.robot.commands.operatorcommands.TeleIntake;
-
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import java.util.function.Supplier;
 
 import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.commands.operator.TeleIntake;
+import frc.robot.commands.operator.TeleTransversal;
+import frc.robot.commands.operator.TeleUptake;
 import frc.robot.subsystems.intake.Intake;
 
 public class AutoBallHandler extends ParallelCommandGroup{

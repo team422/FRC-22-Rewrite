@@ -1,18 +1,20 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 
-public class TeleFlyVarDown extends CommandBase{
+public class TeleFlyVarPistonToggle extends CommandBase{
+
     private final VarFlyWheel varFlyWheel;
-    public TeleFlyVarDown(VarFlyWheel varFlyWheel) {
+    
+    public TeleFlyVarPistonToggle(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
     }
 
     @Override
     public void execute() {
-        varFlyWheel.retractFly();
+        varFlyWheel.switchFlyState();
     }
     
     @Override

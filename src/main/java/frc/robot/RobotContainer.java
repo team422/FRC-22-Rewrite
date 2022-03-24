@@ -12,27 +12,25 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.AutoMotionProfiling;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.Turn;
-// import frc.robot.subsystems.drivetrain.*;
-// import edu.wpi.first.wpilibj2.command.Command;
-// import frc.robot.oi.*;
-import frc.robot.commands.operatorcommands.TeleClimbDown;
-import frc.robot.commands.operatorcommands.TeleClimbTilt;
-import frc.robot.commands.operatorcommands.TeleClimbUp;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
-import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
-import frc.robot.commands.operatorcommands.TeleFlyVarUp;
-import frc.robot.commands.operatorcommands.TeleIndexer;
-import frc.robot.commands.operatorcommands.TeleIntake;
-import frc.robot.commands.operatorcommands.TeleIntakeToggle;
-import frc.robot.commands.operatorcommands.TeleShoot;
+import frc.robot.commands.auto.OneCargoAuto;
+import frc.robot.commands.operator.TeleClimbDown;
+import frc.robot.commands.operator.TeleClimbTilt;
+import frc.robot.commands.operator.TeleClimbUp;
+import frc.robot.commands.operator.TeleFlyVar;
+import frc.robot.commands.operator.TeleFlyVarPistonToggle;
+import frc.robot.commands.operator.TeleFlyVarUp;
+import frc.robot.commands.operator.TeleIndexer;
+import frc.robot.commands.operator.TeleIntake;
+import frc.robot.commands.operator.TeleIntakeToggle;
+import frc.robot.commands.operator.TeleShoot;
 import frc.robot.oi.UserControls;
 import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
@@ -67,9 +65,9 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
     //     new ClimberIOFalcon(),
     //     new ClimberPistonIO());
     // private final Intake intake = new Intake(new IntakeIOTalonSRX());
-    // private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
-    // private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
-    // private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
+    private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
+    private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
+    private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
     // private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
     // private  UsbCamera camera;
     
@@ -155,23 +153,13 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
      *
      * @return the command to run in autonomous
      */
-    public void printSpeedValue(){
-        
-        System.out.println(drive.getLeftSpeedEncoderPerSecond());
-        System.out.println(drive.getRightSpeedEncoderPerSecond());
-    }
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         drive.setBrakeMode(true);
         return new AutoMotionProfiling(drive,
-            List.of(
-                new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
-                new Pose2d(1.0, 0.0, new Rotation2d(0.0)),
-                new Pose2d(1.0, 1.0, new Rotation2d(0.0)),
-                new Pose2d(0.0, 0.0, new Rotation2d(0.0))
-            )
-        ).andThen(() -> drive.setBrakeMode(false));
-        // return (new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel))
-        //     .andThen(() -> drive.setBrakeMode(false));
+            new Pose2d(0.0, 0.0, new Rotation2d(0.0)),
+            new Pose2d(1.0, 1.0, new Rotation2d(Math.PI))
+        );
+        // return (new OneCargoAuto(drive, transversal, uptake, varFlyWheel));
     }
 }

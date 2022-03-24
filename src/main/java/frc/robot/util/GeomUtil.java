@@ -29,11 +29,11 @@ public class GeomUtil {
             Math.atan2(endPose.getY() - startPose.getY(),
                 endPose.getX() - endPose.getX());
         
-        return Units.radiansToDegrees(convertRadiansToPositive(rot));
+        return Units.radiansToDegrees(normalizeRadians(rot));
     }
 
     private static double getDistance(Pose2d startPose, Pose2d endPose) {
-        return Math.sqrt(Math.pow(endPose.getX() - endPose.getX(), 2)
+        return Math.sqrt(Math.pow(endPose.getX() - startPose.getX(), 2)
             + Math.pow(endPose.getY() - startPose.getY(), 2));
     }
 
@@ -41,12 +41,20 @@ public class GeomUtil {
         double rot = getFirstRotation(startPose, endPose)
             - endPose.getRotation().getRadians();
 
-        return Units.radiansToDegrees(convertRadiansToPositive(rot));
+        return Units.radiansToDegrees(normalizeRadians(rot));
     }
 
-    private static double convertRadiansToPositive(double rot) {
+    private static double normalizeRadians(double rot) {
         while (rot < 0) {
             rot += 2 * Math.PI;
+        }
+
+        while (rot > 2 * Math.PI) {
+            rot -= 2 * Math.PI;
+        }
+
+        if (rot > Math.PI) {
+            rot -= 2 * Math.PI;
         }
 
         return rot;

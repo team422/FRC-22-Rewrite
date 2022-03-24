@@ -13,18 +13,16 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutoMotionProfiling extends SequentialCommandGroup {
     private static DriveBase drive;
-    private static List<Pose2d> waypoints;
+    private static Pose2d startPose;
+    private static Pose2d endPose;
 
-    private static List<Command> steps;
+    private static List<Command> steps = new ArrayList<>();
 
     public AutoMotionProfiling(DriveBase drive, Pose2d startPose, Pose2d endPose) {
-        this(drive, List.of(startPose, endPose));
-    }
-
-    public AutoMotionProfiling(DriveBase drive, List<Pose2d> waypoints) {
         addRequirements(drive);
         this.drive = drive;
-        this.waypoints = waypoints;
+        this.startPose = startPose;
+        this.endPose = endPose;
 
         generateSteps();
 
@@ -32,13 +30,14 @@ public class AutoMotionProfiling extends SequentialCommandGroup {
     }
 
     private static void generateSteps() {
-        for (int i = 0; i < waypoints.size() - 1; i++) {
-            Map<String, Double> values =
-                GeomUtil.startToEndValues(waypoints.get(i), waypoints.get(i+1));
-            // Uncomment this out soon
-            // steps.add(new Turn(drive, values.get("First rotation"), 0.5));
-            // steps.add(new DriveStraight(drive, values.get("Distance"), 0.5));
-            // steps.add(new Turn(drive, values.get("Second rotation"), 0.5));
-        }
+        Map<String, Double> values =
+            GeomUtil.startToEndValues(startPose, endPose);
+        // Uncomment this out soon
+        System.out.println("First rotation: " + values.get("First rotation"));
+        steps.add(new Turn(drive, values.get("First rotation"), 0.2));
+        System.out.println("Drive straight: " + values.get("Distance"));
+        steps.add(new DriveStraight(drive, values.get("Distance"), 0.2));
+        System.out.println("Second rotation: " + values.get("Second rotation"));
+        steps.add(new Turn(drive, values.get("Second rotation"), 0.2));
     }
 }

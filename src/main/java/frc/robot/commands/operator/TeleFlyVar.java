@@ -1,4 +1,4 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operator;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -10,7 +10,7 @@ import frc.robot.util.TunableNumber;
 public class TeleFlyVar extends CommandBase{
     private final VarFlyWheel varFlyWheel;
     private final double upSpeed = 0.25; // Distance is x feet to close bumper
-    private final double downSpeed = 0.18;
+    private final double downSpeed = 0.3;
 
     public TeleFlyVar(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
