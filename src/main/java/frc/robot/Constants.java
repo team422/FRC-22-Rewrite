@@ -27,7 +27,6 @@ public final class Constants {
     public enum DriveMode {
         TANK, ARCADE
     }
-
     public static final BotType bot = BotType.ROBOT_2022_COMP;
     public static final DriveMode mode = DriveMode.ARCADE;
     public static double driveGearRatio = 6.75;

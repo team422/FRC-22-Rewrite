@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;
-
+    private static final double maxRotationsPerMinute = 6380.0;
     public static WPI_TalonFX leftLeader;
     private WPI_TalonFX leftFollower;
     public static WPI_TalonFX rightLeader;
@@ -24,7 +24,7 @@ public class DriveIOFalcon implements DriveIO {
 
     private double leftEncoderValue;
     private double rightEncoderValue;
-
+    
     private ADXRS450_Gyro gyro;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
@@ -34,6 +34,11 @@ public class DriveIOFalcon implements DriveIO {
 
     private final double kP;
     private final double kD;
+
+    private double leftLastEncoderValue;
+    private double rightLastEncoderValue;
+    private double leftSpeedEncodersPerSecond = 0;
+    private double rightSpeedEncodersPerSecond = 0;
 
     public DriveIOFalcon() {
         switch (Constants.bot) {
@@ -88,8 +93,27 @@ public class DriveIOFalcon implements DriveIO {
         rightFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
 
         this.gyro = new ADXRS450_Gyro(kGyroPort);
+        leftLastEncoderValue = leftLeader.getSelectedSensorPosition(0);
+        rightLastEncoderValue = rightLeader.getSelectedSensorPosition(0);
+    }
+    @Override
+    public void findSpeed(){
+        double leftCurrentEncoder = leftLeader.getSelectedSensorPosition(0);
+        double rightCurrentEncoder = rightLeader.getSelectedSensorPosition(0);
+        leftSpeedEncodersPerSecond = 1/Constants.loopPeriodSecs*(leftCurrentEncoder - leftLastEncoderValue);
+        rightSpeedEncodersPerSecond = 1/Constants.loopPeriodSecs*(rightCurrentEncoder -rightLastEncoderValue );
+        leftLastEncoderValue = leftCurrentEncoder;
+        rightLastEncoderValue = rightCurrentEncoder;
     }
 
+    @Override
+    public double getLeftSpeedEncoderPerSecond(){
+        return this.leftSpeedEncodersPerSecond;
+    }
+    @Override
+    public double getRightSpeedEncoderPerSecond(){
+        return this.rightSpeedEncodersPerSecond;
+    }
     @Override
     public WPI_TalonFX getLeftLeader() {
         return leftLeader;
@@ -99,7 +123,10 @@ public class DriveIOFalcon implements DriveIO {
     public WPI_TalonFX getRightLeader() {
         return rightLeader;
     }
-
+    @Override
+    public double getMaxRotationsPerMinute(){
+        return this.maxRotationsPerMinute;
+    }
     @Override
     public void setVoltage(double leftVolts, double rightVolts) {
         leftLeader.set(ControlMode.PercentOutput, leftVolts / 12.0);
@@ -179,7 +206,7 @@ public class DriveIOFalcon implements DriveIO {
     @Override
     public double getGyroAngle() {
         // return Units.degreesToRadians(gyro.getAngle());
-        return gyro.getAngle();
+        return -gyro.getAngle();
     }
 
     @Override

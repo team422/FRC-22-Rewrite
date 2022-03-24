@@ -11,7 +11,16 @@ public interface DriveIO {
     public default WPI_TalonFX getRightLeader() {
         return null;
     }
-
+    public default double getMaxRotationsPerMinute(){
+        return 0.0;
+    }
+    public default void findSpeed(){}
+    public default double getLeftSpeedEncoderPerSecond(){
+        return 0.0;
+    }
+    public default double getRightSpeedEncoderPerSecond(){
+        return 0.0;
+    }
     /** Sets the voltage of the drivetrain motors (open loop) */
     public default void setVoltage(double leftVolts, double rightVolts) {
     }
@@ -90,6 +99,12 @@ public interface DriveIO {
     }
 
     public default double getkD() {
+        return 0.0;
+    }
+    public default double getLeftSpeed(){
+        return 0.0;
+    }
+    public default double getRightSpeed(){
         return 0.0;
     }
 }
