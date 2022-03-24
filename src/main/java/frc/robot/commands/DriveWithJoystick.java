@@ -1,29 +1,31 @@
 package frc.robot.commands;
 
-import java.util.function.Supplier;
+import frc.robot.Constants;
+import frc.robot.subsystems.drivetrain.DriveBase;
 
+import java.util.function.Supplier;
 import edu.wpi.first.math.MathUtil;
 // import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.drivetrain.DriveBase;
-import frc.robot.util.TunableNumber;
 
 /** An example command that uses an example subsystem. */
 public class DriveWithJoystick extends CommandBase {
-
     private final DriveBase drive;
+    private final Supplier<Boolean> sniperMode;
     private final Supplier<Constants.DriveMode> modeSupplier;
     private final Supplier<Double> leftXSupplier, leftYSupplier,
-            rightXSupplier, rightYSupplier;
-    private final Supplier<Boolean> sniperModeSupplier;
+        rightXSupplier, rightYSupplier;
 
+    private static final double speedCap = 1;
+    private static final double rotationCap = 1;
+
+    // private final AxisProcessor leftXProcessor = new AxisProcessor();
+    // private final AxisProcessor leftYProcessor = new AxisProcessor();
+    // private final AxisProcessor rightXProcessor = new AxisProcessor();
+    // private final AxisProcessor rightYProcessor = new AxisProcessor();
+    
     // Remember to put this as TunableNumber
     private static double deadband = 0.1;
-
-    private static final TunableNumber sniperModeSpeedMultiplier = new TunableNumber("DriveControls/SniperSpeed", 0.03);
-    private static final TunableNumber maxSpeed = new TunableNumber("DriveControls/MaxSpeed", 0.7);
-    private static final TunableNumber maxTurnSpeed = new TunableNumber("DriveControls/MaxTurnSpeed", 0.4);
 
     /**
      * Creates a new ExampleCommand.
@@ -31,8 +33,8 @@ public class DriveWithJoystick extends CommandBase {
      * @param subsystem The subsystem used by this command.
      */
     public DriveWithJoystick(DriveBase drive, Supplier<Constants.DriveMode> modeSupplier,
-            Supplier<Double> leftXSupplier, Supplier<Double> leftYSupplier,
-            Supplier<Double> rightXSupplier, Supplier<Double> rightYSupplier, Supplier<Boolean> sniperModeSupplier) {
+        Supplier<Double> leftXSupplier, Supplier<Double> leftYSupplier,
+        Supplier<Double> rightXSupplier, Supplier<Double> rightYSupplier, Supplier<Boolean> sniperMode) {
         addRequirements(drive);
         this.drive = drive;
         this.modeSupplier = modeSupplier;
@@ -40,7 +42,7 @@ public class DriveWithJoystick extends CommandBase {
         this.leftYSupplier = leftYSupplier;
         this.rightXSupplier = rightXSupplier;
         this.rightYSupplier = rightYSupplier;
-        this.sniperModeSupplier = sniperModeSupplier;
+        this.sniperMode =  sniperMode;
 
         // Set defaults of tunable numbers here
     }
@@ -58,29 +60,29 @@ public class DriveWithJoystick extends CommandBase {
     @Override
     @SuppressWarnings("unused")
     public void execute() {
-        double leftXValue = convertToValue(leftXSupplier.get());
-        double leftYValue = convertToValue(leftYSupplier.get());
-        double rightXValue = convertToValue(rightXSupplier.get());
-        double rightYValue = convertToValue(rightYSupplier.get());
+        double leftXValue = leftXSupplier.get();
+        double leftYValue = leftYSupplier.get();
+        double rightXValue = rightXSupplier.get();
+        double rightYValue = rightYSupplier.get();
+        boolean isSniperMode = sniperMode.get();
+        double mult = 1;
 
         WheelSpeeds speeds = new WheelSpeeds(0.0, 0.0);
-        switch (modeSupplier.get()) {
+        switch(modeSupplier.get()) {
             case TANK:
                 speeds = new WheelSpeeds(leftYValue, rightYValue);
                 break;
             case ARCADE:
-                if (sniperModeSupplier.get()) {
-                    double mult = sniperModeSpeedMultiplier.get();
-                    leftYValue *= mult;
-                    rightXValue *= mult;
-                }
-                speeds = WheelSpeeds.fromArcade(-maxSpeed.get() * leftYValue, maxTurnSpeed.get() * rightXValue);
+                speeds = WheelSpeeds.fromArcade(-leftYValue,rightXValue);
                 break;
         }
-
-        // System.out.println("Test Number: " + sniperModeSpeedMultiplier.get());
-
-        drive.drivePercent(speeds.left, speeds.right);
+        if(isSniperMode) {
+            mult = 0.1;
+        } else {
+            mult = 1;
+        }
+        System.out.println("Input Speed" + speeds.left);
+        drive.drivePercent(mult * speeds.left, mult *  speeds.right);
     }
 
     // Called once the command ends or is interrupted.
@@ -93,21 +95,6 @@ public class DriveWithJoystick extends CommandBase {
     public boolean isFinished() {
         return false;
     }
-
-    private double convertToValue(double joystickValue) {
-        // if (Math.abs(joystickValue) > deadband) {
-        // return joystickValue;
-        // }
-
-        // return 0.0;
-        double scaledValue = 0;
-        if (Math.abs(joystickValue) > deadband) {
-            scaledValue = (Math.abs(joystickValue) - deadband) / (1 - deadband);
-            scaledValue = Math.copySign(Math.pow(scaledValue, 2), joystickValue);
-        }
-        return scaledValue;
-    }
-
     /** Represents the wheel speeds for each side as a percentage */
     private static class WheelSpeeds {
         public double left;
@@ -119,8 +106,8 @@ public class DriveWithJoystick extends CommandBase {
         }
 
         public static WheelSpeeds fromArcade(double speed, double rotation) {
-            speed = MathUtil.clamp(speed, -1.0, 1.0);
-            rotation = MathUtil.clamp(rotation, -1.0, 1.0);
+            // speed = MathUtil.clamp(speed, -1.0, 1.0);
+            // rotation = MathUtil.clamp(rotation, -1.0, 1.0);
 
             double leftSpeed;
             double rightSpeed;
@@ -128,11 +115,7 @@ public class DriveWithJoystick extends CommandBase {
             leftSpeed = speed + rotation;
             rightSpeed = speed - rotation;
 
-            double maxMagnitude = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-            if (maxMagnitude > 1.0) {
-                leftSpeed /= maxMagnitude;
-                rightSpeed /= maxMagnitude;
-            }
+            System.out.println("Calculated Speed" + leftSpeed);
 
             return new WheelSpeeds(leftSpeed, rightSpeed);
         }

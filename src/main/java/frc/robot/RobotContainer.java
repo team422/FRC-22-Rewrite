@@ -95,14 +95,13 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
         UserControls controls = new XboxUserControls(0, 1);
 
         // Define commands here
-        DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(
-            drive,
-            () -> Constants.mode,
-            () -> controls.getLeftDriveX(),
-            () -> controls.getLeftDriveY(),
-            () -> controls.getRightDriveX(),
-            () -> controls.getRightDriveY(),
-            () -> controls.getSniperModeButton().get());
+        DriveWithJoystick defaultDriveCommand = new DriveWithJoystick(drive,
+        () -> Constants.mode,
+        () -> controls.getLeftDriveX(),
+        () -> controls.getLeftDriveY(),
+        () -> controls.getRightDriveX(),
+        () -> controls.getRightDriveY(),
+        () -> controls.getSniperModeButton().get());
         
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
             () -> 7.0 * controls.getIntakeSpeed());

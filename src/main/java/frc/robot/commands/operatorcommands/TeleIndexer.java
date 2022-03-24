@@ -20,8 +20,8 @@ public class TeleIndexer extends CommandBase {
     @Override
     public void execute() {
         if(colorSensor.getProximity() < 100 && transversal.getCurrentCommand() == this &&uptake.getCurrentCommand() == this){
-            transversal.setVoltage(5.0);
-            uptake.setVoltage(2.0);
+            transversal.setVoltage(6.0);
+            uptake.setVoltage(3.0);
         }
         else if(transversal.getCurrentCommand() == this && uptake.getCurrentCommand() == this){
             transversal.setVoltage(0);

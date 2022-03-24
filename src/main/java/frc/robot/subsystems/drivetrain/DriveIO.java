@@ -1,6 +1,16 @@
 package frc.robot.subsystems.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 public interface DriveIO {
+
+    public default WPI_TalonFX getLeftLeader() {
+        return null;
+    }
+
+    public default WPI_TalonFX getRightLeader() {
+        return null;
+    }
 
     /** Sets the voltage of the drivetrain motors (open loop) */
     public default void setVoltage(double leftVolts, double rightVolts) {

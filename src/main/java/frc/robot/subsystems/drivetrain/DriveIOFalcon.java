@@ -17,9 +17,9 @@ public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
-    private WPI_TalonFX leftLeader;
+    public static WPI_TalonFX leftLeader;
     private WPI_TalonFX leftFollower;
-    private WPI_TalonFX rightLeader;
+    public static WPI_TalonFX rightLeader;
     private WPI_TalonFX rightFollower;
 
     private double leftEncoderValue;
@@ -91,11 +91,27 @@ public class DriveIOFalcon implements DriveIO {
     }
 
     @Override
+    public WPI_TalonFX getLeftLeader() {
+        return leftLeader;
+    }
+
+    @Override
+    public WPI_TalonFX getRightLeader() {
+        return rightLeader;
+    }
+
+    @Override
     public void setVoltage(double leftVolts, double rightVolts) {
         leftLeader.setVoltage(leftVolts);
         rightLeader.setVoltage(rightVolts);
     }
 
+    @Override
+    public void setSpeed(double leftSpeed, double rightSpeed){
+        // controlmode.setSpeed
+        leftLeader.set(ControlMode.PercentOutput, leftSpeed);
+        rightLeader.set(ControlMode.PercentOutput, rightSpeed);
+    }
     @Override
     public void setSpeed(double leftSpeed, double rightSpeed){
         // controlmode.setSpeed
