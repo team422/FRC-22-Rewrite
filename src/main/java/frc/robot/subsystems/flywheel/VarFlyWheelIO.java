@@ -1,4 +1,4 @@
-package frc.robot.subsystems.flywheelvarhood;
+package frc.robot.subsystems.flywheel;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -9,8 +9,7 @@ public interface VarFlyWheelIO {
     }
 
     /** Sets the velocity of the drivetrain motors (closed loop) */
-    public default void setVelocity(double flySpeed,
-            double flyFFValue) {
+    public default void setVelocity(double flySpeed) {
     }
 
     /** Change the mode of the motors */
@@ -18,15 +17,15 @@ public interface VarFlyWheelIO {
     }
 
     /** Set PID constants */
-    public default void setPID(double kP, double kI, double kD) {
+    public default void setFPID(double kF, double kP, double kI, double kD) {
     }
 
     public default void switchState(boolean extend) {
 
     }
 
-    public default void toggleState(){
-        
+    public default void toggleState() {
+
     }
 
     public default boolean getState() {

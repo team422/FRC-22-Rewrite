@@ -28,9 +28,16 @@ public final class Constants {
         TANK, ARCADE
     }
 
+    // General Constants
     public static final BotType bot = BotType.ROBOT_2022_COMP;
-    public static final DriveMode mode = DriveMode.ARCADE;
-    public static double driveGearRatio = 6.75;
     public static double loopPeriodSecs = 0.02;
     public static boolean tuningMode = false;
+
+    // Drivebase Constants
+    public static final DriveMode mode = DriveMode.ARCADE;
+    public static double driveGearRatio = 6.75;
+
+    // Shooter Constants
+    public static final double SHOOTER_UP_RPM = 2000; // Distance is x feet to close bumper
+    public static final double SHOOTER_DOWN_RPM = 2200;
 }

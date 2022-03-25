@@ -9,16 +9,16 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
 
-public class IntakeIOTalonSRX implements IntakeIO{
-    
+public class IntakeIOTalonSRX implements IntakeIO {
+
     private WPI_TalonSRX intakeMotor;
     private DoubleSolenoid intakeArmSolenoid;
 
-    public IntakeIOTalonSRX(){
-        switch(Constants.bot){
+    public IntakeIOTalonSRX() {
+        switch (Constants.bot) {
             case ROBOT_2022_COMP:
                 this.intakeMotor = new WPI_TalonSRX(59);
-                intakeMotor.setInverted(true);
+                intakeMotor.setInverted(false);
                 this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 12);
                 break;
             case ROBOT_2022_PRACTICE:
@@ -28,28 +28,28 @@ public class IntakeIOTalonSRX implements IntakeIO{
     }
 
     @Override
-    public void runIntakeVoltage(double volts){
+    public void runIntakeVoltage(double volts) {
         intakeMotor.set(ControlMode.PercentOutput, volts / 12);
     }
 
     @Override
-    public void runIntakeVelocity(double velocity){
+    public void runIntakeVelocity(double velocity) {
         intakeMotor.set(ControlMode.Velocity, velocity);
     }
 
     @Override
-    public void stopIntake(){
+    public void stopIntake() {
         intakeMotor.stopMotor();
     }
 
     @Override
-    public void setIntakeMotorBrakeMode(boolean enable){
+    public void setIntakeMotorBrakeMode(boolean enable) {
         intakeMotor.setNeutralMode(enable ? NeutralMode.Brake : NeutralMode.Coast);
     }
 
     @Override
-    public void setIntakeSolenoid(){
-        if(intakeArmSolenoid.get() == Value.kOff){
+    public void setIntakeSolenoid() {
+        if (intakeArmSolenoid.get() == Value.kOff) {
             intakeArmSolenoid.set(Value.kForward);
         } else {
             // intakeArmSolenoid.toggle();

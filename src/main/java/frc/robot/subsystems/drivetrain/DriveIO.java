@@ -20,7 +20,8 @@ public interface DriveIO {
     public default void setVelocity(double leftSpeed,
             double rightSpeed) {
     }
-    public default void setSpeed(double leftSpeed, double rightSpeed){
+
+    public default void setSpeed(double leftSpeed, double rightSpeed) {
 
     }
 
@@ -29,7 +30,8 @@ public interface DriveIO {
     }
 
     /** Set PID constants */
-    public default void setPID(double kP, double kI, double kD) {}
+    public default void setPID(double kP, double kI, double kD) {
+    }
 
     /** Gets left encoder value */
     public default double getLeftPosition() {
@@ -37,15 +39,17 @@ public interface DriveIO {
     }
 
     /** Resets left encoder value */
-    public default void resetLeftPosition() {}
-    
+    public default void resetLeftPosition() {
+    }
+
     /** Gets right encoder value */
     public default double getRightPosition() {
         return 0.0;
     }
 
     /** Resets right encoder value */
-    public default void resetRightPosition() {}
+    public default void resetRightPosition() {
+    }
 
     /** Gets left encoder rate */
     public default double getLeftRate() {
@@ -63,7 +67,8 @@ public interface DriveIO {
     }
 
     /** Resets gyro value */
-    public default void resetGyroAngle() {}
+    public default void resetGyroAngle() {
+    }
 
     /** Gets gyro rate */
     public default double getGyroRate() {

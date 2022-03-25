@@ -1,12 +1,12 @@
 package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
@@ -17,9 +17,9 @@ public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;
 
-    public static WPI_TalonFX leftLeader;
+    public WPI_TalonFX leftLeader;
     private WPI_TalonFX leftFollower;
-    public static WPI_TalonFX rightLeader;
+    public WPI_TalonFX rightLeader;
     private WPI_TalonFX rightFollower;
 
     private double leftEncoderValue;
@@ -105,8 +105,9 @@ public class DriveIOFalcon implements DriveIO {
         leftLeader.set(ControlMode.PercentOutput, leftVolts / 12.0);
         rightLeader.set(ControlMode.PercentOutput, rightVolts / 12.0);
     }
+
     @Override
-    public void setSpeed(double leftSpeed, double rightSpeed){
+    public void setSpeed(double leftSpeed, double rightSpeed) {
         // controlmode.setSpeed
         leftLeader.set(ControlMode.PercentOutput, leftSpeed);
         rightLeader.set(ControlMode.PercentOutput, rightSpeed);
@@ -115,7 +116,7 @@ public class DriveIOFalcon implements DriveIO {
     @Override
     public void setVelocity(double leftVelocityRadPerSec,
             double rightVelocityRadPerSec) {
-        
+
         double leftTicksPer100Ms = Units.radiansToRotations(leftVelocityRadPerSec)
                 * encoderTicksPerRev / 10.0;
         double rightTicksPer100Ms = Units.radiansToRotations(rightVelocityRadPerSec)
@@ -178,7 +179,7 @@ public class DriveIOFalcon implements DriveIO {
 
     @Override
     public double getGyroAngle() {
-        return Units.degreesToRadians(gyro.getAngle());
+        return gyro.getAngle();
     }
 
     @Override
