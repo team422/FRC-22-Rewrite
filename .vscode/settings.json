@@ -28,6 +28,7 @@
         },
     ],
     "java.test.defaultConfig": "WPIlibUnitTests",
+    "files.insertFinalNewline": true,
     "java.codeGeneration.generateComments": true,
     "editor.detectIndentation": false,
     "editor.autoIndent": "full",
