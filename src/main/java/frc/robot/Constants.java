@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -27,6 +29,11 @@ public final class Constants {
     public enum DriveMode {
         TANK, ARCADE
     }
+
+    // Field Constants
+    public static final double BALL_HEIGHT_METERS = 0.2;
+    public static final double HUB_HIGH_HEIGHT_METERS = Units.feetToMeters(8.8);
+    public static final double HUB_LOW_HEIGHT_METERS = 1.5;
 
     // General Constants
     public static final BotType bot = BotType.ROBOT_2022_COMP;

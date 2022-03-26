@@ -1,17 +1,29 @@
 package frc.robot.subsystems.vision;
 
+import org.photonvision.targeting.PhotonPipelineResult;
+
 public interface VisionIO {
 
-    public default double getYaw() {
+    public default PhotonPipelineResult getLatestResult() {
+        return null;
+    }
+
+    public default void updateTarget() {
+    }
+
+    public default double getX() {
         return 0.0;
     }
 
-    public default double getPitch() {
+    public default void setLEDEnabled(boolean enabled) {
+    }
+
+    public default double getCameraHeightMeters() {
         return 0.0;
     }
 
-    public default double distanceToTarget(double CAMERA_HEIGHT_METERS, double BALL_HEIGHT_METERS,
-            double CAMERA_DEGREES_HORIZ) {
+    public default double getCameraDegreesHoriz() {
         return 0.0;
     }
+
 }

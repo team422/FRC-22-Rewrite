@@ -45,7 +45,7 @@ public class XboxUserControls implements UserControls {
 
     @Override
     public Trigger getAutoDriveButton() {
-        return new Trigger();
+        return new Trigger(() -> driverController.getXButton());
     }
 
     @Override

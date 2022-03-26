@@ -1,25 +1,41 @@
 package frc.robot.subsystems.vision;
 
+import org.photonvision.targeting.PhotonPipelineResult;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
 
-    private final VisionIO photonCam;
+    private final VisionIO visionIO;
+    private PhotonPipelineResult latestResult;
 
     public Vision(VisionIO visionCam) {
-        this.photonCam = visionCam;
+        this.visionIO = visionCam;
     }
 
-    public double getX() {
-        return photonCam.getYaw();
+    @Override
+    public void periodic() {
+        latestResult = visionIO.getLatestResult();
     }
 
-    public double getY() {
-        return photonCam.getPitch();
+    public PhotonPipelineResult getLatestResult() {
+        return this.latestResult;
     }
 
-    public double getDistance(double CAMERA_HEIGHT_METERS, double BALL_HEIGHT_METERS, double CAMERA_DEGREES_HORIZ) {
-        return photonCam.distanceToTarget(CAMERA_HEIGHT_METERS, BALL_HEIGHT_METERS, CAMERA_DEGREES_HORIZ);
+    public void setLEDEnabled(boolean enabled) {
+        visionIO.setLEDEnabled(enabled);
+    }
+
+    public void setPipelineIndex() {
+        // TODO
+    }
+
+    public double getCameraHeightMeters() {
+        return visionIO.getCameraHeightMeters();
+    }
+
+    public double getCameraDegreesHoriz() {
+        return visionIO.getCameraDegreesHoriz();
     }
 
 }
