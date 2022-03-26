@@ -9,7 +9,6 @@ import frc.robot.subsystems.drivetrain.DriveBase;
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends CommandBase {
     private final DriveBase drive;
-    private final Supplier<Boolean> sniperMode;
     private final Supplier<Double> leftXSupplier, leftYSupplier,
             rightXSupplier, rightYSupplier;
 
@@ -31,14 +30,13 @@ public class ArcadeDrive extends CommandBase {
      */
     public ArcadeDrive(DriveBase drive,
             Supplier<Double> leftXSupplier, Supplier<Double> leftYSupplier,
-            Supplier<Double> rightXSupplier, Supplier<Double> rightYSupplier, Supplier<Boolean> sniperMode) {
+            Supplier<Double> rightXSupplier, Supplier<Double> rightYSupplier) {
         addRequirements(drive);
         this.drive = drive;
         this.leftXSupplier = leftXSupplier;
         this.leftYSupplier = leftYSupplier;
         this.rightXSupplier = rightXSupplier;
         this.rightYSupplier = rightYSupplier;
-        this.sniperMode = sniperMode;
 
         // Set defaults of tunable numbers here
     }
@@ -61,18 +59,12 @@ public class ArcadeDrive extends CommandBase {
         double leftYValue = leftYSupplier.get();
         double rightXValue = rightXSupplier.get();
         double rightYValue = rightYSupplier.get();
-        boolean isSniperMode = sniperMode.get();
         double mult = 1;
         double leftSpeed;
         double rightSpeed;
 
-        if (isSniperMode) {
-            leftSpeed = leftYValue * 0.1;
-            rightSpeed = rightXValue * 0.1;
-        } else {
-            leftSpeed = leftYValue;
-            rightSpeed = rightXValue;
-        }
+        leftSpeed = leftYValue;
+        rightSpeed = rightXValue;
 
         drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
     }

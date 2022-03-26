@@ -33,17 +33,6 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getSniperModeButton() {
-        return new Trigger(() -> driverController.getRightTriggerAxis() > 0.4);
-
-    }
-
-    @Override
-    public Trigger getSpeedModeButton() {
-        return new Trigger(() -> driverController.getLeftBumper());
-    }
-
-    @Override
     public Trigger getAutoDriveButton() {
         return new Trigger();
     }
@@ -54,13 +43,12 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getShootButton() {
+    public Trigger getFeedShooterButton() {
         return new Trigger(() -> driverController.getLeftBumper());
     }
 
     @Override
-    public Trigger getRevButton() {
-
+    public Trigger getRevShooterButton() {
         return new Trigger(() -> driverController.getRightBumper());
     }
 
@@ -105,17 +93,12 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getFlyWheelUp() {
-        return new Trigger(() -> operatorController.getXButton());
-    }
-
-    @Override
-    public Trigger getDriverFlyWheelUp() {
+    public Trigger getDriverFlyWheelHoodUp() {
         return new Trigger(() -> driverController.getYButton());
     }
 
     @Override
-    public Trigger getFlyWheeldDown() {
+    public Trigger getDriverFlyWheelHoodDown() {
         return new Trigger(() -> driverController.getBButton());
     }
     // @Override

@@ -15,6 +15,7 @@ import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
@@ -24,8 +25,8 @@ import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.commands.operatorcommands.TeleUptake;
+import frc.robot.oi.MixedXboxJoystickControls;
 import frc.robot.oi.UserControls;
-import frc.robot.oi.XboxUserControls;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.climber.ClimberPistonIO;
@@ -83,15 +84,14 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        UserControls controls = new XboxUserControls(0, 1);
+        UserControls controls = new MixedXboxJoystickControls(0, 1, 5);
 
         // Define commands here
         ArcadeDrive defaultDriveCommand = new ArcadeDrive(drive,
                 () -> controls.getLeftDriveX(),
                 () -> controls.getLeftDriveY(),
                 () -> controls.getRightDriveX(),
-                () -> controls.getRightDriveY(),
-                () -> controls.getSniperModeButton().get());
+                () -> controls.getRightDriveY());
 
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
                 () -> 12.0 * controls.getIntakeSpeed());
@@ -115,7 +115,8 @@ public class RobotContainer {
 
         TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultVolts());
         // TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
-        TeleFlyVar runFlywheelCommand = new TeleFlyVar(varFlyWheel);
+        TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
+        TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -132,13 +133,12 @@ public class RobotContainer {
 
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
 
-        controls.getFlyWheelUp().whileActiveOnce(flyUp);
-        controls.getDriverFlyWheelUp().whileActiveOnce(flyUp);
-        controls.getFlyWheeldDown().whileActiveOnce(flyDown);
+        controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
+        controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
         // controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
 
-        controls.getShootButton().whileActiveOnce(shootCommand);
-        controls.getRevButton().whileActiveOnce(runFlywheelCommand);
+        controls.getFeedShooterButton().whileActiveOnce(feedCargoCommand);
+        controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
         drive.resetLeftPosition();
         drive.resetRightPosition();
     }
