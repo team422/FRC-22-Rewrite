@@ -2,7 +2,6 @@ package frc.robot.commands.operatorcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.climber.Climber;
-import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
 
 public class TeleClimbTilt extends CommandBase {
 

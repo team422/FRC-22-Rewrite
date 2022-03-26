@@ -1,67 +1,108 @@
 package frc.robot.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.networktables.NetworkTableEntry;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
+/**
+ * Class for a tunable number. Gets value from dashboard in tuning mode, returns default if not or
+ * value not in dashboard.
+ */
 public class TunableNumber {
-    
-    private static final ShuffleboardTab tab = Shuffleboard.getTab("Tuning");
-    private String numberKey;
-    private NetworkTableEntry entry;
+    private static final String tableKey = "TunableNumbers";
+
+    private String key;
     private double defaultValue;
     private double previousValue = defaultValue;
-    private Consumer<Double> onValueChangedConsumer;
+    private List<Consumer<Double>> consumers;
 
-    public TunableNumber(String numberKey) {
-        this.numberKey = numberKey;
-
-        if (Constants.tuningMode) {
-            entry = tab.add(numberKey, defaultValue).getEntry();
-        }
+    /**
+     * Create a new TunableNumber
+     * 
+     * @param dashboardKey Key on dashboard
+     */
+    public TunableNumber(String dashboardKey) {
+        this.key = tableKey + "/" + dashboardKey;
     }
 
-    public TunableNumber(String numberKey, double defaultValue) {
-        this(numberKey);
-        this.defaultValue = defaultValue;
-        this.previousValue = defaultValue;
+    /**
+     * Create a new TunableNumber with the default value
+     * 
+     * @param dashboardKey Key on dashboard
+     * @param defaultValue Default value
+     */
+    public TunableNumber(String dashboardKey, double defaultValue) {
+        this(dashboardKey);
+        setDefault(defaultValue);
     }
 
-    public TunableNumber(String numberKey, double defaultValue, Consumer<Double> consumer) {
-        this(numberKey, defaultValue);
-        this.onValueChangedConsumer = consumer;
-    }
-
+    /**
+     * Get the default value for the number that has been set
+     * 
+     * @return The default value
+     */
     public double getDefault() {
-        return this.defaultValue;
+        return defaultValue;
     }
 
-    public void setDefault(double newDefault) {
-        this.defaultValue = newDefault;
-
+    /**
+     * Set the default value of the number
+     * 
+     * @param defaultValue The default value
+     */
+    public void setDefault(double defaultValue) {
+        this.defaultValue = defaultValue;
         if (Constants.tuningMode) {
-            entry = tab.add(numberKey, defaultValue).getEntry();
+            // This makes sure the data is on NetworkTables but will not change it
+            SmartDashboard.putNumber(key,
+                    SmartDashboard.getNumber(key, defaultValue));
+            notify(defaultValue);
+        } else {
+            SmartDashboard.delete(key);
         }
     }
 
+    /**
+     * Get the current value, from dashboard if available and in tuning mode
+     * 
+     * @return The current value
+     */
     public double get() {
         if (!Constants.tuningMode) {
             return defaultValue;
         }
 
-        double value = entry.getDouble(defaultValue);
+        double value = SmartDashboard.getNumber(key, defaultValue);
 
         if (value != previousValue) {
-            if (onValueChangedConsumer != null) {
-                onValueChangedConsumer.accept(value);
-            }
-            
             previousValue = value;
+            notify(value);
         }
 
         return value;
+    }
+
+    public void addChangeListener(Consumer<Double> listener) {
+        if (listener == null) {
+            return;
+        }
+
+        if (consumers == null) {
+            consumers = new ArrayList<>();
+        }
+
+        consumers.add(listener);
+    }
+
+    private void notify(double value) {
+        if (consumers == null) {
+            return;
+        }
+        for (var consumer : consumers) {
+            consumer.accept(value);
+        }
     }
 }

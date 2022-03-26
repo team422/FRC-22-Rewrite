@@ -95,17 +95,33 @@ public class XboxUserControls implements UserControls {
     // }
 
     @Override
+    public Trigger getUptakeUpTrigger() {
+        return new Trigger(() -> operatorController.getLeftY() > 0.2);
+    }
+
+    @Override
+    public Trigger getUptakeDownTrigger() {
+        return new Trigger(() -> operatorController.getLeftY() < -0.2);
+    }
+
+    @Override
     public Trigger getFlyWheelUp() {
         return new Trigger(() -> operatorController.getXButton());
     }
-    // @Override
-    // public Trigger getFlyWheeldDown() {
-    //     return new Trigger(() -> driverController.getBButton());
-    // }
+
     @Override
-    public Trigger getFlyWheelToggle() {
+    public Trigger getDriverFlyWheelUp() {
         return new Trigger(() -> driverController.getYButton());
     }
+
+    @Override
+    public Trigger getFlyWheeldDown() {
+        return new Trigger(() -> driverController.getBButton());
+    }
+    // @Override
+    // public Trigger getFlyWheelToggle() {
+    //     return new Trigger(() -> driverController.getYButton());
+    // }
 
     @Override
     public Trigger getClimbUp() {
@@ -116,15 +132,15 @@ public class XboxUserControls implements UserControls {
     public Trigger getClimbDown() {
         return new Trigger(() -> operatorController.getPOV() == 180);
     }
-    
+
     @Override
     public Trigger getClimbAuto() {
         return new Trigger();
     }
 
     @Override
-    public double defaultValue() {
-        return 12*0.9;
+    public double defaultVolts() {
+        return 12 * 0.9;
     }
 
     @Override

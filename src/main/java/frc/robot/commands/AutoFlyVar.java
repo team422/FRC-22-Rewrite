@@ -1,14 +1,15 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 
-public class TeleFlyVar extends CommandBase {
+public class AutoFlyVar extends CommandBase {
     private final VarFlyWheel varFlyWheel;
+    private final double upSpeed = 2000; // Distance is x feet to close bumper
+    private final double downSpeed = 2200;
 
-    public TeleFlyVar(VarFlyWheel varFlyWheel) {
+    public AutoFlyVar(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
     }
 
@@ -19,9 +20,9 @@ public class TeleFlyVar extends CommandBase {
     @Override
     public void execute() {
         if (varFlyWheel.get() == Value.kForward) {
-            varFlyWheel.flyVelocity(Constants.SHOOTER_UP_RPM);
+            varFlyWheel.flyVelocity(upSpeed);
         } else if (varFlyWheel.get() == Value.kReverse) {
-            varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
+            varFlyWheel.flyVelocity(downSpeed);
         }
     }
 

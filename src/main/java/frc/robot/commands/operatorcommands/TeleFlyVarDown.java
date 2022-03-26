@@ -1,11 +1,11 @@
 package frc.robot.commands.operatorcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.flywheel.VarFlyWheel;
 
-import frc.robot.subsystems.flywheelvarhood.VarFlyWheel;
-
-public class TeleFlyVarDown extends CommandBase{
+public class TeleFlyVarDown extends CommandBase {
     private final VarFlyWheel varFlyWheel;
+
     public TeleFlyVarDown(VarFlyWheel varFlyWheel) {
         this.varFlyWheel = varFlyWheel;
     }
@@ -14,7 +14,7 @@ public class TeleFlyVarDown extends CommandBase{
     public void execute() {
         varFlyWheel.retractFly();
     }
-    
+
     @Override
     public void end(boolean interrupted) {
     }

@@ -2,17 +2,16 @@ package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.TalonFXUtils;
 
 public class DriveBase extends SubsystemBase {
     // Final for now, make sure to change in order to switch between drives
@@ -31,8 +30,7 @@ public class DriveBase extends SubsystemBase {
     // private final SimpleMotorFeedforward leftFF;
     // private final SimpleMotorFeedforward rightFF;
 
-    private DifferentialDriveOdometry odometry =
-        new DifferentialDriveOdometry(new Rotation2d(),
+    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(),
             new Pose2d());
 
     public DriveBase(DriveIO driveIO) {
@@ -51,20 +49,20 @@ public class DriveBase extends SubsystemBase {
         //     driveIO.getkS(),
         //     driveIO.getkV(),
         //     driveIO.getkA());
-        
+
         setBrakeMode(false);
     }
 
     @Override
     public void periodic() {
         odometry.update(new Rotation2d(-driveIO.getGyroAngle()),
-            getLeftDistanceMeters(),
-            getRightDistanceMeters());
+                getLeftDistanceMeters(),
+                getRightDistanceMeters());
     }
 
     public void resetOdometry(Pose2d pose) {
         odometry.resetPosition(pose,
-            new Rotation2d(-driveIO.getGyroAngle()));
+                new Rotation2d(-driveIO.getGyroAngle()));
     }
 
     public void driveVoltage(double leftVoltage, double rightVoltage) {
@@ -73,10 +71,10 @@ public class DriveBase extends SubsystemBase {
 
     public void drivePercent(double leftPercent, double rightPercent) {
         driveIO.setSpeed(leftPercent,
-            rightPercent);
+                rightPercent);
     }
 
-    public void driveSpeed(double leftSpeed, double rightSpeed){
+    public void driveSpeed(double leftSpeed, double rightSpeed) {
         driveIO.setSpeed(leftSpeed, rightSpeed);
     }
 
@@ -96,7 +94,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getLeftDistanceMeters() {
-        return (driveIO.getLeftPosition() / 2048) * (2 * Math.PI) * wheelRadiusMeters * (1/Constants.driveGearRatio);
+        return TalonFXUtils.ticksToMeters(driveIO.getLeftPosition(), Constants.driveGearRatio, wheelRadiusMeters);
     }
 
     public void resetLeftPosition() {
@@ -104,7 +102,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getRightDistanceMeters() {
-        return (driveIO.getRightPosition() / 2048) * (2 * Math.PI) * wheelRadiusMeters * (1/Constants.driveGearRatio);
+        return TalonFXUtils.ticksToMeters(driveIO.getRightPosition(), Constants.driveGearRatio, wheelRadiusMeters);
     }
 
     public void resetRightPosition() {
