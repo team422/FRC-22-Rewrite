@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.DistanceToHub;
 import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -41,6 +42,8 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.transversal.TransversalIOSparkMax;
 import frc.robot.subsystems.uptake.Uptake;
 import frc.robot.subsystems.uptake.UptakeIOSparkMax;
+import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.VisionIOSnakeEyes;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -62,6 +65,7 @@ public class RobotContainer {
     private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
     private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
     private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
+    private final Vision hubCam = new Vision(new VisionIOSnakeEyes("hubCam"));
     private UsbCamera camera;
 
     /**
@@ -117,6 +121,8 @@ public class RobotContainer {
         // TeleFlyVar revCommand = new TeleFlyVar(varFlyWheel);
         TeleFlyVar runFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
+        DistanceToHub findDistanceToHub = new DistanceToHub(hubCam);
+
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
@@ -136,6 +142,7 @@ public class RobotContainer {
         controls.getDriverFlyWheelUp().whileActiveOnce(flyUp);
         controls.getFlyWheeldDown().whileActiveOnce(flyDown);
         // controls.getFlyWheelToggle().whileActiveOnce(flyPistonToggle);
+        controls.getAutoAimButton().whileActiveOnce(findDistanceToHub);
 
         controls.getShootButton().whileActiveOnce(shootCommand);
         controls.getRevButton().whileActiveOnce(runFlywheelCommand);
