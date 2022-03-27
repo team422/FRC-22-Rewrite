@@ -50,6 +50,7 @@ public class DriveIOFalcon implements DriveIO {
 
                 this.kP = 0.064039;
                 this.kD = 0.0;
+                this.gyro = new ADXRS450_Gyro(kGyroPort);
                 break;
             case ROBOT_2022_PRACTICE:
                 this.leftLeader = new WPI_TalonFX(4);
@@ -86,8 +87,6 @@ public class DriveIOFalcon implements DriveIO {
         leftFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightLeader.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
         rightFollower.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 40, .5));
-
-        this.gyro = new ADXRS450_Gyro(kGyroPort);
     }
 
     @Override
@@ -179,16 +178,28 @@ public class DriveIOFalcon implements DriveIO {
 
     @Override
     public double getGyroAngle() {
+        if (gyro == null) {
+            return 0;
+        }
+
         return gyro.getAngle();
     }
 
     @Override
     public void resetGyroAngle() {
+        if (gyro == null) {
+            return;
+        }
+
         gyro.reset();
     }
 
     @Override
     public double getGyroRate() {
+        if (gyro == null) {
+            return 0;
+        }
+
         return gyro.getRate();
     }
 
