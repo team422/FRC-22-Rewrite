@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.OneCargoAuto;
 import frc.robot.commands.PositionForHub;
 import frc.robot.commands.RotateToHub;
+import frc.robot.commands.auto.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -146,7 +146,7 @@ public class RobotContainer {
 
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
-  
+
         controls.getFeedShooterButton().whileActiveOnce(feedCargoCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
