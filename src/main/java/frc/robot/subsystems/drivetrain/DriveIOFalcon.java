@@ -34,6 +34,7 @@ public class DriveIOFalcon implements DriveIO {
 
     private final double kP;
     private final double kD;
+    private boolean isGyroInverted = false;
 
     public DriveIOFalcon() {
         switch (Constants.bot) {
@@ -51,6 +52,7 @@ public class DriveIOFalcon implements DriveIO {
                 this.kP = 0.064039;
                 this.kD = 0.0;
                 this.gyro = new ADXRS450_Gyro(kGyroPort);
+                this.isGyroInverted = true;
                 break;
             case ROBOT_2022_PRACTICE:
                 this.leftLeader = new WPI_TalonFX(4);
@@ -182,7 +184,9 @@ public class DriveIOFalcon implements DriveIO {
             return 0;
         }
 
-        return gyro.getAngle();
+        double multiplier = isGyroInverted ? -1 : 1;
+
+        return gyro.getAngle() * multiplier;
     }
 
     @Override
