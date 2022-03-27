@@ -27,18 +27,30 @@ import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.oi.MixedXboxJoystickControls;
 import frc.robot.oi.UserControls;
 import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
 import frc.robot.subsystems.climber.ClimberIOFalcon;
 import frc.robot.subsystems.climber.ClimberPistonIO;
+import frc.robot.subsystems.colorSensor.ColorSensor;
+import frc.robot.subsystems.colorSensor.ColorSensorIO;
+import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
 import frc.robot.subsystems.drivetrain.DriveBase;
+import frc.robot.subsystems.drivetrain.DriveIO;
 import frc.robot.subsystems.drivetrain.DriveIOFalcon;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
+import frc.robot.subsystems.flywheel.VarFlyWheelIO;
 import frc.robot.subsystems.flywheel.VarFlyWheelIOFalcon;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOTalonSRX;
 import frc.robot.subsystems.transversal.Transversal;
+import frc.robot.subsystems.transversal.TransversalIO;
 import frc.robot.subsystems.transversal.TransversalIOSparkMax;
 import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.subsystems.uptake.UptakeIO;
 import frc.robot.subsystems.uptake.UptakeIOSparkMax;
+import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.VisionIO;
+import frc.robot.subsystems.vision.VisionIOPhotonVision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -51,30 +63,99 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final DriveBase drive = new DriveBase(new DriveIOFalcon());
-    private final Climber climber = new Climber(
-            new ClimberIOFalcon(),
-            new ClimberPistonIO());
-    private final Intake intake = new Intake(new IntakeIOTalonSRX());
-    private final VarFlyWheel varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
-    private final Transversal transversal = new Transversal(new TransversalIOSparkMax());
-    private final Uptake uptake = new Uptake(new UptakeIOSparkMax());
-    // private final ColorSensor colorSensor = new ColorSensor(new ColorSensorIORevV3());
-    // private final Vision hubCam = new Vision(
-    //         new VisionIOPhotonVision(
-    //                 VisionIOPhotonVision.HUB_CAMERA_NAME,
-    //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
-    //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+    private DriveBase drive;
+    private Climber climber;
+    private Intake intake;
+    private VarFlyWheel varFlyWheel;
+    private Transversal transversal;
+    private Uptake uptake;
+    private ColorSensor colorSensor;
+    private Vision hubCam;
     private UsbCamera camera;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+
+        // Initialize Subsystems
+        configureSubsystems();
+
         // Configure the button bindings
         configureButtonBindings();
-        camera = CameraServer.startAutomaticCapture();
-        camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+    }
+
+    private void configureSubsystems() {
+        switch (Constants.bot) {
+            case ROBOT_2022_COMP:
+                drive = new DriveBase(new DriveIOFalcon());
+                climber = new Climber(
+                        new ClimberIOFalcon(),
+                        new ClimberPistonIO());
+                intake = new Intake(new IntakeIOTalonSRX());
+                varFlyWheel = new VarFlyWheel(new VarFlyWheelIOFalcon());
+                transversal = new Transversal(new TransversalIOSparkMax());
+                uptake = new Uptake(new UptakeIOSparkMax());
+                colorSensor = new ColorSensor(new ColorSensorIORevV3());
+                // hubCam = new Vision(
+                //         new VisionIOPhotonVision(
+                //                 VisionIOPhotonVision.HUB_CAMERA_NAME,
+                //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                camera = CameraServer.startAutomaticCapture();
+                camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+                break;
+            case ROBOT_2022_PRACTICE:
+                drive = new DriveBase(new DriveIOFalcon());
+                hubCam = new Vision(
+                        new VisionIOPhotonVision(
+                                VisionIOPhotonVision.HUB_CAMERA_NAME,
+                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                break;
+            default:
+                System.out.println("No robot selected.");
+                break;
+        }
+
+        if (drive == null) {
+            drive = new DriveBase(new DriveIO() {
+            });
+        }
+        if (climber == null) {
+            climber = new Climber(new ClimberIO() {
+            }, null);
+        }
+
+        if (intake == null) {
+            intake = new Intake(new IntakeIO() {
+            });
+        }
+
+        if (varFlyWheel == null) {
+            varFlyWheel = new VarFlyWheel(new VarFlyWheelIO() {
+            });
+        }
+
+        if (transversal == null) {
+            transversal = new Transversal(new TransversalIO() {
+            });
+        }
+
+        if (uptake == null) {
+            uptake = new Uptake(new UptakeIO() {
+            });
+        }
+
+        if (colorSensor == null) {
+            colorSensor = new ColorSensor(new ColorSensorIO() {
+            });
+        }
+
+        if (hubCam == null) {
+            hubCam = new Vision(new VisionIO() {
+            });
+        }
     }
 
     /**

@@ -1,12 +1,11 @@
 package frc.robot.commands.operatorcommands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.uptake.Uptake;
 
-
-public class TeleUptake extends CommandBase{
+public class TeleUptake extends CommandBase {
     private final Uptake uptake;
     private final Supplier<Double> voltageSupplier;
 
@@ -20,7 +19,7 @@ public class TeleUptake extends CommandBase{
     @Override
     public void execute() {
         double voltage = voltageSupplier.get();
-            uptake.setVoltage(voltage);
+        uptake.setVoltage(voltage);
     }
 
     @Override

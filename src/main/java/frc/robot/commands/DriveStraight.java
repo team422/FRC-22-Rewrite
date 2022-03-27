@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.DriveBase;
 
@@ -20,27 +21,27 @@ public class DriveStraight extends CommandBase {
     public void initialize() {
         drive.resetLeftPosition();
         drive.resetRightPosition();
-        drive.getGyroAngle();
-        // drive.setBrakeMode(true);
-        System.out.println("Driving!!");
+
+        drive.setBrakeMode(true);
+        drive.resetGyro();
     }
 
     @Override
     public void execute() {
-        // double correction = -drive.getGyroAngle() * 0.05 + 1.0;
-        System.out.println(drive.getLeftDistanceMeters());
-        System.out.println(drive.getRightDistanceMeters());
-        drive.driveSpeed(speed, speed);
+        double correction = Units.degreesToRadians(drive.getGyroAngle()) * 0.1;
+        double moveSpeed = this.speed * Math.signum(this.meters);
+        drive.driveBase.curvatureDrive(moveSpeed, correction, false);
     }
 
     @Override
     public void end(boolean interrupted) {
-        drive.drivePercent(0.0, 0.0);
+        drive.driveSpeed(0.0, 0.0);
     }
 
     @Override
     public boolean isFinished() {
-        return ((drive.getLeftDistanceMeters() > this.meters) || (drive.getRightDistanceMeters() > this.meters));
+        return Math.abs(drive.getLeftDistanceMeters()) > Math.abs(this.meters)
+                || Math.abs(drive.getRightDistanceMeters()) > Math.abs(this.meters);
     }
 
 }
