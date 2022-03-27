@@ -23,7 +23,7 @@ import frc.robot.subsystems.vision.Vision;
 public class OneCargoAuto extends ParallelCommandGroup {
 
     public OneCargoAuto(DriveBase drive,
-            Vision vision,
+            Vision hubCam,
             Transversal transversal,
             Uptake uptake,
             VarFlyWheel varFlyWheel) {

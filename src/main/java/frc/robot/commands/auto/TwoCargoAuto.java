@@ -21,7 +21,7 @@ import frc.robot.subsystems.vision.Vision;
 
 public class TwoCargoAuto extends ParallelCommandGroup {
     public TwoCargoAuto(DriveBase drive,
-            Vision vision,
+            Vision hubCam,
             Intake intake,
             Transversal transversal,
             Uptake uptake,

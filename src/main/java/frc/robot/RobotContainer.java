@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.PositionForHub;
 import frc.robot.commands.RotateToHub;
-import frc.robot.commands.auto.OneCargoAuto;
+import frc.robot.commands.auto.ThreeCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -163,6 +163,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        return new ThreeCargoAuto(drive, hubCam, intake, transversal, uptake, varFlyWheel);
     }
 }

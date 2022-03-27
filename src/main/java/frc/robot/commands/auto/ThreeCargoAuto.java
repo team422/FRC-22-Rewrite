@@ -4,7 +4,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AutoMotionProfiling;
+import frc.robot.commands.RotateToHub;
 import frc.robot.commands.RunTransUp;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
@@ -19,7 +21,7 @@ import frc.robot.subsystems.vision.Vision;
 
 public class ThreeCargoAuto extends ParallelCommandGroup {
     public ThreeCargoAuto(DriveBase drive,
-            Vision vision,
+            Vision hubCam,
             Intake intake,
             Transversal transversal,
             Uptake uptake,
@@ -40,6 +42,9 @@ public class ThreeCargoAuto extends ParallelCommandGroup {
                                 new Pose2d(Units.feetToMeters(8), 0, new Rotation2d()),
                                 new Pose2d(Units.feetToMeters(4), -Units.feetToMeters(6),
                                         new Rotation2d(-Units.degreesToRadians(50)))),
-                        new RunTransUp(transversal, uptake).withTimeout(4)));
+                        parallel(
+                                new RotateToHub(hubCam, drive),
+                                sequence(new WaitCommand(3),
+                                        new RunTransUp(transversal, uptake).withTimeout(4)))));
     }
 }
