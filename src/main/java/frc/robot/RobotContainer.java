@@ -20,6 +20,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
+import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleShoot;
@@ -179,7 +180,7 @@ public class RobotContainer {
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
                 () -> 12.0 * controls.getIntakeSpeed());
 
-        // TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
+        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
@@ -208,7 +209,7 @@ public class RobotContainer {
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
         intake.setDefaultCommand(defaultIntakeCommand);
-        // uptake.setDefaultCommand(defaultIndexCommand);
+        uptake.setDefaultCommand(defaultIndexCommand);
 
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);

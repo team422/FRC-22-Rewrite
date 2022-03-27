@@ -2,7 +2,6 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.Turn;
@@ -56,10 +55,8 @@ public class FourCargoAuto extends ParallelCommandGroup {
                         // Shoot first two cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(3),
 
-                        new PrintCommand("weeeeeee"),
-
                         // Turn to loading station
-                        new Turn(drive, -60, driveSpeed),
+                        new Turn(drive, -68, driveSpeed / 2),
 
                         // Drive to loading station
                         new DriveStraight(drive, Units.feetToMeters(20), driveSpeed),
@@ -67,11 +64,11 @@ public class FourCargoAuto extends ParallelCommandGroup {
                         // Wait for intaking at loading station
                         new WaitCommand(3),
 
-                        // Turn to hub
-                        new Turn(drive, 30, driveSpeed),
-
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-12), driveSpeed),
+                        new DriveStraight(drive, Units.feetToMeters(-20), driveSpeed),
+
+                        // Turn to hub
+                        new Turn(drive, 68, driveSpeed / 2),
 
                         // Align to hub using vision
                         // new PositionForHub(vision, drive).withTimeout(3),
