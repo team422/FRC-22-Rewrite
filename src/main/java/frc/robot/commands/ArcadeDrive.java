@@ -66,6 +66,9 @@ public class ArcadeDrive extends CommandBase {
         leftSpeed = leftYValue;
         rightSpeed = rightXValue;
 
+        // System.out.println("Drive Left Speed: " + leftSpeed);
+        // System.out.println("Drive Right Speed: " + rightSpeed);
+
         drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
     }
 

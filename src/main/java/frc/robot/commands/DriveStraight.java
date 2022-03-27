@@ -21,6 +21,7 @@ public class DriveStraight extends CommandBase {
         drive.resetLeftPosition();
         drive.resetRightPosition();
         drive.getGyroAngle();
+        // drive.setBrakeMode(true);
         System.out.println("Driving!!");
     }
 

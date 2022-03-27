@@ -12,7 +12,7 @@ import frc.robot.util.FieldUtils;
 public class PositionForHub extends CommandBase {
 
     private static final double MAX_TURN_SPEED = 0.0075;
-    private static final double LONG_TARGET_DISTANCE = Units.feetToMeters(7);
+    private static final double LONG_TARGET_DISTANCE = Units.feetToMeters(8);
 
     private final Vision hubCam;
     private final DriveBase drive;
