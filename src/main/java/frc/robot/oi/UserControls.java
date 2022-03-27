@@ -35,14 +35,6 @@ public interface UserControls {
         return 0.0;
     }
 
-    public default Trigger getSniperModeButton() {
-        return new Trigger();
-    }
-
-    public default Trigger getSpeedModeButton() {
-        return new Trigger();
-    }
-
     public default Trigger getAutoDriveButton() {
         return new Trigger();
     }
@@ -51,11 +43,11 @@ public interface UserControls {
         return new Trigger();
     }
 
-    public default Trigger getShootButton() {
+    public default Trigger getFeedShooterButton() {
         return new Trigger();
     }
 
-    public default Trigger getRevButton() {
+    public default Trigger getRevShooterButton() {
         return new Trigger();
     }
 
@@ -63,31 +55,31 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getIntakeExtendButton() {
+        return new Trigger();
+    }
+
     public default Trigger getIntakeRetractButton() {
         return new Trigger();
     }
 
-    public default Trigger getIntakeForwardsButton() {
+    public default Trigger getIntakeRunInButton() {
         return new Trigger();
     }
 
-    public default Trigger getIntakeBackwardsButton() {
+    public default Trigger getIntakeRunOutButton() {
         return new Trigger();
     }
 
-    public default Trigger getFlyWheelUp() {
+    public default Trigger getDriverFlyWheelHoodUp() {
         return new Trigger();
     }
 
-    public default Trigger getDriverFlyWheelUp() {
+    public default Trigger getDriverFlyWheelHoodDown() {
         return new Trigger();
     }
 
-    public default Trigger getFlyWheeldDown() {
-        return new Trigger();
-    }
-
-    public default Trigger getFlyWheelToggle() {
+    public default Trigger getFlyWheelHoodToggle() {
         return new Trigger();
     }
 
