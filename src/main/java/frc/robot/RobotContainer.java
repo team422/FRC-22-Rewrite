@@ -119,46 +119,33 @@ public class RobotContainer {
                 break;
         }
 
-        if (drive == null) {
-            drive = new DriveBase(new DriveIO() {
-            });
-        }
-        if (climber == null) {
-            climber = new Climber(new ClimberIO() {
-            }, null);
-        }
+        drive = drive != null ? drive : new DriveBase(new DriveIO() {
+        });
 
-        if (intake == null) {
-            intake = new Intake(new IntakeIO() {
-            });
-        }
+        climber = climber != null ? climber : new Climber(new ClimberIO() {
+        }, null);
 
-        if (varFlyWheel == null) {
-            varFlyWheel = new VarFlyWheel(new VarFlyWheelIO() {
-            });
-        }
+        intake = intake != null ? intake : new Intake(new IntakeIO() {
+        });
 
-        if (transversal == null) {
-            transversal = new Transversal(new TransversalIO() {
-            });
-        }
+        varFlyWheel = varFlyWheel != null ? varFlyWheel : new VarFlyWheel(new VarFlyWheelIO() {
+        });
 
-        if (uptake == null) {
-            uptake = new Uptake(new UptakeIO() {
-            });
-        }
+        transversal = transversal != null ? transversal : new Transversal(new TransversalIO() {
+        });
 
-        if (colorSensor == null) {
-            colorSensor = new ColorSensor(new ColorSensorIO() {
-            });
-        }
+        uptake = uptake != null ? uptake : new Uptake(new UptakeIO() {
+        });
 
-        if (hubCam == null) {
-            hubCam = new Vision(new VisionIO() {
-            });
-        }
+        colorSensor = colorSensor != null ? colorSensor : new ColorSensor(new ColorSensorIO() {
+        });
+
+        hubCam = hubCam != null ? hubCam : new Vision(new VisionIO() {
+        });
 
         hubCam.setLEDEnabled(false);
+        drive.resetLeftPosition();
+        drive.resetRightPosition();
     }
 
     /**
@@ -210,6 +197,8 @@ public class RobotContainer {
         uptake.setDefaultCommand(defaultIndexCommand);
 
         // Define button / command bindings here
+
+        // Operator command bindings
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whenActive(climmberTiltCommand);
@@ -219,6 +208,7 @@ public class RobotContainer {
 
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
 
+        // Driver command bindings
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
 
@@ -230,9 +220,6 @@ public class RobotContainer {
 
         controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         controls.getAutoDriveButton().whileActiveOnce(positionToHub);
-
-        drive.resetLeftPosition();
-        drive.resetRightPosition();
     }
 
     /**
