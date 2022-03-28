@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.PositionForHub;
+import frc.robot.commands.RotateToHub;
 import frc.robot.commands.auto.FourCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -18,12 +20,10 @@ import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
-import frc.robot.commands.operatorcommands.TeleFlyVarPistonToggle;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
-import frc.robot.commands.operatorcommands.TeleShoot;
 import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.oi.MixedXboxJoystickControls;
 import frc.robot.oi.UserControls;
@@ -98,11 +98,11 @@ public class RobotContainer {
                 transversal = new Transversal(new TransversalIOSparkMax());
                 uptake = new Uptake(new UptakeIOSparkMax());
                 colorSensor = new ColorSensor(new ColorSensorIORevV3());
-                // hubCam = new Vision(
-                //         new VisionIOPhotonVision(
-                //                 VisionIOPhotonVision.HUB_CAMERA_NAME,
-                //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
-                //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                hubCam = new Vision(
+                        new VisionIOPhotonVision(
+                                VisionIOPhotonVision.HUB_CAMERA_NAME,
+                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 camera = CameraServer.startAutomaticCapture();
                 camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
@@ -157,6 +157,8 @@ public class RobotContainer {
             hubCam = new Vision(new VisionIO() {
             });
         }
+
+        hubCam.setLEDEnabled(false);
     }
 
     /**
@@ -184,27 +186,23 @@ public class RobotContainer {
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
-        // TeleClimbTiltCG climmberTiltCommand = new TeleClimbTiltCG(varFlyWheel, climber);
         TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
 
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
         TeleIntake intakeInCommand = new TeleIntake(intake, () -> -7.0);
         TeleIntake intakeOutCommand = new TeleIntake(intake, () -> 7.0);
-        // Tele uptakeTraversalCommand = new TeleIntakeToggle(intake);
 
         TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
         TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
 
-        TeleFlyVarPistonToggle flyPistonToggle = new TeleFlyVarPistonToggle(varFlyWheel);
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
-        TeleShoot shootCommand = new TeleShoot(varFlyWheel, transversal, uptake, () -> controls.defaultVolts());
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
         TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
-        // RotateToHub rotateToHub = new RotateToHub(hubCam, drive);
-        // PositionForHub positionToHub = new PositionForHub(hubCam, drive);
+        RotateToHub rotateToHub = new RotateToHub(hubCam, drive);
+        PositionForHub positionToHub = new PositionForHub(hubCam, drive);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -214,7 +212,7 @@ public class RobotContainer {
         // Define button / command bindings here
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
-        // controls.getClimbButton().whenActive(climmberTiltCommand);
+        controls.getClimbButton().whenActive(climmberTiltCommand);
 
         controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
         controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
@@ -230,8 +228,8 @@ public class RobotContainer {
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
         controls.getIntakeRunOutButton().whileActiveOnce(intakeOutCommand);
 
-        // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
-        // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
+        controls.getAutoAimButton().whileActiveOnce(rotateToHub);
+        controls.getAutoDriveButton().whileActiveOnce(positionToHub);
 
         drive.resetLeftPosition();
         drive.resetRightPosition();
@@ -243,7 +241,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCam);
     }
 
     public void setBrakeMode(boolean enabled) {

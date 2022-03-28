@@ -4,10 +4,10 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.PositionForHub;
+import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
-import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.subsystems.drivetrain.DriveBase;
@@ -15,12 +15,14 @@ import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
+import frc.robot.subsystems.vision.Vision;
 
 public class FourCargoAuto extends ParallelCommandGroup {
+    private static final double DRIVE_SPEED = 0.4;
+    private static final double TURN_SPEED = 0.15;
 
     public FourCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
-            VarFlyWheel flywheel) {
-        double driveSpeed = 0.3;
+            VarFlyWheel flywheel, Vision vision) {
         addCommands(
                 // Prepare Intake
                 sequence(
@@ -35,43 +37,40 @@ public class FourCargoAuto extends ParallelCommandGroup {
 
                 // Prepare Shooter
                 sequence(
-                        // Actuate hood up
-                        new TeleFlyVarUp(flywheel),
+                        // Start shooter (slightly longer distance than our sweet spot)
+                        new RunFlyWheel(flywheel, 2200, true).withTimeout(5),
 
-                        // Start shooter
-                        new TeleFlyVar(flywheel)).withTimeout(15),
+                        // No need to run flywheel in this interim time
+                        new WaitCommand(2),
+
+                        // Run flywheel for final two shots
+                        new RunFlyWheel(flywheel, 2000, true)).withTimeout(15),
 
                 // Auto Drive Sequence
                 sequence(
                         // Drive to pick up cargo
-                        new DriveStraight(drive, Units.feetToMeters(3), driveSpeed),
-
-                        // Wait so ball has time to intake
-                        new WaitCommand(1),
-
-                        // Drive toward hub slightly (Backwards because intake is facing away)
-                        new DriveStraight(drive, Units.feetToMeters(-1), driveSpeed),
+                        new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
                         // Shoot first two cargo
-                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(3),
+                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, -68, driveSpeed / 2),
+                        new Turn(drive, -74, TURN_SPEED),
 
                         // Drive to loading station
-                        new DriveStraight(drive, Units.feetToMeters(20), driveSpeed),
+                        new DriveStraight(drive, Units.feetToMeters(18.5), DRIVE_SPEED * 1.5),
 
                         // Wait for intaking at loading station
-                        new WaitCommand(3),
+                        new WaitCommand(1.5),
 
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-20), driveSpeed),
+                        new DriveStraight(drive, Units.feetToMeters(-15), DRIVE_SPEED * 2),
 
                         // Turn to hub
-                        new Turn(drive, 68, driveSpeed / 2),
+                        new Turn(drive, 70, TURN_SPEED * 3),
 
                         // Align to hub using vision
-                        // new PositionForHub(vision, drive).withTimeout(3),
+                        new PositionForHub(vision, drive).withTimeout(0.7),
 
                         // Shoot second two cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(3)));
