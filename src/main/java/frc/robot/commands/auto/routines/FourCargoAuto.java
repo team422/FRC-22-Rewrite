@@ -1,12 +1,13 @@
-package frc.robot.commands.auto;
+package frc.robot.commands.auto.routines;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DriveStraight;
 import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.SetIntakeExtended;
-import frc.robot.commands.Turn;
+import frc.robot.commands.auto.DriveStraight;
+import frc.robot.commands.auto.DriveStraightToBall;
+import frc.robot.commands.auto.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
