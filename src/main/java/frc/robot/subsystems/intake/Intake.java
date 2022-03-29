@@ -28,4 +28,8 @@ public class Intake extends SubsystemBase {
     public void toggle() {
         intakeIO.setIntakeSolenoid();
     }
+
+    public void setIntakeSolenoid(boolean extended) {
+        intakeIO.setIntakeSolenoidForward(extended);
+    }
 }

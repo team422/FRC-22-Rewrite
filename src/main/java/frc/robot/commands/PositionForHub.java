@@ -12,7 +12,7 @@ import frc.robot.util.FieldUtils;
 public class PositionForHub extends CommandBase {
 
     private static final double MAX_TURN_SPEED = 0.0075;
-    private static final double LONG_TARGET_DISTANCE = Units.feetToMeters(8);
+    private static final double LONG_TARGET_DISTANCE = Units.feetToMeters(7);
 
     private final Vision hubCam;
     private final DriveBase drive;
@@ -30,10 +30,8 @@ public class PositionForHub extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println("Rotating to hub...");
         result = hubCam.getLatestResult();
         if (result == null || !result.hasTargets()) {
-            System.out.println("No targets...");
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putBoolean("Hub In Range", false);
             return;
@@ -41,8 +39,8 @@ public class PositionForHub extends CommandBase {
 
         SmartDashboard.putBoolean("Hub Visible", true);
 
-        double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
-        double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
+        double xPos = result.getBestTarget().getYaw();
+        double yPos = result.getBestTarget().getPitch();
 
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
         double targetOffset = distance - LONG_TARGET_DISTANCE;
@@ -58,7 +56,7 @@ public class PositionForHub extends CommandBase {
 
         double turnSpeed = xPos * MAX_TURN_SPEED;
 
-        drive.driveBase.curvatureDrive(travelSpeed, turnSpeed, true);
+        drive.driveBase.curvatureDrive(-travelSpeed, turnSpeed, true);
     }
 
     @Override

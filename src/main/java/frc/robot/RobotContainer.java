@@ -71,7 +71,8 @@ public class RobotContainer {
     private Transversal transversal;
     private Uptake uptake;
     private ColorSensor colorSensor;
-    private Vision hubCam;
+    private Vision hubCamera;
+    private Vision intakeCamera;
     private UsbCamera camera;
 
     /**
@@ -98,9 +99,14 @@ public class RobotContainer {
                 transversal = new Transversal(new TransversalIOSparkMax());
                 uptake = new Uptake(new UptakeIOSparkMax());
                 colorSensor = new ColorSensor(new ColorSensorIORevV3());
-                hubCam = new Vision(
+                hubCamera = new Vision(
                         new VisionIOPhotonVision(
                                 VisionIOPhotonVision.HUB_CAMERA_NAME,
+                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                intakeCamera = new Vision(
+                        new VisionIOPhotonVision(
+                                "IntakeCamera",
                                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 camera = CameraServer.startAutomaticCapture();
@@ -108,7 +114,7 @@ public class RobotContainer {
                 break;
             case ROBOT_2022_PRACTICE:
                 drive = new DriveBase(new DriveIOFalcon());
-                hubCam = new Vision(
+                hubCamera = new Vision(
                         new VisionIOPhotonVision(
                                 VisionIOPhotonVision.HUB_CAMERA_NAME,
                                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
@@ -140,10 +146,10 @@ public class RobotContainer {
         colorSensor = colorSensor != null ? colorSensor : new ColorSensor(new ColorSensorIO() {
         });
 
-        hubCam = hubCam != null ? hubCam : new Vision(new VisionIO() {
+        hubCamera = hubCamera != null ? hubCamera : new Vision(new VisionIO() {
         });
 
-        hubCam.setLEDEnabled(false);
+        // hubCam.setLEDEnabled(false); (Commented out because it breaks network tables)
         drive.resetLeftPosition();
         drive.resetRightPosition();
     }
@@ -188,8 +194,8 @@ public class RobotContainer {
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
         TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
-        RotateToHub rotateToHub = new RotateToHub(hubCam, drive);
-        PositionForHub positionToHub = new PositionForHub(hubCam, drive);
+        RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
+        PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -228,7 +234,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCam);
+        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
     }
 
     public void setBrakeMode(boolean enabled) {

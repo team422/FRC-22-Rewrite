@@ -19,7 +19,7 @@ public class IntakeIOTalonSRX implements IntakeIO {
             case ROBOT_2022_COMP:
                 this.intakeMotor = new WPI_TalonSRX(59);
                 intakeMotor.setInverted(false);
-                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 12);
+                this.intakeArmSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 12, 13);
                 break;
             case ROBOT_2022_PRACTICE:
             default:
@@ -55,5 +55,10 @@ public class IntakeIOTalonSRX implements IntakeIO {
             // intakeArmSolenoid.toggle();
             intakeArmSolenoid.set(intakeArmSolenoid.get() == Value.kForward ? Value.kReverse : Value.kForward);
         }
+    }
+
+    @Override
+    public void setIntakeSolenoidForward(boolean extended) {
+        intakeArmSolenoid.set(extended ? Value.kReverse : Value.kForward);
     }
 }

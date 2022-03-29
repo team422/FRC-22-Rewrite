@@ -3,12 +3,12 @@ package frc.robot.commands.auto;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.commands.DriveStraight;
+import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.SetIntakeExtended;
 import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
-import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIntake;
-import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.intake.Intake;
@@ -16,14 +16,15 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
 
 public class TwoCargoAuto extends ParallelCommandGroup {
+    double DRIVE_SPEED = 0.3;
+
     public TwoCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel) {
-        double driveSpeed = 0.3;
         addCommands(
                 // Prepare Intake
                 sequence(
-                        // Extend intake (TODO make command explicit)
-                        new TeleIntakeToggle(intake),
+                        // Extend intake
+                        new SetIntakeExtended(intake, true),
 
                         // Wait for intake extend
                         new WaitCommand(0.2),
@@ -31,31 +32,21 @@ public class TwoCargoAuto extends ParallelCommandGroup {
                         // Run intake
                         new TeleIntake(intake, () -> -7.0)),
 
-                // Prepare Shooter
-                sequence(
-                        // Actuate hood up
-                        new TeleFlyVarUp(flywheel),
-
-                        new WaitCommand(2),
-
-                        // Start shooter
-                        new TeleFlyVar(flywheel)),
+                // Start shooter
+                new RunFlyWheel(flywheel, Constants.SHOOTER_UP_RPM, true),
 
                 // Auto Drive Sequence
                 sequence(
                         // Drive to pick up cargo
-                        new DriveStraight(drive, Units.feetToMeters(3), driveSpeed),
-
-                        // Wait so ball has time to intake
-                        new WaitCommand(1),
-
-                        // Drive toward hub slightly (Backwards because intake is facing away)
-                        new DriveStraight(drive, Units.feetToMeters(-1), driveSpeed),
+                        new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
                         // Align to hub using vision
                         // new PositionForHub(vision, drive).withTimeout(3),
 
                         // Shoot cargo
-                        new TeleFeed(transversal, uptake, () -> 9.0)).withTimeout(5));
+                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(5),
+
+                        // Back up a little further out of the tarmac
+                        new DriveStraight(drive, Units.feetToMeters(2), DRIVE_SPEED)));
     }
 }
