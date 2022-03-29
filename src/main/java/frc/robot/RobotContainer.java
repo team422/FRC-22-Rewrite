@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.PositionForHub;
 import frc.robot.commands.RotateToHub;
+import frc.robot.commands.VisionSniperMode;
 import frc.robot.commands.auto.FourCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -194,6 +195,7 @@ public class RobotContainer {
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
         TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
+        VisionSniperMode RotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
 
@@ -224,7 +226,7 @@ public class RobotContainer {
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
         controls.getIntakeRunOutButton().whileActiveOnce(intakeOutCommand);
 
-        controls.getAutoAimButton().whileActiveOnce(rotateToHub);
+        controls.getAutoAimButton().whileActiveOnce(RotateToHubAdjustable);
         controls.getAutoDriveButton().whileActiveOnce(positionToHub);
     }
 
