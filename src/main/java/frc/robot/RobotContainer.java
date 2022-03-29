@@ -226,7 +226,7 @@ public class RobotContainer {
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
         controls.getIntakeRunOutButton().whileActiveOnce(intakeOutCommand);
 
-        controls.getAutoAimButton().whileActiveOnce(RotateToHubAdjustable);
+        controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         controls.getAutoDriveButton().whileActiveOnce(positionToHub);
     }
