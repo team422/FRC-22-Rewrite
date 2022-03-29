@@ -55,8 +55,13 @@ public class VisionSniperMode extends CommandBase {
     }
 
     @Override
-    public void end() {
+    public void end(boolean interrupted) {
         hubCam.setLEDEnabled(false);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
 }
