@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.visioncommands;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
@@ -9,16 +9,14 @@ import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.util.FieldUtils;
 
-public class PositionForHub extends CommandBase {
+public class RotateToHub extends CommandBase {
 
     private static final double MAX_TURN_SPEED = 0.0075;
-    private static final double LONG_TARGET_DISTANCE = Units.feetToMeters(7);
-
     private final Vision hubCam;
-    private final DriveBase drive;
+    private DriveBase drive;
     private PhotonPipelineResult result;
 
-    public PositionForHub(Vision hubCam, DriveBase drive) {
+    public RotateToHub(Vision hubCam, DriveBase drive) {
         this.hubCam = hubCam;
         this.drive = drive;
     }
@@ -30,33 +28,26 @@ public class PositionForHub extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("Rotating to hub...");
         result = hubCam.getLatestResult();
         if (result == null || !result.hasTargets()) {
+            System.out.println("No targets...");
             SmartDashboard.putBoolean("Hub Visible", false);
-            SmartDashboard.putBoolean("Hub In Range", false);
+            SmartDashboard.putNumber("Hub Distance", 0);
             return;
         }
 
-        SmartDashboard.putBoolean("Hub Visible", true);
-
-        double xPos = result.getBestTarget().getYaw();
-        double yPos = result.getBestTarget().getPitch();
-
-        double distance = FieldUtils.getHubDistance(yPos, hubCam);
-        double targetOffset = distance - LONG_TARGET_DISTANCE;
-
-        SmartDashboard.putBoolean("Hub In Range", Math.abs(targetOffset) < 0.2);
-
-        double travelSpeed = Math.copySign(Math.log1p(Math.abs(targetOffset) * 10) * 0.1, targetOffset);
-
+        double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
+        double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
         xPos = Math.abs(xPos) > 1 ? xPos : 0;
+        SmartDashboard.putBoolean("Hub Visible", false);
+        SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
 
         System.out.println("X POS: " + xPos);
-        System.out.println("Hub distance: " + distance);
 
         double turnSpeed = xPos * MAX_TURN_SPEED;
 
-        drive.driveBase.curvatureDrive(-travelSpeed, turnSpeed, true);
+        drive.driveSpeed(turnSpeed, -turnSpeed);
     }
 
     @Override
@@ -64,8 +55,8 @@ public class PositionForHub extends CommandBase {
         hubCam.setLEDEnabled(false);
     }
 
-    @Override
     public boolean isFinished() {
         return false;
     }
+
 }

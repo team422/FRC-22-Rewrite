@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.visioncommands;
 
 import java.util.function.Supplier;
 
