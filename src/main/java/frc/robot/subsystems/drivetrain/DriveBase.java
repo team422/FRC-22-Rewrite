@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.TalonFXUtils;
@@ -55,9 +56,11 @@ public class DriveBase extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometry.update(new Rotation2d(-driveIO.getGyroAngle()),
+        odometry.update(new Rotation2d(getGyroAngle()),
                 getLeftDistanceMeters(),
                 getRightDistanceMeters());
+
+        SmartDashboard.putNumber("Gyro Value", getGyroAngle());
     }
 
     public void resetOdometry(Pose2d pose) {

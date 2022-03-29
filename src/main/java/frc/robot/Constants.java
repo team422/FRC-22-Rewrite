@@ -32,7 +32,7 @@ public final class Constants {
 
     // Field Constants
     public static final double BALL_HEIGHT_METERS = 0.2;
-    public static final double HUB_HIGH_HEIGHT_METERS = Units.feetToMeters(8.8);
+    public static final double HUB_HIGH_HEIGHT_METERS = Units.feetToMeters(8.667);
     public static final double HUB_LOW_HEIGHT_METERS = 1.5;
 
     // General Constants

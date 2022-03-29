@@ -11,6 +11,6 @@ public class TeleFeed extends ParallelCommandGroup {
         addCommands(
                 parallel(
                         new TeleUptake(uptake, voltageSupplier),
-                        new TeleTransversal(transversal, () -> 2.0)));
+                        new TeleTransversal(transversal, () -> 5.0)));
     }
 }
