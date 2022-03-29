@@ -54,4 +54,9 @@ public class VisionSniperMode extends CommandBase {
         drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);
     }
 
+    @Override
+    public void end() {
+        hubCam.setLEDEnabled(false);
+    }
+
 }
