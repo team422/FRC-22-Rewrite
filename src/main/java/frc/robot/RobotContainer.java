@@ -195,7 +195,7 @@ public class RobotContainer {
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
         TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
 
-        VisionSniperMode RotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
+        VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
 
