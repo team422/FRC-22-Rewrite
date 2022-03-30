@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.auto.routines.FourCargoAuto;
+import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -105,11 +105,11 @@ public class RobotContainer {
                                 VisionIOPhotonVision.HUB_CAMERA_NAME,
                                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
-                intakeCamera = new Vision(
-                        new VisionIOPhotonVision(
-                                "IntakeCamera",
-                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
-                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                // intakeCamera = new Vision(
+                //         new VisionIOPhotonVision(
+                //                 "IntakeCamera",
+                //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 camera = CameraServer.startAutomaticCapture();
                 camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
@@ -148,6 +148,9 @@ public class RobotContainer {
         });
 
         hubCamera = hubCamera != null ? hubCamera : new Vision(new VisionIO() {
+        });
+
+        intakeCamera = intakeCamera != null ? intakeCamera : new Vision(new VisionIO() {
         });
 
         // hubCam.setLEDEnabled(false); (Commented out because it breaks network tables)
@@ -198,6 +201,7 @@ public class RobotContainer {
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
+        // TurnToBall turnToBall = new TurnToBall(intakeCamera, drive, 15);
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
@@ -228,7 +232,8 @@ public class RobotContainer {
 
         controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
-        controls.getAutoDriveButton().whileActiveOnce(positionToHub);
+        // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
+        // controls.getAutoDriveButton().whileActiveOnce(turnToBall);
     }
 
     /**
@@ -237,7 +242,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
     }
 
     public void setBrakeMode(boolean enabled) {

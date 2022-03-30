@@ -9,7 +9,7 @@ import edu.wpi.first.math.util.Units;
 public class VisionIOPhotonVision implements VisionIO {
     public static final String HUB_CAMERA_NAME = "limelight";
     public static final double HUB_CAMERA_HEIGHT_METERS = Units.inchesToMeters(28.5);
-    public static final double HUB_CAMERA_DEGREES_HORIZ = 50;
+    public static final double HUB_CAMERA_DEGREES_HORIZ = 46;
 
     private final PhotonCamera photonCam;
     private final double cameraHeightMeters;

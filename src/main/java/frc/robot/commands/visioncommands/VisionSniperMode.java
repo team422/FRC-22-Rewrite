@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -35,20 +36,21 @@ public class VisionSniperMode extends CommandBase {
     @Override
     public void execute() {
         pipeline = hubCam.getLatestResult();
+        double turnSpeed = 0;
+
         if (pipeline == null || !pipeline.hasTargets()) {
             System.out.println("No targets...");
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putNumber("Hub Distance", 0);
-            return;
+        } else {
+            double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
+            double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
+            xPos = Math.abs(xPos) > 0.3 ? xPos : 0;
+            SmartDashboard.putBoolean("Hub Visible", true);
+            SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
+            turnSpeed = MathUtil.clamp(xPos * 0.03, -0.2, 0.2);
         }
 
-        double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
-        double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
-        xPos = Math.abs(xPos) > 1 ? xPos : 0;
-        SmartDashboard.putBoolean("Hub Visible", true);
-        SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
-
-        double turnSpeed = xPos * 0.0075;
         double forwardSpeed = driveSpeed.get() * DRIVE_MULT;
 
         drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);

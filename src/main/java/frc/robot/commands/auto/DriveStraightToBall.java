@@ -37,7 +37,7 @@ public class DriveStraightToBall extends CommandBase {
 
         double correction = 0;
 
-        if (result.hasTargets()) {
+        if (result != null && result.hasTargets()) {
             drive.resetGyro();
             correction = Units.degreesToRadians(result.getBestTarget().getYaw()) * 0.3;
         } else {

@@ -9,9 +9,9 @@ import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.auto.DriveStraightToBall;
 import frc.robot.commands.auto.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.visioncommands.PositionForHub;
+import frc.robot.commands.visioncommands.TurnToBall;
 import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -20,11 +20,11 @@ import frc.robot.subsystems.transversal.Transversal;
 import frc.robot.subsystems.uptake.Uptake;
 import frc.robot.subsystems.vision.Vision;
 
-public class FourCargoAuto extends ParallelCommandGroup {
+public class FiveCargoAuto extends ParallelCommandGroup {
     private static final double DRIVE_SPEED = 0.4;
     private static final double TURN_SPEED = 0.15;
 
-    public FourCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
+    public FiveCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel, Vision hubVision, Vision intakeVision, ColorSensor colorSensor) {
         addCommands(
                 // Prepare Intake
@@ -51,34 +51,33 @@ public class FourCargoAuto extends ParallelCommandGroup {
 
                 // Auto Drive Sequence
                 sequence(
-                        // Drive to pick up cargo
+                        //drive forwards
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
-
-                        // Shoot first two cargo
+                        //Telefeed
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
-
-                        // Turn to loading station
-                        new Turn(drive, -75, TURN_SPEED),
-
-                        // Drive to loading station
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(18.5), DRIVE_SPEED * 1.8),
-
-                        // Run Transversal to Index balls
-                        // new TeleFeed(transversal, uptake, () -> 3.0).withTimeout(1),
-                        new TeleIndexer(transversal, uptake, colorSensor).withTimeout(1.25),
-                        // Wait for intaking at loading station
-                        // new WaitCommand(1.0),
-
-                        // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-15), DRIVE_SPEED * 2.2),
-
-                        // Turn to hub
-                        new Turn(drive, 70, TURN_SPEED * 3),
-
-                        // Align to hub using vision
-                        new PositionForHub(hubVision, drive).withTimeout(1.1),
-
-                        // Shoot second two cargo
-                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(3)));
+                        //Turn right/clockwise to ball
+                        new TurnToBall(intakeVision, drive, TURN_SPEED * 1.5, 85),
+                        //drive straight and intake ball
+                        new DriveStraight(drive, Units.feetToMeters(9), DRIVE_SPEED),
+                        //drive backwards
+                        new DriveStraight(drive, Units.feetToMeters(-3), DRIVE_SPEED),
+                        //turn counterclockwise
+                        new Turn(drive, -85, TURN_SPEED),
+                        //position to hub
+                        new PositionForHub(hubVision, drive).withTimeout(1),
+                        //feed balls to shoot
+                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
+                        //Turn clockwise to ball
+                        new Turn(drive, 45, TURN_SPEED),
+                        //drive straight to ball
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11), DRIVE_SPEED),
+                        //drive backwards
+                        new DriveStraight(drive, Units.feetToMeters(-11), DRIVE_SPEED),
+                        //turn counterclockwise
+                        new Turn(drive, -45, TURN_SPEED),
+                        //position to hub
+                        new PositionForHub(hubVision, drive).withTimeout(1),
+                        //TeleFeed        
+                        new TeleFeed(transversal, uptake, () -> 9.0)));
     }
 }

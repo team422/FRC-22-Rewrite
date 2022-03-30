@@ -40,7 +40,7 @@ public class MixedXboxJoystickControls implements UserControls {
 
     @Override
     public Trigger getAutoDriveButton() {
-        return new Trigger();
+        return new Trigger(() -> leftDriverJoystick.getRawButton(2));
     }
 
     @Override
