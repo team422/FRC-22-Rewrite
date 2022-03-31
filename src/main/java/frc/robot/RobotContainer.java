@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.auto.routines.FiveCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -242,7 +242,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
     }
 
     public void setBrakeMode(boolean enabled) {

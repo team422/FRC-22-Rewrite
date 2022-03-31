@@ -72,8 +72,13 @@ public class ArcadeDrive extends CommandBase {
         // System.out.println("Drive Left Speed: " + leftSpeed);
         // System.out.println("Drive Right Speed: " + rightSpeed);
 
-        // drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
-        drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
+        if (Math.abs(leftSpeed) <= 0.1) {
+            drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
+        } else {
+            drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
+        }
+
+        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
 
         // drive.driveSpeed(leftSpeed + rightSpeed, leftSpeed - rightSpeed);
 

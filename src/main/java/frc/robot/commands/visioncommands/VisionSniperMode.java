@@ -54,7 +54,7 @@ public class VisionSniperMode extends CommandBase {
 
         double forwardSpeed = driveSpeed.get() * DRIVE_MULT;
 
-        drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);
+        drive.driveBase.curvatureDrive(forwardSpeed, turnSpeed, true);
     }
 
     @Override
