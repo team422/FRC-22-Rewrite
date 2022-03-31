@@ -63,13 +63,20 @@ public class ArcadeDrive extends CommandBase {
         double leftSpeed;
         double rightSpeed;
 
-        leftSpeed = leftYValue;
-        rightSpeed = rightXValue;
+        // leftSpeed = leftYValue;
+        // rightSpeed = rightXValue;
+
+        leftSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
+        rightSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
 
         // System.out.println("Drive Left Speed: " + leftSpeed);
         // System.out.println("Drive Right Speed: " + rightSpeed);
 
-        drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
+        // drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
+        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
+
+        drive.driveSpeed(leftSpeed + rightSpeed, leftSpeed - rightSpeed);
+
     }
 
     // Called once the command ends or is interrupted.

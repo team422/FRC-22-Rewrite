@@ -68,13 +68,13 @@ public class FiveCargoAuto extends ParallelCommandGroup {
                         //feed balls to shoot
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
                         //Turn clockwise to ball
-                        new Turn(drive, 45, TURN_SPEED),
+                        new Turn(drive, 48, TURN_SPEED),
                         //drive straight to ball
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11), DRIVE_SPEED),
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(25), DRIVE_SPEED),
                         //drive backwards
-                        new DriveStraight(drive, Units.feetToMeters(-11), DRIVE_SPEED),
+                        new DriveStraight(drive, Units.feetToMeters(-25), DRIVE_SPEED),
                         //turn counterclockwise
-                        new Turn(drive, -45, TURN_SPEED),
+                        new Turn(drive, -48, TURN_SPEED),
                         //position to hub
                         new PositionForHub(hubVision, drive).withTimeout(1),
                         //TeleFeed        

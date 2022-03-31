@@ -31,6 +31,8 @@ public class VisionSniperMode extends CommandBase {
     @Override
     public void initialize() {
         hubCam.setLEDEnabled(true);
+        drive.setBrakeMode(true);
+        System.out.println("your mom gae");
     }
 
     @Override
@@ -59,6 +61,7 @@ public class VisionSniperMode extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         hubCam.setLEDEnabled(false);
+        drive.setBrakeMode(false);
     }
 
     @Override
