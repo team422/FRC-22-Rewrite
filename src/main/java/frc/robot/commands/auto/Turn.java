@@ -50,7 +50,7 @@ public class Turn extends CommandBase {
     @Override
     public boolean isFinished() {
         // double turn_left = drive.getGyroAngle() - turnDegrees;
-        return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 2;
+        return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 1.5 && Math.abs(drive.getLeftSpeed()) < 300;
     }
 
     @Override

@@ -11,7 +11,6 @@ import frc.robot.commands.auto.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.visioncommands.PositionForHub;
-import frc.robot.commands.visioncommands.TurnToBall;
 import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -22,7 +21,7 @@ import frc.robot.subsystems.vision.Vision;
 
 public class FiveCargoAuto extends ParallelCommandGroup {
     private static final double DRIVE_SPEED = 0.4;
-    private static final double TURN_SPEED = 0.15;
+    private static final double TURN_SPEED = 0.5;
 
     public FiveCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel, Vision hubVision, Vision intakeVision, ColorSensor colorSensor) {
@@ -54,13 +53,14 @@ public class FiveCargoAuto extends ParallelCommandGroup {
                         //drive forwards
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
                         //Telefeed
-                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
+                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(1.3),
                         //Turn right/clockwise to ball
-                        new TurnToBall(intakeVision, drive, TURN_SPEED * 1.5, 85),
+                        // new TurnToBall(intakeVision, drive, TURN_SPEED * 1.5, 85),
+                        new Turn(drive, 110, TURN_SPEED),
                         //drive straight and intake ball
-                        new DriveStraight(drive, Units.feetToMeters(9), DRIVE_SPEED),
+                        new DriveStraight(drive, Units.feetToMeters(9), DRIVE_SPEED * 2),
                         //drive backwards
-                        new DriveStraight(drive, Units.feetToMeters(-3), DRIVE_SPEED),
+                        new DriveStraight(drive, Units.feetToMeters(-3), DRIVE_SPEED * 2),
                         //turn counterclockwise
                         new Turn(drive, -85, TURN_SPEED),
                         //position to hub
@@ -70,9 +70,9 @@ public class FiveCargoAuto extends ParallelCommandGroup {
                         //Turn clockwise to ball
                         new Turn(drive, 48, TURN_SPEED),
                         //drive straight to ball
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(25), DRIVE_SPEED),
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(16), DRIVE_SPEED),
                         //drive backwards
-                        new DriveStraight(drive, Units.feetToMeters(-25), DRIVE_SPEED),
+                        new DriveStraight(drive, Units.feetToMeters(-16), DRIVE_SPEED),
                         //turn counterclockwise
                         new Turn(drive, -48, TURN_SPEED),
                         //position to hub

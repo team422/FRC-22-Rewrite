@@ -104,6 +104,10 @@ public class DriveBase extends SubsystemBase {
         driveIO.resetLeftPosition();
     }
 
+    public double getLeftSpeed() {
+        return driveIO.getLeftRate();
+    }
+
     public double getRightDistanceMeters() {
         return TalonFXUtils.ticksToMeters(driveIO.getRightPosition(), Constants.driveGearRatio, wheelRadiusMeters);
     }

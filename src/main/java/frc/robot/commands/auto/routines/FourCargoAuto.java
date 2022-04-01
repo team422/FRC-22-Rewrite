@@ -22,7 +22,7 @@ import frc.robot.subsystems.vision.Vision;
 
 public class FourCargoAuto extends ParallelCommandGroup {
     private static final double DRIVE_SPEED = 0.4;
-    private static final double TURN_SPEED = 0.15;
+    private static final double TURN_SPEED = 0.5;
 
     public FourCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel, Vision hubVision, Vision intakeVision, ColorSensor colorSensor) {
