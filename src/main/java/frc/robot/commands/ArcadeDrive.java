@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 // import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.DriveBase;
 
 /** An example command that uses an example subsystem. */
@@ -66,19 +67,24 @@ public class ArcadeDrive extends CommandBase {
         leftSpeed = leftYValue;
         rightSpeed = rightXValue;
 
+        if (Constants.driveMode == 1) {
+            drive.drivePercent(leftSpeed + rightSpeed, leftSpeed - rightSpeed);
+        } else if (Constants.driveMode == 2) {
+            drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
+        } else if (Constants.driveMode == 3) {
+            drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
+        } else if (Constants.driveMode == 4) {
+            if (Math.abs(leftSpeed) <= 0.1) {
+                drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
+            } else {
+                drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
+            }
+        }
         // leftSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
         // rightSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
 
         // System.out.println("Drive Left Speed: " + leftSpeed);
         // System.out.println("Drive Right Speed: " + rightSpeed);
-
-        if (Math.abs(leftSpeed) <= 0.1) {
-            drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
-        } else {
-            drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
-        }
-
-        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
 
         // drive.driveSpeed(leftSpeed + rightSpeed, leftSpeed - rightSpeed);
 

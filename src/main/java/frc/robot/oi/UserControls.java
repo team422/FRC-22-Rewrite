@@ -79,6 +79,22 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getArcadeSetSpeed() {
+        return new Trigger();
+    }
+
+    public default Trigger getArcadeDifferential() {
+        return new Trigger();
+    }
+
+    public default Trigger getCurvatureDifferential() {
+        return new Trigger();
+    }
+
+    public default Trigger getArcadeCurvatureDifferential() {
+        return new Trigger();
+    }
+
     public default Trigger getFlyWheelHoodToggle() {
         return new Trigger();
     }

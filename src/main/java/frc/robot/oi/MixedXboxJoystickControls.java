@@ -109,6 +109,26 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getArcadeSetSpeed() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(7));
+    }
+
+    @Override
+    public Trigger getArcadeDifferential() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(8));
+    }
+
+    @Override
+    public Trigger getCurvatureDifferential() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(9));
+    }
+
+    @Override
+    public Trigger getArcadeCurvatureDifferential() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(10));
+    }
+
+    @Override
     public Trigger getFlyWheelHoodToggle() {
         return new Trigger(() -> operatorController.getXButton());
     }

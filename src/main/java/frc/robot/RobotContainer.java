@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.SetDriveMode;
 import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -234,6 +235,11 @@ public class RobotContainer {
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
         // controls.getAutoDriveButton().whileActiveOnce(turnToBall);
+
+        controls.getArcadeSetSpeed().whileActiveOnce(new SetDriveMode(1));
+        controls.getArcadeDifferential().whileActiveOnce(new SetDriveMode(2));
+        controls.getCurvatureDifferential().whileActiveOnce(new SetDriveMode(3));
+        controls.getArcadeCurvatureDifferential().whileActiveOnce(new SetDriveMode(4));
     }
 
     /**
