@@ -18,6 +18,7 @@ public class TeleFlyVarSpeed extends CommandBase {
     private double shooterSpeed;
 
     public TeleFlyVarSpeed(VarFlyWheel varFlyWheel, Vision hubCam) {
+        addRequirements(varFlyWheel);
         this.varFlyWheel = varFlyWheel;
         this.hubCam = hubCam;
     }
@@ -31,28 +32,38 @@ public class TeleFlyVarSpeed extends CommandBase {
     public void execute() {
         if (varFlyWheel.get() == Value.kReverse) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
-        } else if (varFlyWheel.get() == Value.kForward) {
+        } else {
             result = hubCam.getLatestResult();
 
             if (result == null || !result.hasTargets()) {
                 SmartDashboard.putBoolean("Hub Visible", false);
                 SmartDashboard.putBoolean("Hub In Range", false);
                 shooterSpeed = 2000;
-            }
-            else {
+            } else {
                 SmartDashboard.putBoolean("Hub Visible", true);
 
                 double yPos = result.getBestTarget().getPitch();
                 double distance = FieldUtils.getHubDistance(yPos, hubCam);
-        
+                SmartDashboard.putNumber("Hub Distance", distance);
+
                 if (distance < Units.feetToMeters(6)) {
-                    shooterSpeed = 1900;
-                }
-                else if (distance < Units.feetToMeters(8)) {
+                    shooterSpeed = 1950;
+                    // } else if (distance < Units.feetToMeters(6)) {
+                    //     shooterSpeed = 1900;
+                    // } else if (distance < Units.feetToMeters(8)) {
+                    //     shooterSpeed = 2000;
+                } else if (distance < Units.feetToMeters(6.5)) {
                     shooterSpeed = 2000;
-                }
-                else {
+                } else if (distance < Units.feetToMeters(7)) {
                     shooterSpeed = 2100;
+                } else if (distance < Units.feetToMeters(8)) {
+                    shooterSpeed = 2300;
+                } else if (distance < Units.feetToMeters(9)) {
+                    shooterSpeed = 2400;
+                } else if (distance < Units.feetToMeters(10)) {
+                    shooterSpeed = 2600;
+                } else {
+                    shooterSpeed = 2800;
                 }
             }
 
