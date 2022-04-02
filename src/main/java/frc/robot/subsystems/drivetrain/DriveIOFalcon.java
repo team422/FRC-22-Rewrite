@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 // Internal Imports
 import frc.robot.Constants;
+import frc.robot.util.TunableNumber;
 
 public class DriveIOFalcon implements DriveIO {
 
@@ -28,12 +29,12 @@ public class DriveIOFalcon implements DriveIO {
     private ADXRS450_Gyro gyro;
     private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
 
-    private final double kS;
-    private final double kV;
-    private final double kA;
+    private final TunableNumber kS;
+    private final TunableNumber kV;
+    private final TunableNumber kA;
 
-    private final double kP;
-    private final double kD;
+    private final TunableNumber kP;
+    private final TunableNumber kD;
     private boolean isGyroInverted = false;
 
     public DriveIOFalcon() {
@@ -45,12 +46,12 @@ public class DriveIOFalcon implements DriveIO {
                 this.rightFollower = new WPI_TalonFX(5);
 
                 // TO CHANGE VIA CHARACTERIZATION (kS, kV, kA, kP, kD)
-                this.kS = 0.66569;
-                this.kV = 0.050387;
-                this.kA = 0.0051628;
+                this.kS = new TunableNumber("kS", 0.66569);
+                this.kV = new TunableNumber("kV", 0.050387);
+                this.kA = new TunableNumber("kA", 0.0051628);
 
-                this.kP = 0.064039;
-                this.kD = 0.0;
+                this.kP = new TunableNumber("kP", 0.064039);
+                this.kD = new TunableNumber("kD", 0.0);
                 this.gyro = new ADXRS450_Gyro(kGyroPort);
                 this.isGyroInverted = true;
                 break;
@@ -60,12 +61,12 @@ public class DriveIOFalcon implements DriveIO {
                 this.rightLeader = new WPI_TalonFX(3);
                 this.rightFollower = new WPI_TalonFX(1);
 
-                this.kS = 0.66569;
-                this.kV = 0.050387;
-                this.kA = 0.0051628;
+                this.kS = new TunableNumber("kS", 0.66569);
+                this.kV = new TunableNumber("kV", 0.050387);
+                this.kA = new TunableNumber("kA", 0.0051628);
 
-                this.kP = 0.0;
-                this.kD = 0.0;
+                this.kP = new TunableNumber("kP", 0.064039);
+                this.kD = new TunableNumber("kD", 0.0);
                 break;
             default:
                 throw new RuntimeException("Invalid robot for DriveIOFalcon!");
@@ -210,26 +211,26 @@ public class DriveIOFalcon implements DriveIO {
 
     @Override
     public double getkS() {
-        return kS;
+        return kS.get();
     }
 
     @Override
     public double getkV() {
-        return kV;
+        return kV.get();
     }
 
     @Override
     public double getkA() {
-        return kA;
+        return kA.get();
     }
 
     @Override
     public double getkP() {
-        return kP;
+        return kP.get();
     }
 
     @Override
     public double getkD() {
-        return kD;
+        return kD.get();
     }
 }

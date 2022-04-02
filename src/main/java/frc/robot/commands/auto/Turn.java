@@ -1,6 +1,6 @@
 package frc.robot.commands.auto;
 
-import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrain.DriveBase;
@@ -11,12 +11,15 @@ public class Turn extends CommandBase {
     double speed;
     private static double maxSpeed = 0.5;
     double targetGyroAngle;
+    PIDController controller;
 
     public Turn(DriveBase drive, double turnDegrees, double speed) {
         addRequirements(drive);
         this.drive = drive;
         this.turnDegrees = turnDegrees;
         this.speed = speed;
+
+        this.controller = new PIDController(drive.getkP(), 0.0, drive.getkD());
     }
 
     @Override
@@ -35,22 +38,19 @@ public class Turn extends CommandBase {
 
     @Override
     public void execute() {
-        double turnSpeed = findCompletionValue(drive.getGyroAngle(), targetGyroAngle) * speed;
-        turnSpeed += Math.copySign(0.1, turnSpeed);
-        turnSpeed = MathUtil.clamp(turnSpeed, -maxSpeed, maxSpeed);
-
-        System.out.println("Turn Speed: " + turnSpeed);
 
         SmartDashboard.putNumber("Current Gyro Angle", drive.getGyroAngle());
         SmartDashboard.putNumber("Target Gyro Angle", targetGyroAngle);
 
-        drive.driveBase.curvatureDrive(0.0, turnSpeed, true);
+        double speed = controller.calculate(drive.getGyroAngle(), turnDegrees);
+        drive.driveVelocity(-speed, speed);
+        // drive.driveBase.curvatureDrive(0.0, turnSpeed, true);
     }
 
     @Override
     public boolean isFinished() {
         // double turn_left = drive.getGyroAngle() - turnDegrees;
-        return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 2;
+        return Math.abs(drive.getGyroAngle()) < 1.5;
     }
 
     @Override
