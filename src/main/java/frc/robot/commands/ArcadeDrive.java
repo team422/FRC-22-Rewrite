@@ -22,6 +22,7 @@ public class ArcadeDrive extends CommandBase {
 
     // Remember to put this as TunableNumber
     private static double deadband = 0.1;
+    private static double maxSpeed = 1;
 
     /**
      * Creates a new ExampleCommand.
@@ -60,29 +61,34 @@ public class ArcadeDrive extends CommandBase {
         double rightXValue = rightXSupplier.get();
         double rightYValue = rightYSupplier.get();
         double mult = 1;
-        double leftSpeed;
-        double rightSpeed;
-
-        leftSpeed = Math.log1p(leftYValue);
-        rightSpeed = rightXValue;
-
-        // leftSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
-        // rightSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
+        double forwardSpeed;
+        double turnSpeed;
+        double divisor;
+        // if (leftYValue < deadband) {
+        //     leftYValue = 0;
+        // }
+        // if (rightXValue < deadband) {
+        //     rightXValue = 0;
+        // }
+        // leftSpeed = leftYValue;
+        // rightSpeed = rightXValue;
+        System.out.println("LEFTY:" + leftYValue);
+        System.out.println("RIGHTX:" + rightXValue);
+        forwardSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
+        turnSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
+        divisor = Math.abs(forwardSpeed) + Math.abs(turnSpeed);
+        divisor = Math.max(divisor, 1);
 
         // System.out.println("Drive Left Speed: " + leftSpeed);
         // System.out.println("Drive Right Speed: " + rightSpeed);
 
-        // if (Math.abs(leftSpeed) <= 0.1) {
-        //     drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
-        // } else {
-        //     drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
-        // }
-
-        drive.driveSpeed(-leftSpeed + rightSpeed, -leftSpeed - rightSpeed);
-
-        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
-
-        // drive.driveSpeed(leftSpeed + rightSpeed, leftSpeed - rightSpeed);
+        // drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);
+        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
+        // System.out.println("Left Wheel Speed: " + (forwardSpeed + turnSpeed) / divisor);
+        // System.out.println("Right Wheel Speed: " + (forwardSpeed - turnSpeed) / divisor);
+        // System.out.println("Divisor: " + divisor);
+        drive.driveSpeed(((forwardSpeed + turnSpeed) / divisor),
+                (forwardSpeed - turnSpeed) / divisor);
 
     }
 
