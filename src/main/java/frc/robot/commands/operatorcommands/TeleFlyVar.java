@@ -23,8 +23,6 @@ public class TeleFlyVar extends CommandBase {
         } else {
 
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
-        } else {
-            varFlyWheel.flyVelocity(Constants.SHOOTER_UP_RPM);
         }
     }
 
