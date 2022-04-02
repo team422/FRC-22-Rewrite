@@ -25,6 +25,10 @@ public class VarFlyWheel extends SubsystemBase {
         varFlyWheelIO.setFPID(kF, kP, kI, kD);
     }
 
+    public double getVelocity() {
+        return varFlyWheelIO.getVelocity();
+    }
+
     public void stop() {
         varFlyWheelIO.stop();
     }

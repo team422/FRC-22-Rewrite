@@ -7,6 +7,7 @@ import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.SetIntakeExtended;
 import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.auto.DriveStraightToBall;
+import frc.robot.commands.auto.FastTurn;
 import frc.robot.commands.auto.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIndexer;
@@ -41,7 +42,7 @@ public class FourCargoAuto extends ParallelCommandGroup {
                 // Prepare Shooter
                 sequence(
                         // Start shooter (slightly longer distance than our sweet spot)
-                        new RunFlyWheel(flywheel, 2200, true).withTimeout(5),
+                        new RunFlyWheel(flywheel, 2300, true).withTimeout(5),
 
                         // No need to run flywheel in this interim time
                         new WaitCommand(2),
@@ -58,22 +59,22 @@ public class FourCargoAuto extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, -75, TURN_SPEED),
+                        new Turn(drive, -76, TURN_SPEED),
 
                         // Drive to loading station
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(18.5), DRIVE_SPEED * 1.8),
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(17), DRIVE_SPEED * 1.8),
 
                         // Run Transversal to Index balls
                         // new TeleFeed(transversal, uptake, () -> 3.0).withTimeout(1),
-                        new TeleIndexer(transversal, uptake, colorSensor).withTimeout(1.25),
+                        new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(1.25),
                         // Wait for intaking at loading station
                         // new WaitCommand(1.0),
 
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-15), DRIVE_SPEED * 2.2),
+                        new DriveStraight(drive, Units.feetToMeters(-12), DRIVE_SPEED * 2.2),
 
                         // Turn to hub
-                        new Turn(drive, 70, TURN_SPEED * 3),
+                        new FastTurn(drive, 60, TURN_SPEED * 3),
 
                         // Align to hub using vision
                         new PositionForHub(hubVision, drive).withTimeout(1.1),

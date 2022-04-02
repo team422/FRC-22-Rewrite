@@ -17,6 +17,10 @@ public interface IntakeIO {
     public default void setIntakeSolenoid() {
     }
 
+    public default boolean getIntakeSolenoid() {
+        return true;
+    }
+
     public default void setIntakeSolenoidForward(boolean extended) {
     }
 }

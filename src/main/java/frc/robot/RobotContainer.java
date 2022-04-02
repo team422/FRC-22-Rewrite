@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.auto.routines.FourCargoAuto;
+import frc.robot.commands.auto.routines.OneCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
@@ -179,7 +179,7 @@ public class RobotContainer {
         TeleIntake defaultIntakeCommand = new TeleIntake(intake,
                 () -> 12.0 * controls.getIntakeSpeed());
 
-        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor);
+        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor, intake);
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
@@ -242,7 +242,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 
     public void setBrakeMode(boolean enabled) {

@@ -25,13 +25,12 @@ public class VisionSniperMode extends CommandBase {
         this.hubCam = hubCam;
         this.drive = drive;
         this.driveSpeed = driveSpeed;
-        addRequirements(drive, hubCam);
+        addRequirements(drive);
     }
 
     @Override
     public void initialize() {
         hubCam.setLEDEnabled(true);
-        drive.setBrakeMode(true);
     }
 
     @Override
@@ -54,13 +53,12 @@ public class VisionSniperMode extends CommandBase {
 
         double forwardSpeed = driveSpeed.get() * DRIVE_MULT;
 
-        drive.driveBase.curvatureDrive(forwardSpeed, turnSpeed, true);
+        drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);
     }
 
     @Override
     public void end(boolean interrupted) {
         hubCam.setLEDEnabled(false);
-        drive.setBrakeMode(false);
     }
 
     @Override

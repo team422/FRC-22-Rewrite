@@ -4,15 +4,11 @@
 
 package frc.robot.commands.auto.routines;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.auto.DriveStraight;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
-import frc.robot.commands.operatorcommands.TeleFlyVarUp;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIntake;
-import frc.robot.commands.operatorcommands.TeleIntakeToggle;
-import frc.robot.commands.operatorcommands.TeleTransversal;
-import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.intake.Intake;
@@ -29,16 +25,21 @@ public class OneCargoAuto extends ParallelCommandGroup {
             VarFlyWheel varFlyWheel) {
 
         addCommands(
+                // sequence(
+                //         new TeleIntakeToggle(intake),
+                //         new TeleIntake(intake, () -> 7.0)),
+                // sequence(
+                //         new TeleFlyVarUp(varFlyWheel),
+                //         new TeleFlyVar(varFlyWheel)),
+                // sequence(
+                //         new DriveStraight(drive, Units.feetToMeters(8), 0.5),
+                //         parallel(
+                //                 new TeleTransversal(transversal, () -> 7.0),
+                //                 new TeleUptake(uptake, () -> 7.0))));
+                new TeleIntake(intake, () -> -9.0),
+                new RunFlyWheel(varFlyWheel, 2300, true),
                 sequence(
-                        new TeleIntakeToggle(intake),
-                        new TeleIntake(intake, () -> 7.0)),
-                sequence(
-                        new TeleFlyVarUp(varFlyWheel),
-                        new TeleFlyVar(varFlyWheel)),
-                sequence(
-                        new DriveStraight(drive, Units.feetToMeters(8), 0.5),
-                        parallel(
-                                new TeleTransversal(transversal, () -> 7.0),
-                                new TeleUptake(uptake, () -> 7.0))));
+                        new WaitCommand(1),
+                        new TeleFeed(transversal, uptake, () -> 9.0)));
     }
 }

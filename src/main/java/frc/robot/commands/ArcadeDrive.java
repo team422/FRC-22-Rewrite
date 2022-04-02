@@ -63,7 +63,7 @@ public class ArcadeDrive extends CommandBase {
         double leftSpeed;
         double rightSpeed;
 
-        leftSpeed = leftYValue;
+        leftSpeed = Math.log1p(leftYValue);
         rightSpeed = rightXValue;
 
         // leftSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
@@ -72,11 +72,13 @@ public class ArcadeDrive extends CommandBase {
         // System.out.println("Drive Left Speed: " + leftSpeed);
         // System.out.println("Drive Right Speed: " + rightSpeed);
 
-        if (Math.abs(leftSpeed) <= 0.1) {
-            drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
-        } else {
-            drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
-        }
+        // if (Math.abs(leftSpeed) <= 0.1) {
+        //     drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
+        // } else {
+        //     drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, false);
+        // }
+
+        drive.driveSpeed(-leftSpeed + rightSpeed, -leftSpeed - rightSpeed);
 
         // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed, false);
 

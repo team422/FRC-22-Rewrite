@@ -23,7 +23,7 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
                 this.followerFlyWheel = new WPI_TalonFX(9);
 
                 this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 15, 0);
-                this.setFPID(0.055, 0.055, 0, 0);
+                this.setFPID(0.055, 0.060, 0, 0);
                 break;
             case ROBOT_2022_PRACTICE:
             default:
@@ -48,6 +48,11 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
     public void setVelocity(double flyWheelRPM) {
         double targetVelocity = TalonFXUtils.RPMToTicksPer100ms(flyWheelRPM);
         leaderFlyWheel.set(ControlMode.Velocity, targetVelocity);
+    }
+
+    @Override
+    public double getVelocity() {
+        return TalonFXUtils.ticksPer100msToRPM(leaderFlyWheel.getSelectedSensorVelocity());
     }
 
     @Override
