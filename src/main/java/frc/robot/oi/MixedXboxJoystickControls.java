@@ -120,6 +120,16 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getTraversalInTrigger() {
+        return new Trigger(() -> operatorController.getRightY() > 0.2);
+    }
+
+    @Override
+    public Trigger getTraversalOutTrigger() {
+        return new Trigger(() -> operatorController.getRightY() < -0.2);
+    }
+
+    @Override
     public Trigger getDriverFlyWheelHoodUp() {
         return new Trigger(() -> leftDriverJoystick.getRawButton(5));
     }

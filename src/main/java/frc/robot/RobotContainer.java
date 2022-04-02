@@ -23,6 +23,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
@@ -193,6 +194,9 @@ public class RobotContainer {
         TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
         TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
 
+        TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
+        TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
+
         RunFlyWheel revShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
         RunFlyWheel vomitShooterCommand = new RunFlyWheel(varFlyWheel, -1000, true);
 
@@ -228,6 +232,9 @@ public class RobotContainer {
 
         controls.getOperatorRevShooterButton().whenActive(revShooterCommand);
         controls.getOperatorVomitShooterButton().whenActive(vomitShooterCommand);
+
+        controls.getTraversalInTrigger().whileActiveContinuous(traversalInCommand);
+        controls.getTraversalOutTrigger().whileActiveContinuous(traversalOutCommand);
 
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
 

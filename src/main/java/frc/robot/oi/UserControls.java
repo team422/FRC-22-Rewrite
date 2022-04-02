@@ -11,6 +11,14 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getTraversalInTrigger() {
+        return new Trigger();
+    }
+
+    public default Trigger getTraversalOutTrigger() {
+        return new Trigger();
+    }
+
     public default double getLeftDriveX() {
         return 0.0;
     }
