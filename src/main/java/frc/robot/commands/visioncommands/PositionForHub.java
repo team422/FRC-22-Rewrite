@@ -47,7 +47,7 @@ public class PositionForHub extends CommandBase {
 
         SmartDashboard.putBoolean("Hub In Range", Math.abs(targetOffset) < 0.2);
 
-        double travelSpeed = Math.copySign(Math.log1p(Math.abs(targetOffset) * 10) * 0.1 + 0.025, targetOffset);
+        double travelSpeed = Math.copySign(Math.log1p(Math.abs(targetOffset) * 10) * 0.1 + 0.05, targetOffset);
 
         xPos = Math.abs(xPos) > 0.75 ? xPos : 0;
 

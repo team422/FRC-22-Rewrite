@@ -42,13 +42,13 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                 // Prepare Shooter
                 sequence(
                         // Start shooter (slightly longer distance than our sweet spot)
-                        new RunFlyWheel(flywheel, 2400, true).withTimeout(5),
+                        new RunFlyWheel(flywheel, 2350, true).withTimeout(7),
 
                         // No need to run flywheel in this interim time
                         new WaitCommand(2),
 
                         // Run flywheel for final two shots
-                        new RunFlyWheel(flywheel, 2050, true)).withTimeout(15),
+                        new RunFlyWheel(flywheel, 2050, true)),
 
                 // Auto Drive Sequence
                 sequence(
@@ -56,16 +56,16 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
                         //turn to align to the hub.
-                        new Turn(drive, -4, TURN_SPEED * 0.25),
+                        new Turn(drive, -8, TURN_SPEED * 0.25),
 
                         // Shoot first two cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, 13, TURN_SPEED * 0.5),
+                        new Turn(drive, 20, TURN_SPEED * 0.5),
 
                         // Drive to loading station
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(10), DRIVE_SPEED * 1.8),
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(12), DRIVE_SPEED * 1.8),
 
                         // Run Transversal to Index balls
                         // new TeleFeed(transversal, uptake, () -> 3.0).withTimeout(1),
@@ -74,13 +74,13 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         // new WaitCommand(1.0),
 
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-10), DRIVE_SPEED * 2.2),
+                        new DriveStraight(drive, Units.feetToMeters(-13.5), DRIVE_SPEED * 2.2),
 
                         // Turn to hub
-                        new FastTurn(drive, 45, TURN_SPEED * 3),
+                        new FastTurn(drive, -15, TURN_SPEED * 3),
 
                         // Align to hub using vision
-                        new PositionForHub(hubVision, drive).withTimeout(1.1),
+                        new PositionForHub(hubVision, drive).withTimeout(1.0),
 
                         // Shoot second two cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(3)));
