@@ -84,6 +84,16 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getOperatorIntakeRunInButton() {
+        return new Trigger(() -> operatorController.getRightBumper());
+    }
+
+    @Override
+    public Trigger getOperatorIntakeRunOutButton() {
+        return new Trigger(() -> operatorController.getLeftBumper());
+    }
+
+    @Override
     public double getCellStopSpeed() {
         return operatorController.getLeftY();
     }

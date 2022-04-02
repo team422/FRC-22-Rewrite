@@ -71,6 +71,14 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getOperatorIntakeRunInButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorIntakeRunOutButton() {
+        return new Trigger();
+    }
+
     public default Trigger getDriverFlyWheelHoodUp() {
         return new Trigger();
     }
