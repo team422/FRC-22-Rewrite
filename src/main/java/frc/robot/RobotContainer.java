@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -192,6 +193,9 @@ public class RobotContainer {
         TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
         TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
 
+        RunFlyWheel revShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
+        RunFlyWheel vomitShooterCommand = new RunFlyWheel(varFlyWheel, -1000, true);
+
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
@@ -221,6 +225,9 @@ public class RobotContainer {
         // Potential issues if driver and operator try to run intake in opposite directions? Ignoring since that issue would already exist anyways (feedCargo & Uptake)
         controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
         controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+
+        controls.getOperatorRevShooterButton().whenActive(revShooterCommand);
+        controls.getOperatorVomitShooterButton().whenActive(vomitShooterCommand);
 
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
 

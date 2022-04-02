@@ -79,6 +79,14 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getOperatorRevShooterButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorVomitShooterButton() {
+        return new Trigger();
+    }
+
     public default Trigger getDriverFlyWheelHoodUp() {
         return new Trigger();
     }

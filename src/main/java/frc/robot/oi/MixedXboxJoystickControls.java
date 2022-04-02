@@ -58,6 +58,17 @@ public class MixedXboxJoystickControls implements UserControls {
         return new Trigger(() -> rightDriverJoystick.getRawButton(1));
     }
 
+    // Not sure how Trigger button works...it returns a double?
+    @Override
+    public Trigger getOperatorRevShooterButton() {
+        return new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2);
+    }
+
+    @Override
+    public Trigger getOperatorVomitShooterButton() {
+        return new Trigger(() -> operatorController.getLeftTriggerAxis() > 0.2);
+    }
+
     @Override
     public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
