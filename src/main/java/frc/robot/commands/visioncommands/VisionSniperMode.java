@@ -43,7 +43,7 @@ public class VisionSniperMode extends CommandBase {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putNumber("Hub Distance", 0);
         } else {
-            double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
+            double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + 3;
             double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
             xPos = Math.abs(xPos) > 0.3 ? xPos : 0;
             SmartDashboard.putBoolean("Hub Visible", true);
