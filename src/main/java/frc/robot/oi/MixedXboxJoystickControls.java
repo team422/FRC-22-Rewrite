@@ -58,6 +58,17 @@ public class MixedXboxJoystickControls implements UserControls {
         return new Trigger(() -> rightDriverJoystick.getRawButton(1));
     }
 
+    // Not sure how Trigger button works...it returns a double?
+    @Override
+    public Trigger getOperatorRevShooterButton() {
+        return new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2);
+    }
+
+    @Override
+    public Trigger getOperatorVomitShooterButton() {
+        return new Trigger(() -> operatorController.getLeftTriggerAxis() > 0.2);
+    }
+
     @Override
     public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
@@ -84,6 +95,16 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getOperatorIntakeRunInButton() {
+        return new Trigger(() -> operatorController.getRightBumper());
+    }
+
+    @Override
+    public Trigger getOperatorIntakeRunOutButton() {
+        return new Trigger(() -> operatorController.getLeftBumper());
+    }
+
+    @Override
     public double getCellStopSpeed() {
         return operatorController.getLeftY();
     }
@@ -96,6 +117,16 @@ public class MixedXboxJoystickControls implements UserControls {
     @Override
     public Trigger getUptakeDownTrigger() {
         return new Trigger(() -> operatorController.getLeftY() < -0.2);
+    }
+
+    @Override
+    public Trigger getTraversalInTrigger() {
+        return new Trigger(() -> operatorController.getRightY() > 0.2);
+    }
+
+    @Override
+    public Trigger getTraversalOutTrigger() {
+        return new Trigger(() -> operatorController.getRightY() < -0.2);
     }
 
     @Override

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
@@ -22,6 +23,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
@@ -192,6 +194,12 @@ public class RobotContainer {
         TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
         TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
 
+        TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
+        TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
+
+        RunFlyWheel revShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
+        RunFlyWheel vomitShooterCommand = new RunFlyWheel(varFlyWheel, -1000, true);
+
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
@@ -217,6 +225,16 @@ public class RobotContainer {
 
         controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
         controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
+
+        // Potential issues if driver and operator try to run intake in opposite directions? Ignoring since that issue would already exist anyways (feedCargo & Uptake)
+        controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
+        controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+
+        controls.getOperatorRevShooterButton().whenActive(revShooterCommand);
+        controls.getOperatorVomitShooterButton().whenActive(vomitShooterCommand);
+
+        controls.getTraversalInTrigger().whileActiveContinuous(traversalInCommand);
+        controls.getTraversalOutTrigger().whileActiveContinuous(traversalOutCommand);
 
         controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
 
