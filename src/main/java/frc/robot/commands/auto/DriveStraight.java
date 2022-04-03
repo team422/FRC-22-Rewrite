@@ -8,6 +8,7 @@ public class DriveStraight extends CommandBase {
     private final DriveBase drive;
     private final double meters;
     private final double speed;
+    private double targetGyroAngle;
 
     public DriveStraight(DriveBase drive, double meters, double speed) {
         setName("DriveStraight");
@@ -23,12 +24,16 @@ public class DriveStraight extends CommandBase {
         drive.resetRightPosition();
 
         drive.setBrakeMode(true);
-        drive.resetGyro();
+        targetGyroAngle = drive.getGyroAngle();
+    }
+
+    private double getGyroOffset() {
+        return drive.getGyroAngle() - targetGyroAngle;
     }
 
     @Override
     public void execute() {
-        double correction = Units.degreesToRadians(drive.getGyroAngle()) * 0.1;
+        double correction = Units.degreesToRadians(getGyroOffset()) * 0.1;
         double moveSpeed = this.speed * Math.signum(this.meters);
         drive.driveBase.curvatureDrive(moveSpeed, correction, false);
     }

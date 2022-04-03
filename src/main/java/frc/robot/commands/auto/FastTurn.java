@@ -21,14 +21,10 @@ public class FastTurn extends CommandBase {
 
     @Override
     public void initialize() {
-        drive.resetGyro();
         targetGyroAngle = drive.getGyroAngle() + turnDegrees;
         drive.setBrakeMode(true);
     }
 
-    // public double getGyroDelta(){
-    //     return 
-    // }
     public double findCompletionValue(double currentAngle, double targetAngle) {
         return (targetAngle - currentAngle) / Math.abs(turnDegrees);
     }

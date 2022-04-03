@@ -12,6 +12,7 @@ public class DriveStraightToBall extends CommandBase {
     private final Vision intakeCamera;
     private final double meters;
     private final double speed;
+    private double targetGyroAngle;
 
     public DriveStraightToBall(DriveBase drive, Vision intakeCamera, double meters, double speed) {
         setName("DriveStraightToBall");
@@ -28,7 +29,12 @@ public class DriveStraightToBall extends CommandBase {
         drive.resetRightPosition();
 
         drive.setBrakeMode(true);
-        drive.resetGyro();
+
+        targetGyroAngle = drive.getGyroAngle();
+    }
+
+    private double getGyroOffset() {
+        return drive.getGyroAngle() - targetGyroAngle;
     }
 
     @Override
@@ -38,10 +44,10 @@ public class DriveStraightToBall extends CommandBase {
         double correction = 0;
 
         if (result != null && result.hasTargets()) {
-            drive.resetGyro();
+            targetGyroAngle = drive.getGyroAngle();
             correction = Units.degreesToRadians(result.getBestTarget().getYaw()) * 0.3;
         } else {
-            correction = Units.degreesToRadians(drive.getGyroAngle()) * 0.1;
+            correction = Units.degreesToRadians(getGyroOffset()) * 0.1;
         }
 
         correction = MathUtil.clamp(correction, -MAX_CORRECTION_VALUE, MAX_CORRECTION_VALUE);

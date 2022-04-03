@@ -21,7 +21,6 @@ public class Turn extends CommandBase {
 
     @Override
     public void initialize() {
-        drive.resetGyro();
         targetGyroAngle = drive.getGyroAngle() + turnDegrees;
         drive.setBrakeMode(true);
     }

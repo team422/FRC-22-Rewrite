@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.auto.routines.FourCargoAutoPos2;
+import frc.robot.commands.auto.routines.FourCargoAutoPos3;
 import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
+import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
@@ -196,7 +196,8 @@ public class RobotContainer {
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
-        TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
+        // TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
+        TeleFlyVarSpeed revFlywheelCommand = new TeleFlyVarSpeed(varFlyWheel, hubCamera);
 
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
@@ -242,7 +243,9 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+        // return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+        //         colorSensor);
+        return new FourCargoAutoPos3(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                 colorSensor);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }

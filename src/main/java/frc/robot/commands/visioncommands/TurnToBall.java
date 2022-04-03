@@ -21,7 +21,6 @@ public class TurnToBall extends CommandBase {
     @Override
     public void initialize() {
         drive.setBrakeMode(true);
-        drive.resetGyro();
     }
 
     @Override

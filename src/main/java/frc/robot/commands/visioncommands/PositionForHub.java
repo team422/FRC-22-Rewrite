@@ -39,7 +39,7 @@ public class PositionForHub extends CommandBase {
 
         SmartDashboard.putBoolean("Hub Visible", true);
 
-        double xPos = result.getBestTarget().getYaw();
+        double xPos = result.getBestTarget().getYaw() + 3;
         double yPos = result.getBestTarget().getPitch();
 
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
