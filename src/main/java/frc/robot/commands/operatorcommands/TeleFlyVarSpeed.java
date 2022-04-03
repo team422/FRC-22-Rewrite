@@ -38,7 +38,7 @@ public class TeleFlyVarSpeed extends CommandBase {
             if (result == null || !result.hasTargets()) {
                 SmartDashboard.putBoolean("Hub Visible", false);
                 SmartDashboard.putBoolean("Hub In Range", false);
-                shooterSpeed = 2000;
+                shooterSpeed = 2200;
             } else {
                 SmartDashboard.putBoolean("Hub Visible", true);
 
