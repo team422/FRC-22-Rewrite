@@ -11,6 +11,14 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getTraversalInTrigger() {
+        return new Trigger();
+    }
+
+    public default Trigger getTraversalOutTrigger() {
+        return new Trigger();
+    }
+
     public default double getLeftDriveX() {
         return 0.0;
     }
@@ -68,6 +76,22 @@ public interface UserControls {
     }
 
     public default Trigger getIntakeRunOutButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorIntakeRunInButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorIntakeRunOutButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorRevShooterButton() {
+        return new Trigger();
+    }
+
+    public default Trigger getOperatorVomitShooterButton() {
         return new Trigger();
     }
 
