@@ -35,6 +35,22 @@ public interface UserControls {
         return 0.0;
     }
 
+    public default double getLeftOperatorX() {
+        return 0.0;
+    }
+
+    public default double getLeftOperatorY() {
+        return 0.0;
+    }
+
+    public default double getRightOperatorX() {
+        return 0.0;
+    }
+
+    public default double getRightOperatorY() {
+        return 0.0;
+    }
+
     public default double getCellStopSpeed() {
         return 0.0;
     }
@@ -67,7 +83,7 @@ public interface UserControls {
         return new Trigger();
     }
 
-    public default Trigger getIntakeRetractButton() {
+    public default Trigger getIntakeToggleButton() {
         return new Trigger();
     }
 

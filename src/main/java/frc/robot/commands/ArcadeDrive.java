@@ -63,32 +63,13 @@ public class ArcadeDrive extends CommandBase {
         double mult = 1;
         double forwardSpeed;
         double turnSpeed;
-        double divisor;
-        // if (leftYValue < deadband) {
-        //     leftYValue = 0;
-        // }
-        // if (rightXValue < deadband) {
-        //     rightXValue = 0;
-        // }
-        // leftSpeed = leftYValue;
-        // rightSpeed = rightXValue;
         System.out.println("LEFTY:" + leftYValue);
         System.out.println("RIGHTX:" + rightXValue);
         forwardSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
         turnSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
-        divisor = Math.abs(forwardSpeed) + Math.abs(turnSpeed);
-        divisor = Math.max(divisor, 1);
 
-        // System.out.println("Drive Left Speed: " + leftSpeed);
-        // System.out.println("Drive Right Speed: " + rightSpeed);
-
-        // drive.driveBase.curvatureDrive(-forwardSpeed, turnSpeed, true);
+        drive.driveBase.curvatureDrive(forwardSpeed, turnSpeed, true);
         // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
-        // System.out.println("Left Wheel Speed: " + (forwardSpeed + turnSpeed) / divisor);
-        // System.out.println("Right Wheel Speed: " + (forwardSpeed - turnSpeed) / divisor);
-        // System.out.println("Divisor: " + divisor);
-        drive.driveSpeed(((forwardSpeed + turnSpeed) / divisor),
-                (forwardSpeed - turnSpeed) / divisor);
 
     }
 

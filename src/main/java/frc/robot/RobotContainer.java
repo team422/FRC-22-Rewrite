@@ -17,14 +17,13 @@ import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleFlyVar;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
+import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleTransversal;
-import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
 import frc.robot.commands.visioncommands.VisionSniperMode;
@@ -82,7 +81,6 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-
         // Initialize Subsystems
         configureSubsystems();
 
@@ -178,9 +176,6 @@ public class RobotContainer {
                 () -> controls.getRightDriveX(),
                 () -> controls.getRightDriveY());
 
-        TeleIntake defaultIntakeCommand = new TeleIntake(intake,
-                () -> 12.0 * controls.getIntakeSpeed());
-
         TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor, intake);
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
@@ -190,21 +185,22 @@ public class RobotContainer {
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
         TeleIntake intakeInCommand = new TeleIntake(intake, () -> -7.0);
         TeleIntake intakeOutCommand = new TeleIntake(intake, () -> 7.0);
+        TeleIntake operatorIntakeCommand = new TeleIntake(intake, () -> controls.getRightOperatorY() * 12);
 
-        TeleUptake uptakeUpCommand = new TeleUptake(uptake, () -> 10.0);
-        TeleUptake uptakeDownCommand = new TeleUptake(uptake, () -> -10.0);
+        TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -10.0);
+        TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 10.0);
 
         TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
 
-        RunFlyWheel revShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
-        RunFlyWheel vomitShooterCommand = new RunFlyWheel(varFlyWheel, -1000, true);
+        RunFlyWheel operatorRevShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
+        RunFlyWheel operatorVomitShooterCommand = new RunFlyWheel(varFlyWheel, -1000, true);
 
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
-        TeleFlyVar revFlywheelCommand = new TeleFlyVar(varFlyWheel);
+        TeleFlyVarSpeed revFlywheelCommand = new TeleFlyVarSpeed(varFlyWheel, hubCamera);
 
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
@@ -213,7 +209,7 @@ public class RobotContainer {
 
         // Define default commands here
         drive.setDefaultCommand(defaultDriveCommand);
-        intake.setDefaultCommand(defaultIntakeCommand);
+        intake.setDefaultCommand(operatorIntakeCommand);
         uptake.setDefaultCommand(defaultIndexCommand);
 
         // Define button / command bindings here
@@ -230,19 +226,19 @@ public class RobotContainer {
         controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
         controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
 
-        controls.getOperatorRevShooterButton().whenActive(revShooterCommand);
-        controls.getOperatorVomitShooterButton().whenActive(vomitShooterCommand);
+        controls.getOperatorRevShooterButton().whileActiveOnce(operatorRevShooterCommand);
+        controls.getOperatorVomitShooterButton().whileActiveOnce(operatorVomitShooterCommand);
 
         controls.getTraversalInTrigger().whileActiveContinuous(traversalInCommand);
         controls.getTraversalOutTrigger().whileActiveContinuous(traversalOutCommand);
 
-        controls.getIntakeRetractButton().whenActive(intakeToggleCommand);
+        controls.getIntakeToggleButton().whenActive(intakeToggleCommand);
 
         // Driver command bindings
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
 
-        controls.getFeedShooterButton().whileActiveOnce(feedCargoCommand);
+        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);

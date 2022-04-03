@@ -5,6 +5,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.util.FieldUtils;
@@ -39,7 +40,7 @@ public class PositionForHub extends CommandBase {
 
         SmartDashboard.putBoolean("Hub Visible", true);
 
-        double xPos = result.getBestTarget().getYaw();
+        double xPos = result.getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
         double yPos = result.getBestTarget().getPitch();
 
         double distance = FieldUtils.getHubDistance(yPos, hubCam);

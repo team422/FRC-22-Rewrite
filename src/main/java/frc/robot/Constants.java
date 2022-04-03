@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.util.TunableNumber;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -47,4 +48,7 @@ public final class Constants {
     // Shooter Constants
     public static final double SHOOTER_UP_RPM = 2150; // Distance is x feet to close bumper
     public static final double SHOOTER_DOWN_RPM = 2200;
+
+    // Vision Constants
+    public static final TunableNumber VISION_TARGET_OFFSET = new TunableNumber("Vision/TargetOffset", 3);
 }

@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.util.FieldUtils;
@@ -43,7 +44,7 @@ public class VisionSniperMode extends CommandBase {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putNumber("Hub Distance", 0);
         } else {
-            double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + 3;
+            double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
             double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
             xPos = Math.abs(xPos) > 0.3 ? xPos : 0;
             SmartDashboard.putBoolean("Hub Visible", true);

@@ -39,6 +39,26 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public double getLeftOperatorX() {
+        return operatorController.getLeftX();
+    }
+
+    @Override
+    public double getLeftOperatorY() {
+        return operatorController.getLeftY();
+    }
+
+    @Override
+    public double getRightOperatorX() {
+        return operatorController.getRightX();
+    }
+
+    @Override
+    public double getRightOperatorY() {
+        return operatorController.getRightY();
+    }
+
+    @Override
     public Trigger getAutoDriveButton() {
         return new Trigger(() -> leftDriverJoystick.getRawButton(2));
     }
@@ -80,8 +100,8 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
-    public Trigger getIntakeRetractButton() {
-        return new Trigger(() -> rightDriverJoystick.getRawButton(5));
+    public Trigger getIntakeToggleButton() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(5) || operatorController.getXButton());
     }
 
     @Override

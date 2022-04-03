@@ -28,11 +28,7 @@ public class TeleIndexer extends CommandBase {
             uptake.stop();
         }
 
-        if (intake.getIntakeSolenoid()) {
-            transversal.setVoltage(6.0);
-        } else {
-            transversal.stop();
-        }
+        transversal.setVoltage(6.0);
     }
 
     @Override
