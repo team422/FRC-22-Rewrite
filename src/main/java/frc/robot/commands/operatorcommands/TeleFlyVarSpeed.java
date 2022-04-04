@@ -49,7 +49,7 @@ public class TeleFlyVarSpeed extends CommandBase {
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
 
         SmartDashboard.putBoolean("Hub Visible", true);
-        SmartDashboard.putNumber("Hub Distance", distance);
+        SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
 
         if (distance < Units.feetToMeters(6)) {
             return 1950;
