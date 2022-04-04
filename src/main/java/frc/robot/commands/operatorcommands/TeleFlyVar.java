@@ -21,7 +21,6 @@ public class TeleFlyVar extends CommandBase {
         if (varFlyWheel.get() == Value.kForward) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_UP_RPM);
         } else {
-
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
         }
     }

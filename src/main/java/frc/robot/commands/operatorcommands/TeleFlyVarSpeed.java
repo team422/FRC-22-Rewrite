@@ -33,41 +33,40 @@ public class TeleFlyVarSpeed extends CommandBase {
         if (varFlyWheel.get() == Value.kReverse) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
         } else {
-            result = hubCam.getLatestResult();
+            var result = hubCam.getLatestResult();
+            double speed = calculateSpeed(result);
 
-            if (result == null || !result.hasTargets()) {
-                SmartDashboard.putBoolean("Hub Visible", false);
-                SmartDashboard.putBoolean("Hub In Range", false);
-                shooterSpeed = 2000;
-            } else {
-                SmartDashboard.putBoolean("Hub Visible", true);
+            varFlyWheel.flyVelocity(speed);
+        }
+    }
 
-                double yPos = result.getBestTarget().getPitch();
-                double distance = FieldUtils.getHubDistance(yPos, hubCam);
-                SmartDashboard.putNumber("Hub Distance", distance);
+    private double calculateSpeed(PhotonPipelineResult result) {
+        if (result == null || !result.hasTargets()) {
+            SmartDashboard.putBoolean("Hub Visible", false);
+            SmartDashboard.putBoolean("Hub In Range", false);
+            return 2200;
+        }
 
-                if (distance < Units.feetToMeters(6)) {
-                    shooterSpeed = 1950;
-                    // } else if (distance < Units.feetToMeters(6)) {
-                    //     shooterSpeed = 1900;
-                    // } else if (distance < Units.feetToMeters(8)) {
-                    //     shooterSpeed = 2000;
-                } else if (distance < Units.feetToMeters(6.5)) {
-                    shooterSpeed = 2000;
-                } else if (distance < Units.feetToMeters(7)) {
-                    shooterSpeed = 2100;
-                } else if (distance < Units.feetToMeters(8)) {
-                    shooterSpeed = 2300;
-                } else if (distance < Units.feetToMeters(9)) {
-                    shooterSpeed = 2400;
-                } else if (distance < Units.feetToMeters(10)) {
-                    shooterSpeed = 2600;
-                } else {
-                    shooterSpeed = 2800;
-                }
-            }
+        double yPos = result.getBestTarget().getPitch();
+        double distance = FieldUtils.getHubDistance(yPos, hubCam);
 
-            varFlyWheel.flyVelocity(shooterSpeed);
+        SmartDashboard.putBoolean("Hub Visible", true);
+        SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
+
+        if (distance < Units.feetToMeters(6)) {
+            return 1950;
+            // } else if (distance < Units.feetToMeters(6.5)) {
+            //     return 2000;
+        } else if (distance < Units.feetToMeters(7)) {
+            return 2050;
+        } else if (distance < Units.feetToMeters(8)) {
+            return 2200;
+        } else if (distance < Units.feetToMeters(9)) {
+            return 2300;
+        } else if (distance < Units.feetToMeters(10)) {
+            return 2500;
+        } else {
+            return 2800;
         }
     }
 

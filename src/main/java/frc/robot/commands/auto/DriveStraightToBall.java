@@ -45,6 +45,7 @@ public class DriveStraightToBall extends CommandBase {
 
         if (result != null && result.hasTargets()) {
             targetGyroAngle = drive.getGyroAngle();
+            drive.resetGyro();
             correction = Units.degreesToRadians(result.getBestTarget().getYaw()) * 0.3;
         } else {
             correction = Units.degreesToRadians(getGyroOffset()) * 0.1;

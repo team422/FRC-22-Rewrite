@@ -5,6 +5,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.util.FieldUtils;
@@ -37,7 +38,8 @@ public class RotateToHub extends CommandBase {
             return;
         }
 
-        double xPos = hubCam.getLatestResult().getBestTarget().getYaw();
+
+        double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
         double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
         xPos = Math.abs(xPos) > 1 ? xPos : 0;
         SmartDashboard.putBoolean("Hub Visible", false);
