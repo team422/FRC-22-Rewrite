@@ -42,7 +42,7 @@ public class TwoCargoAuto extends ParallelCommandGroup {
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
                         // Align to hub using vision
-                        // new PositionForHub(vision, drive).withTimeout(3),
+                        new PositionForHub(vision, drive).withTimeout(3),
 
                         // Shoot cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(5),
