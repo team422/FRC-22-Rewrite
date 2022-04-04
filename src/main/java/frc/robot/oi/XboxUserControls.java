@@ -58,7 +58,7 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getIntakeRetractButton() {
+    public Trigger getIntakeToggleButton() {
         return new Trigger(() -> operatorController.getYButton());
     }
 

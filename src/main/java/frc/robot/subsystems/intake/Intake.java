@@ -32,4 +32,8 @@ public class Intake extends SubsystemBase {
     public void setIntakeSolenoid(boolean extended) {
         intakeIO.setIntakeSolenoidForward(extended);
     }
+
+    public boolean getIntakeSolenoid() {
+        return intakeIO.getIntakeSolenoid();
+    }
 }

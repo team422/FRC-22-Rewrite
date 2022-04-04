@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 
@@ -26,6 +27,7 @@ public class RunFlyWheel extends CommandBase {
     @Override
     public void execute() {
         flywheel.flyVelocity(this.rpm);
+        SmartDashboard.putNumber("Shooter Velocity", flywheel.getVelocity());
     }
 
     @Override

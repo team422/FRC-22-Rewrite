@@ -1,14 +1,15 @@
-package frc.robot.commands.auto;
+package frc.robot.commands.auto.routines;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.commands.DriveStraight;
 import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.SetIntakeExtended;
+import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIntake;
+import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.intake.Intake;
@@ -30,7 +31,7 @@ public class TwoCargoAuto extends ParallelCommandGroup {
                         new WaitCommand(0.2),
 
                         // Run intake
-                        new TeleIntake(intake, () -> -7.0)),
+                        new TeleIntake(intake, () -> -7.0)).withTimeout(5),
 
                 // Start shooter
                 new RunFlyWheel(flywheel, Constants.SHOOTER_UP_RPM, true),
@@ -47,6 +48,8 @@ public class TwoCargoAuto extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(5),
 
                         // Back up a little further out of the tarmac
-                        new DriveStraight(drive, Units.feetToMeters(2), DRIVE_SPEED)));
+                        new TeleIntakeToggle(intake),
+
+                        new DriveStraight(drive, Units.feetToMeters(.5), DRIVE_SPEED)));
     }
 }

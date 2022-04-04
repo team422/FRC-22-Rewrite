@@ -22,6 +22,7 @@ public class ArcadeDrive extends CommandBase {
 
     // Remember to put this as TunableNumber
     private static double deadband = 0.1;
+    private static double maxSpeed = 1;
 
     /**
      * Creates a new ExampleCommand.
@@ -60,16 +61,16 @@ public class ArcadeDrive extends CommandBase {
         double rightXValue = rightXSupplier.get();
         double rightYValue = rightYSupplier.get();
         double mult = 1;
-        double leftSpeed;
-        double rightSpeed;
+        double forwardSpeed;
+        double turnSpeed;
+        System.out.println("LEFTY:" + leftYValue);
+        System.out.println("RIGHTX:" + rightXValue);
+        forwardSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
+        turnSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
 
-        leftSpeed = leftYValue;
-        rightSpeed = rightXValue;
+        drive.driveBase.curvatureDrive(forwardSpeed, turnSpeed, true);
+        // drive.driveBase.arcadeDrive(-leftSpeed, rightSpeed);
 
-        // System.out.println("Drive Left Speed: " + leftSpeed);
-        // System.out.println("Drive Right Speed: " + rightSpeed);
-
-        drive.driveBase.curvatureDrive(-leftSpeed, rightSpeed, true);
     }
 
     // Called once the command ends or is interrupted.

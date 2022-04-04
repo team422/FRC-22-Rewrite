@@ -20,7 +20,7 @@ public class TeleFlyVar extends CommandBase {
     public void execute() {
         if (varFlyWheel.get() == Value.kForward) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_UP_RPM);
-        } else if (varFlyWheel.get() == Value.kReverse) {
+        } else {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
         }
     }

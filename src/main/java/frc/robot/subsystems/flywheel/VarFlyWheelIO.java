@@ -24,6 +24,10 @@ public interface VarFlyWheelIO {
 
     }
 
+    public default double getVelocity() {
+        return 0;
+    }
+
     public default void toggleState() {
 
     }

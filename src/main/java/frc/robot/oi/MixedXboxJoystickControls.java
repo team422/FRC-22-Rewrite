@@ -39,8 +39,28 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public double getLeftOperatorX() {
+        return operatorController.getLeftX();
+    }
+
+    @Override
+    public double getLeftOperatorY() {
+        return operatorController.getLeftY();
+    }
+
+    @Override
+    public double getRightOperatorX() {
+        return operatorController.getRightX();
+    }
+
+    @Override
+    public double getRightOperatorY() {
+        return operatorController.getRightY();
+    }
+
+    @Override
     public Trigger getAutoDriveButton() {
-        return new Trigger();
+        return new Trigger(() -> leftDriverJoystick.getRawButton(2));
     }
 
     @Override
@@ -58,6 +78,17 @@ public class MixedXboxJoystickControls implements UserControls {
         return new Trigger(() -> rightDriverJoystick.getRawButton(1));
     }
 
+    // Not sure how Trigger button works...it returns a double?
+    @Override
+    public Trigger getOperatorRevShooterButton() {
+        return new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2);
+    }
+
+    @Override
+    public Trigger getOperatorVomitShooterButton() {
+        return new Trigger(() -> operatorController.getLeftTriggerAxis() > 0.2);
+    }
+
     @Override
     public Trigger getClimbButton() {
         return new Trigger(() -> operatorController.getBButton());
@@ -69,8 +100,8 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
-    public Trigger getIntakeRetractButton() {
-        return new Trigger(() -> rightDriverJoystick.getRawButton(5));
+    public Trigger getIntakeToggleButton() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(5) || operatorController.getXButton());
     }
 
     @Override
@@ -81,6 +112,16 @@ public class MixedXboxJoystickControls implements UserControls {
     @Override
     public Trigger getIntakeRunOutButton() {
         return new Trigger(() -> leftDriverJoystick.getRawButton(3));
+    }
+
+    @Override
+    public Trigger getOperatorIntakeRunInButton() {
+        return new Trigger(() -> operatorController.getRightBumper());
+    }
+
+    @Override
+    public Trigger getOperatorIntakeRunOutButton() {
+        return new Trigger(() -> operatorController.getLeftBumper());
     }
 
     @Override
@@ -96,6 +137,16 @@ public class MixedXboxJoystickControls implements UserControls {
     @Override
     public Trigger getUptakeDownTrigger() {
         return new Trigger(() -> operatorController.getLeftY() < -0.2);
+    }
+
+    @Override
+    public Trigger getTraversalInTrigger() {
+        return new Trigger(() -> operatorController.getRightY() > 0.2);
+    }
+
+    @Override
+    public Trigger getTraversalOutTrigger() {
+        return new Trigger(() -> operatorController.getRightY() < -0.2);
     }
 
     @Override
