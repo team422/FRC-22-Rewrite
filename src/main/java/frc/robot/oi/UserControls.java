@@ -131,6 +131,22 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getClimbUpRight() {
+        return new Trigger();
+    }
+
+    public default Trigger getClimbDownRight() {
+        return new Trigger();
+    }
+
+    public default Trigger getClimbUpLeft() {
+        return new Trigger();
+    }
+
+    public default Trigger getClimbDownLeft() {
+        return new Trigger();
+    }
+
     public default Trigger getClimbAuto() {
         return new Trigger();
     }

@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
-import frc.robot.commands.operatorcommands.TeleClimbDown;
-import frc.robot.commands.operatorcommands.TeleClimbTilt;
-import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -24,6 +21,13 @@ import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleTransversal;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDown;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDownLeft;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDownRight;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbTilt;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUpLeft;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUpRight;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
 import frc.robot.commands.visioncommands.VisionSniperMode;
@@ -180,6 +184,10 @@ public class RobotContainer {
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
+        TeleClimbUpLeft climberUpLeftCommand = new TeleClimbUpLeft(climber);
+        TeleClimbDownLeft climberDownLeftCommand = new TeleClimbDownLeft(climber);
+        TeleClimbUpRight climberUpRightCommand = new TeleClimbUpRight(climber);
+        TeleClimbDownRight climberDownRightCommand = new TeleClimbDownRight(climber);
         TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
 
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
@@ -217,6 +225,10 @@ public class RobotContainer {
         // Operator command bindings
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
+        // controls.getClimbUpLeft().whileActiveOnce(climberUpLeftCommand);
+        // controls.getClimbDownLeft().whileActiveOnce(climberDownLeftCommand);
+        // controls.getClimbUpRight().whileActiveOnce(climberUpRightCommand);
+        // controls.getClimbDownRight().whileActiveOnce(climberDownRightCommand);
         controls.getClimbButton().whenActive(climmberTiltCommand);
 
         controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
@@ -256,8 +268,11 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+        // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                 colorSensor);
+        // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 

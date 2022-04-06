@@ -7,6 +7,7 @@ import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.SetIntakeExtended;
 import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.auto.DriveStraightToBall;
+import frc.robot.commands.auto.FastTurn;
 import frc.robot.commands.auto.Turn;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleIntake;
@@ -46,7 +47,7 @@ public class FiveCargoAuto extends ParallelCommandGroup {
                         new WaitCommand(2),
 
                         // Run flywheel for final two shots
-                        new RunFlyWheel(flywheel, 2050, true)).withTimeout(15),
+                        new RunFlyWheel(flywheel, 2050, true)).withTimeout(30),
 
                 // Auto Drive Sequence
                 sequence(
@@ -56,28 +57,26 @@ public class FiveCargoAuto extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(1.3),
                         //Turn right/clockwise to ball
                         // new TurnToBall(intakeVision, drive, TURN_SPEED * 1.5, 85),
-                        new Turn(drive, 110, TURN_SPEED),
+                        new Turn(drive, 103.5, TURN_SPEED),
                         //drive straight and intake ball
-                        new DriveStraight(drive, Units.feetToMeters(9), DRIVE_SPEED * 2),
+                        new DriveStraight(drive, Units.feetToMeters(7), DRIVE_SPEED * 2),
                         //drive backwards
                         new DriveStraight(drive, Units.feetToMeters(-3), DRIVE_SPEED * 2),
                         //turn counterclockwise
-                        new Turn(drive, -85, TURN_SPEED),
+                        new Turn(drive, -75, TURN_SPEED),
                         //position to hub
-                        new PositionForHub(hubVision, drive).withTimeout(1),
+                        new PositionForHub(hubVision, drive).withTimeout(1.5),
                         //feed balls to shoot
-                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
+                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(1),
                         //Turn clockwise to ball
-                        new Turn(drive, 48, TURN_SPEED),
+                        new FastTurn(drive, 6, TURN_SPEED * 0.5),
                         //drive straight to ball
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(16), DRIVE_SPEED),
+                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(12.5), DRIVE_SPEED * 2),
                         //drive backwards
-                        new DriveStraight(drive, Units.feetToMeters(-16), DRIVE_SPEED),
-                        //turn counterclockwise
-                        new Turn(drive, -48, TURN_SPEED),
+                        new DriveStraight(drive, Units.feetToMeters(-9), DRIVE_SPEED * 2),
                         //position to hub
                         new PositionForHub(hubVision, drive).withTimeout(1),
                         //TeleFeed        
-                        new TeleFeed(transversal, uptake, () -> 9.0)));
+                        new TeleFeed(transversal, uptake, () -> 9.0)).withTimeout(150));
     }
 }

@@ -175,6 +175,26 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getClimbUpLeft() {
+        return new Trigger(() -> operatorController.getPOV() == 315);
+    }
+
+    @Override
+    public Trigger getClimbDownLeft() {
+        return new Trigger(() -> operatorController.getPOV() == 225);
+    }
+
+    @Override
+    public Trigger getClimbUpRight() {
+        return new Trigger(() -> operatorController.getPOV() == 45);
+    }
+
+    @Override
+    public Trigger getClimbDownRight() {
+        return new Trigger(() -> operatorController.getPOV() == 135);
+    }
+
+    @Override
     public Trigger getClimbAuto() {
         return new Trigger();
     }
