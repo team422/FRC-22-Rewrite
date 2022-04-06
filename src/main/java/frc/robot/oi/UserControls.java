@@ -3,6 +3,7 @@ package frc.robot.oi;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public interface UserControls {
+
     public default Trigger getUptakeUpTrigger() {
         return new Trigger();
     }
@@ -79,6 +80,10 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getClimbModeToggle() {
+        return new Trigger();
+    }
+
     public default Trigger getIntakeExtendButton() {
         return new Trigger();
     }
@@ -135,19 +140,11 @@ public interface UserControls {
         return new Trigger();
     }
 
-    public default Trigger getClimbDownRight() {
-        return new Trigger();
-    }
-
     public default Trigger getClimbUpLeft() {
         return new Trigger();
     }
 
-    public default Trigger getClimbDownLeft() {
-        return new Trigger();
-    }
-
-    public default Trigger getClimbAuto() {
+    public default Trigger getClimbEnable() {
         return new Trigger();
     }
 

@@ -117,7 +117,7 @@ public class XboxUserControls implements UserControls {
     }
 
     @Override
-    public Trigger getClimbAuto() {
+    public Trigger getClimbEnable() {
         return new Trigger();
     }
 

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.auto.routines.FourCargoAutoPos2;
+import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -80,6 +80,7 @@ public class RobotContainer {
     private Vision hubCamera;
     private Vision intakeCamera;
     private UsbCamera camera;
+    private boolean climbMode;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -87,6 +88,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Initialize Subsystems
         configureSubsystems();
+
+        this.climbMode = false;
 
         // Configure the button bindings
         configureButtonBindings();
@@ -223,13 +226,8 @@ public class RobotContainer {
         // Define button / command bindings here
 
         // Operator command bindings
-        controls.getClimbUp().whileActiveOnce(climberUpCommand);
-        controls.getClimbDown().whileActiveOnce(climberDownCommand);
-        // controls.getClimbUpLeft().whileActiveOnce(climberUpLeftCommand);
-        // controls.getClimbDownLeft().whileActiveOnce(climberDownLeftCommand);
-        // controls.getClimbUpRight().whileActiveOnce(climberUpRightCommand);
-        // controls.getClimbDownRight().whileActiveOnce(climberDownRightCommand);
-        controls.getClimbButton().whenActive(climmberTiltCommand);
+        controls.getClimbUpLeft().whileActiveOnce(climberUpLeftCommand);
+        controls.getClimbUpRight().whileActiveOnce(climberUpRightCommand);
 
         controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
         controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
@@ -237,6 +235,10 @@ public class RobotContainer {
         // Potential issues if driver and operator try to run intake in opposite directions? Ignoring since that issue would already exist anyways (feedCargo & Uptake)
         controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
         controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+        controls.getClimbUp().whileActiveOnce(climberUpCommand);
+        controls.getClimbDown().whileActiveOnce(climberDownCommand);
+        controls.getClimbButton().whenActive(climmberTiltCommand);
+        // controls.getClimbEnable().whenActive(new TeleToggleClimbMode());
 
         controls.getOperatorRevShooterButton().whileActiveOnce(operatorRevShooterCommand);
         controls.getOperatorVomitShooterButton().whileActiveOnce(operatorVomitShooterCommand);
@@ -262,15 +264,19 @@ public class RobotContainer {
         // controls.getAutoDriveButton().whileActiveOnce(turnToBall);
     }
 
+    // public boolean setClimbMode(boolean climbMode) {
+    //     return climbMode;
+    // }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                colorSensor);
+        return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        // return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+        // colorSensor);
         // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);

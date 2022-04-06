@@ -165,38 +165,35 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger getClimbModeToggle() {
+        return new Trigger(() -> operatorController.getYButton());
+    }
+
+    @Override
     public Trigger getClimbUp() {
-        return new Trigger(() -> operatorController.getPOV() == 0);
+        return new Trigger(() -> ((operatorController.getPOV() == 0) || (operatorController.getPOV() == 45)
+                || (operatorController.getPOV() == 315)));
     }
 
     @Override
     public Trigger getClimbDown() {
-        return new Trigger(() -> operatorController.getPOV() == 180);
+        return new Trigger(() -> ((operatorController.getPOV() == 135) || (operatorController.getPOV() == 180)
+                || (operatorController.getPOV() == 225)));
     }
 
     @Override
     public Trigger getClimbUpLeft() {
-        return new Trigger(() -> operatorController.getPOV() == 315);
-    }
-
-    @Override
-    public Trigger getClimbDownLeft() {
-        return new Trigger(() -> operatorController.getPOV() == 225);
+        return new Trigger(() -> operatorController.getLeftBumper());
     }
 
     @Override
     public Trigger getClimbUpRight() {
-        return new Trigger(() -> operatorController.getPOV() == 45);
+        return new Trigger(() -> operatorController.getRightBumper());
     }
 
     @Override
-    public Trigger getClimbDownRight() {
-        return new Trigger(() -> operatorController.getPOV() == 135);
-    }
-
-    @Override
-    public Trigger getClimbAuto() {
-        return new Trigger();
+    public Trigger getClimbEnable() {
+        return new Trigger(() -> operatorController.getYButton());
     }
 
     @Override
