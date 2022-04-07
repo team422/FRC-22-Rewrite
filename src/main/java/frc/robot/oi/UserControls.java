@@ -161,4 +161,8 @@ public interface UserControls {
 
     public default void setOperatorRumble(double percent) {
     }
+
+    public default Trigger switchShootType() {
+        return new Trigger();
+    }
 }

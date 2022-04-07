@@ -64,6 +64,11 @@ public class MixedXboxJoystickControls implements UserControls {
     }
 
     @Override
+    public Trigger switchShootType() {
+        return new Trigger(() -> rightDriverJoystick.getRawButton(7));
+    }
+
+    @Override
     public Trigger getAutoAimButton() {
         return new Trigger(() -> rightDriverJoystick.getRawButton(2));
     }

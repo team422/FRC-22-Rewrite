@@ -10,9 +10,10 @@ import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.auto.routines.TwoCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -251,6 +252,8 @@ public class RobotContainer {
         // Driver command bindings
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
+        controls.switchShootType()
+                .whileActiveOnce(new InstantCommand(() -> Constants.useVisionShot = !Constants.useVisionShot));
 
         controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
@@ -277,11 +280,12 @@ public class RobotContainer {
         // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         // return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
         // colorSensor);
-        // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 
+    //
     public void setBrakeMode(boolean enabled) {
         drive.setBrakeMode(enabled);
     }

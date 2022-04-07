@@ -50,21 +50,29 @@ public class TeleFlyVarSpeed extends CommandBase {
 
         SmartDashboard.putBoolean("Hub Visible", true);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
-
-        if (distance < Units.feetToMeters(6)) {
-            return 1950;
-            // } else if (distance < Units.feetToMeters(6.5)) {
-            //     return 2000;
-        } else if (distance < Units.feetToMeters(7)) {
-            return 2050;
-        } else if (distance < Units.feetToMeters(8)) {
-            return 2150;
-        } else if (distance < Units.feetToMeters(9)) {
-            return 2300;
-        } else if (distance < Units.feetToMeters(10)) {
-            return 2500;
+        if (Constants.useVisionShot) {
+            if (distance < Units.feetToMeters(6)) {
+                return 1950;
+                // } else if (distance < Units.feetToMeters(6.5)) {
+                //     return 2000;
+            } else if (distance < Units.feetToMeters(7)) {
+                return 2050;
+            } else if (distance < Units.feetToMeters(8)) {
+                return 2150;
+            } else if (distance < Units.feetToMeters(9)) {
+                return 2300;
+            } else if (distance < Units.feetToMeters(10)) {
+                return 2500;
+            } else {
+                return 2800;
+            }
         } else {
-            return 2800;
+            if (varFlyWheel.get() == Value.kReverse) {
+                return Constants.SHOOTER_DOWN_RPM;
+            } else {
+                return Constants.SHOOTER_UP_RPM;
+            }
+
         }
     }
 
