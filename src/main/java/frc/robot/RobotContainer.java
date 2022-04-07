@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.auto.routines.FourCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAutoPos2;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -118,7 +118,7 @@ public class RobotContainer {
                 //                 "IntakeCamera",
                 //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
-                camera = CameraServer.startAutomaticCapture();
+                camera = CameraServer.startAutomaticCapture(0);
                 camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
             case ROBOT_2022_PRACTICE:
@@ -278,10 +278,9 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        // return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-        // colorSensor);
-        return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                colorSensor);
+        // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 
