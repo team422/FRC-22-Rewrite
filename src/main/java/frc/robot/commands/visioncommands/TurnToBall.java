@@ -26,12 +26,11 @@ public class TurnToBall extends CommandBase {
 
     @Override
     public void execute() {
-        var pipeline = vision.getLatestResult();
 
         double speed = turnSpeed;
 
-        if (pipeline != null && !pipeline.hasTargets()) {
-            turnSpeed = vision.getLatestResult().getBestTarget().getYaw() * 0.0075;
+        if (!vision.hasTargets()) {
+            turnSpeed = vision.getX() * 0.0075;
         }
 
         drive.driveBase.curvatureDrive(0, speed, true);

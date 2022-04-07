@@ -1,7 +1,5 @@
 package frc.robot.commands.operatorcommands;
 
-import org.photonvision.targeting.PhotonPipelineResult;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,21 +29,21 @@ public class TeleFlyVarSpeed extends CommandBase {
         if (varFlyWheel.get() == Value.kReverse) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
         } else {
-            var result = hubCam.getLatestResult();
-            double speed = calculateSpeed(result);
+
+            double speed = calculateSpeed(hubCam);
 
             varFlyWheel.flyVelocity(speed);
         }
     }
 
-    private double calculateSpeed(PhotonPipelineResult result) {
-        if (result == null || !result.hasTargets()) {
+    private double calculateSpeed(Vision hubCam) {
+        if (hubCam.hasTargets()) {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putBoolean("Hub In Range", false);
             return 2200;
         }
 
-        double yPos = result.getBestTarget().getPitch();
+        double yPos = hubCam.getY();
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
 
         SmartDashboard.putBoolean("Hub Visible", true);

@@ -31,8 +31,7 @@ public class PositionForHub extends CommandBase {
 
     @Override
     public void execute() {
-        result = hubCam.getLatestResult();
-        if (result == null || !result.hasTargets()) {
+        if (!hubCam.hasTargets()) {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putBoolean("Hub In Range", false);
             return;
@@ -40,8 +39,8 @@ public class PositionForHub extends CommandBase {
 
         SmartDashboard.putBoolean("Hub Visible", true);
 
-        double xPos = result.getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
-        double yPos = result.getBestTarget().getPitch();
+        double xPos = hubCam.getX() + Constants.VISION_TARGET_OFFSET.get();
+        double yPos = hubCam.getY();
 
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
         double targetOffset = distance - LONG_TARGET_DISTANCE;

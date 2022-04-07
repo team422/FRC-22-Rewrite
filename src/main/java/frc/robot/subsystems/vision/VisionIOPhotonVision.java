@@ -23,21 +23,26 @@ public class VisionIOPhotonVision implements VisionIO {
     }
 
     @Override
-    public PhotonPipelineResult getLatestResult() {
-        return photonCam.getLatestResult();
-    }
-
-    @Override
-    public void updateTarget() {
-        result = photonCam.getLatestResult();
+    public boolean hasTargets() {
+        return result.hasTargets();
     }
 
     @Override
     public double getX() {
+        result = photonCam.getLatestResult();
         if (!result.hasTargets()) {
             return Double.NaN;
         }
         return photonCam.getLatestResult().getBestTarget().getYaw();
+    }
+
+    @Override
+    public double getY() {
+        result = photonCam.getLatestResult();
+        if (!result.hasTargets()) {
+            return Double.NaN;
+        }
+        return photonCam.getLatestResult().getBestTarget().getPitch();
     }
 
     @Override

@@ -36,7 +36,6 @@ public class VisionSniperMode extends CommandBase {
 
     @Override
     public void execute() {
-        pipeline = hubCam.getLatestResult();
         double turnSpeed = 0;
 
         if (pipeline == null || !pipeline.hasTargets()) {
@@ -44,8 +43,8 @@ public class VisionSniperMode extends CommandBase {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putNumber("Hub Distance", 0);
         } else {
-            double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
-            double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
+            double xPos = hubCam.getX() + Constants.VISION_TARGET_OFFSET.get();
+            double yPos = hubCam.getY();
             xPos = Math.abs(xPos) > 0.3 ? xPos : 0;
             SmartDashboard.putBoolean("Hub Visible", true);
             SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));

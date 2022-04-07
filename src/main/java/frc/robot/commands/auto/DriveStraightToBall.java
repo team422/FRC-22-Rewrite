@@ -33,13 +33,12 @@ public class DriveStraightToBall extends CommandBase {
 
     @Override
     public void execute() {
-        var result = intakeCamera.getLatestResult();
 
         double correction = 0;
 
-        if (result != null && result.hasTargets()) {
+        if (intakeCamera.hasTargets()) {
             drive.resetGyro();
-            correction = Units.degreesToRadians(result.getBestTarget().getYaw()) * 0.3;
+            correction = Units.degreesToRadians(intakeCamera.getX()) * 0.3;
         } else {
             correction = Units.degreesToRadians(drive.getGyroAngle()) * 0.1;
         }

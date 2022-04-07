@@ -15,19 +15,22 @@ public class Vision extends SubsystemBase {
 
     @Override
     public void periodic() {
-        latestResult = visionIO.getLatestResult();
     }
 
-    public PhotonPipelineResult getLatestResult() {
-        return this.latestResult;
+    public boolean hasTargets() {
+        return visionIO.hasTargets();
+    }
+
+    public double getX() {
+        return visionIO.getX();
+    }
+
+    public double getY() {
+        return visionIO.getY();
     }
 
     public void setLEDEnabled(boolean enabled) {
         visionIO.setLEDEnabled(enabled);
-    }
-
-    public void setPipelineIndex() {
-        // TODO
     }
 
     public double getCameraHeightMeters() {

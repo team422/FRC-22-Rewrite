@@ -30,16 +30,15 @@ public class RotateToHub extends CommandBase {
     @Override
     public void execute() {
         System.out.println("Rotating to hub...");
-        result = hubCam.getLatestResult();
-        if (result == null || !result.hasTargets()) {
+        if (!hubCam.hasTargets()) {
             System.out.println("No targets...");
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putNumber("Hub Distance", 0);
             return;
         }
 
-        double xPos = hubCam.getLatestResult().getBestTarget().getYaw() + Constants.VISION_TARGET_OFFSET.get();
-        double yPos = hubCam.getLatestResult().getBestTarget().getPitch();
+        double xPos = hubCam.getX() + Constants.VISION_TARGET_OFFSET.get();
+        double yPos = hubCam.getY();
         xPos = Math.abs(xPos) > 1 ? xPos : 0;
         SmartDashboard.putBoolean("Hub Visible", false);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
