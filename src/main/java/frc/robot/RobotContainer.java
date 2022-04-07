@@ -234,8 +234,8 @@ public class RobotContainer {
         controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
 
         // Potential issues if driver and operator try to run intake in opposite directions? Ignoring since that issue would already exist anyways (feedCargo & Uptake)
-        controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
-        controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+        // controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
+        // controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
         controls.getClimbUp().whileActiveOnce(climberUpCommand);
         controls.getClimbDown().whileActiveOnce(climberDownCommand);
         controls.getClimbButton().whenActive(climmberTiltCommand);

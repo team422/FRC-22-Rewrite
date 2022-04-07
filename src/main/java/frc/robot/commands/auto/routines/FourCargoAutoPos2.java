@@ -38,7 +38,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
 
                         // Run intake
                         parallel(
-                                new TeleIntake(intake, () -> -10.0).withTimeout(15),
+                                new TeleIntake(intake, () -> -7.0).withTimeout(15),
                                 // new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(7),
                                 sequence(
                                         new WaitCommand(8),
