@@ -232,4 +232,9 @@ public class DriveIOFalcon implements DriveIO {
     public double getkD() {
         return kD;
     }
+
+    @Override
+    public void calibrateGyro() {
+        gyro.calibrate();
+    }
 }

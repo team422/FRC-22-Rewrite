@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.auto.routines.FiveCargoAuto;
+import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -274,15 +274,23 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
+        // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         // return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
         // colorSensor);
         // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 
     public void setBrakeMode(boolean enabled) {
         drive.setBrakeMode(enabled);
+    }
+
+    public void setLEDs(boolean enabled) {
+        hubCamera.setLEDEnabled(enabled);
+    }
+
+    public void calibrateGyro() {
+        drive.calibrateGyro();
     }
 }

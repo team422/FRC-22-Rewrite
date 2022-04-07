@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        PortForwarder.add(5800, "gloworm.local", 5800);
+        PortForwarder.add(Constants.PHOTONVISION_PORT, "gloworm.local", Constants.PHOTONVISION_PORT);
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
@@ -100,6 +100,7 @@ public class Robot extends TimedRobot {
     public void testInit() {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
+        m_robotContainer.calibrateGyro();
     }
 
     /** This function is called periodically during test mode. */
