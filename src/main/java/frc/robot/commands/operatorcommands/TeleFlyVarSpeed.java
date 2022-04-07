@@ -41,32 +41,41 @@ public class TeleFlyVarSpeed extends CommandBase {
     }
 
     private double calculateSpeed(PhotonPipelineResult result) {
-        if (result == null || !result.hasTargets()) {
-            SmartDashboard.putBoolean("Hub Visible", false);
-            SmartDashboard.putBoolean("Hub In Range", false);
-            return 2200;
-        }
+        if (Constants.useVisionShot) {
+            if (result == null || !result.hasTargets()) {
+                SmartDashboard.putBoolean("Hub Visible", false);
+                SmartDashboard.putBoolean("Hub In Range", false);
+                return 2200;
+            }
 
-        double yPos = result.getBestTarget().getPitch();
-        double distance = FieldUtils.getHubDistance(yPos, hubCam);
+            double yPos = result.getBestTarget().getPitch();
+            double distance = FieldUtils.getHubDistance(yPos, hubCam);
 
-        SmartDashboard.putBoolean("Hub Visible", true);
-        SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
+            SmartDashboard.putBoolean("Hub Visible", true);
+            SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
 
-        if (distance < Units.feetToMeters(6)) {
-            return 1950;
-            // } else if (distance < Units.feetToMeters(6.5)) {
-            //     return 2000;
-        } else if (distance < Units.feetToMeters(7)) {
-            return 2050;
-        } else if (distance < Units.feetToMeters(8)) {
-            return 2200;
-        } else if (distance < Units.feetToMeters(9)) {
-            return 2300;
-        } else if (distance < Units.feetToMeters(10)) {
-            return 2500;
+            if (distance < Units.feetToMeters(6)) {
+                return 1950;
+                // } else if (distance < Units.feetToMeters(6.5)) {
+                //     return 2000;
+            } else if (distance < Units.feetToMeters(7)) {
+                return 2050;
+            } else if (distance < Units.feetToMeters(8)) {
+                return 2200;
+            } else if (distance < Units.feetToMeters(9)) {
+                return 2300;
+            } else if (distance < Units.feetToMeters(10)) {
+                return 2500;
+            } else {
+                return 2800;
+            }
         } else {
-            return 2800;
+            if (varFlyWheel.get() == Value.kReverse) {
+                return Constants.SHOOTER_DOWN_RPM;
+            } else {
+                return Constants.SHOOTER_UP_RPM;
+            }
+
         }
     }
 

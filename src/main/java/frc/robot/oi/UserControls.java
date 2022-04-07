@@ -143,6 +143,10 @@ public interface UserControls {
         return 0.0;
     }
 
+    public default Trigger switchShootType() {
+        return new Trigger();
+    }
+
     public default void setDriverRumble(double percent) {
     }
 

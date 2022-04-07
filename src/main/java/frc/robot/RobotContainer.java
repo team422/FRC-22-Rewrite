@@ -10,6 +10,7 @@ import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
@@ -23,7 +24,6 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
-import frc.robot.commands.operatorcommands.TeleUptake;
 import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
@@ -206,6 +206,7 @@ public class RobotContainer {
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
+
         // TurnToBall turnToBall = new TurnToBall(intakeCamera, drive, 15);
 
         // Define default commands here
@@ -238,6 +239,8 @@ public class RobotContainer {
         // Driver command bindings
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
+        controls.switchShootType()
+                .whileActiveOnce(new InstantCommand(() -> Constants.useVisionShot = !Constants.useVisionShot));
 
         controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);

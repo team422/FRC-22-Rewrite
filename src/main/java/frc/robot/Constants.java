@@ -51,4 +51,5 @@ public final class Constants {
 
     // Vision Constants
     public static final TunableNumber VISION_TARGET_OFFSET = new TunableNumber("Vision/TargetOffset", 3);
+    public static boolean useVisionShot = true;
 }
