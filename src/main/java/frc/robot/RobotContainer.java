@@ -20,7 +20,7 @@ import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
-import frc.robot.commands.operatorcommands.TeleIndexer;
+import frc.robot.commands.operatorcommands.TeleIndexerV2;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
 import frc.robot.commands.operatorcommands.TeleTransversal;
@@ -176,7 +176,8 @@ public class RobotContainer {
                 () -> controls.getRightDriveX(),
                 () -> controls.getRightDriveY());
 
-        TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor, intake);
+        // TeleIndexer defaultIndexCommand = new TeleIndexer(transversal, uptake, colorSensor, intake);
+        TeleIndexerV2 defaultIndexCommand = new TeleIndexerV2(transversal, uptake, colorSensor);
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
