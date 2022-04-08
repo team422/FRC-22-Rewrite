@@ -46,7 +46,7 @@ public class TwoCargoAuto extends ParallelCommandGroup {
                         // new PositionForHub(vision, drive).withTimeout(3),
 
                         // Shoot cargo
-                        new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(5),
+                        new TeleFeed(transversal, uptake, () -> 6.0).withTimeout(5),
 
                         // Back up a little further out of the tarmac
                         new TeleIntakeToggle(intake),

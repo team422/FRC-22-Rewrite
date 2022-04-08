@@ -13,7 +13,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.auto.routines.FiveCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
+import frc.robot.commands.auto.routines.OneCargoAuto;
+import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -21,6 +25,7 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleShootSequence;
 import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDownLeft;
@@ -201,6 +206,8 @@ public class RobotContainer {
 
         TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -11.0);
         TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 11.0);
+        TeleShootSequence feedSequenceCommand = new TeleShootSequence(varFlyWheel, transversal, uptake, hubCamera,
+                () -> 2.5);
 
         TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
@@ -255,7 +262,7 @@ public class RobotContainer {
         controls.switchShootType()
                 .whileActiveOnce(new InstantCommand(() -> Constants.useVisionShot = !Constants.useVisionShot));
 
-        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
+        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveContinuous(feedSequenceCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
@@ -277,12 +284,24 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                colorSensor);
-        // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
-        // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
-        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        int auto = 2;
+        switch (auto) {
+            case 1:
+                return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+            case 2:
+            default:
+                return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);
+            case 3:
+                return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case 4:
+                return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case 5:
+                return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+
+        }
     }
 
     //

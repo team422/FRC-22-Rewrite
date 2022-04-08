@@ -5,10 +5,7 @@
 package frc.robot.commands.auto.routines;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.operatorcommands.TeleFeed;
-import frc.robot.commands.operatorcommands.TeleIntake;
+import frc.robot.commands.auto.DriveStraight;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.intake.Intake;
@@ -36,10 +33,11 @@ public class OneCargoAuto extends ParallelCommandGroup {
                 //         parallel(
                 //                 new TeleTransversal(transversal, () -> 7.0),
                 //                 new TeleUptake(uptake, () -> 7.0))));
-                new TeleIntake(intake, () -> -9.0),
-                new RunFlyWheel(varFlyWheel, 2300, true),
-                sequence(
-                        new WaitCommand(1),
-                        new TeleFeed(transversal, uptake, () -> 9.0)));
+                // new TeleIntake(intake, () -> -9.0),
+                // new RunFlyWheel(varFlyWheel, 2300, true),
+                // sequence(
+                //         new WaitCommand(1),
+                //         new TeleFeed(transversal, uptake, () -> 9.0)));
+                new DriveStraight(drive, 10, 0.5));
     }
 }
