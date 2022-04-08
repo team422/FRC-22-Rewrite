@@ -67,7 +67,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, 24.25, TURN_SPEED * 0.5),
+                        new Turn(drive, 23.25, TURN_SPEED * 0.5),
 
                         parallel(
                                 // Run Transversal to Index balls
