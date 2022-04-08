@@ -199,8 +199,8 @@ public class RobotContainer {
         TeleIntake intakeOutCommand = new TeleIntake(intake, () -> 7.0);
         TeleIntake operatorIntakeCommand = new TeleIntake(intake, () -> controls.getRightOperatorY() * 12);
 
-        TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -10.0);
-        TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 10.0);
+        TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -11.0);
+        TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 11.0);
 
         TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
@@ -282,6 +282,7 @@ public class RobotContainer {
                 colorSensor);
         // return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera, colorSensor);
         // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        // return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
     }
 
     //
