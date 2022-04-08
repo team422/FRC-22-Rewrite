@@ -84,8 +84,12 @@ public class MixedXboxJoystickControls implements UserControls {
         return new Trigger(() -> operatorController.getRightTriggerAxis() > 0.2);
     }
 
+    // @Override
+    // public Trigger getShootSequenceButton() {
+    //     return new Trigger(() -> rightDriverJoystick.getRawButton(4));
+    // }
     @Override
-    public Trigger getShootSequenceButton() {
+    public Trigger getUseTransversalWithShooterFeedButton() {
         return new Trigger(() -> rightDriverJoystick.getRawButton(4));
     }
 

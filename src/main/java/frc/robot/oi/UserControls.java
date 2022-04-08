@@ -71,6 +71,10 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getUseTransversalWithShooterFeedButton() {
+        return new Trigger();
+    }
+
     public default Trigger getRevShooterButton() {
         return new Trigger();
     }

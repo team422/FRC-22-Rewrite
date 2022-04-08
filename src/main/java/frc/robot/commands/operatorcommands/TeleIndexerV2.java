@@ -25,7 +25,7 @@ public class TeleIndexerV2 extends CommandBase {
     //         transversal.setVoltage(6.0);
     //         uptake.setVoltage(3.0);
     //     } else if (transversal.getCurrentCommand() == this && uptake.getCurrentCommand() == this) {
-    //         transversal.setVoltage(0);
+    //         transversal.setVoltage(-4.0); // THIS VALUE PROBABLY HAS TO BE LOWER BUT IN THEORY THIS SHOULD WORK FINE
     //         uptake.setVoltage(0);
     //     }
     // }
@@ -35,7 +35,7 @@ public class TeleIndexerV2 extends CommandBase {
             transversal.setVoltage(6.0);
             uptake.setVoltage(3.0);
         } else {
-            transversal.setVoltage(0);
+            transversal.setVoltage(-4.0); // THIS VALUE PROBABLY HAS TO BE LOWER BUT IN THEORY THIS SHOULD WORK FINE
             uptake.setVoltage(0);
         }
     }
