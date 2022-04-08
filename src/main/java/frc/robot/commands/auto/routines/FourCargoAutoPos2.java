@@ -38,7 +38,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
 
                         // Run intake
                         parallel(
-                                new TeleIntake(intake, () -> -7.0).withTimeout(15),
+                                new TeleIntake(intake, () -> -8.0).withTimeout(15),
                                 // new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(7),
                                 sequence(
                                         new WaitCommand(8),
@@ -67,7 +67,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, 23.25, TURN_SPEED * 0.5),
+                        new Turn(drive, 22.25, TURN_SPEED * 0.5),
 
                         parallel(
                                 // Run Transversal to Index balls
@@ -80,8 +80,14 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         // Wait for intaking at loading station
                         // new WaitCommand(1.0),
 
+                        // Drive away 1 foot for human player
+                        new DriveStraight(drive, Units.feetToMeters(-1), DRIVE_SPEED * 2.2),
+
+                        // Wait for human throw
+                        new WaitCommand(1),
+
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-12.5), DRIVE_SPEED * 2.2),
+                        new DriveStraight(drive, Units.feetToMeters(-11.5), DRIVE_SPEED * 2.2),
 
                         // Turn to hub
                         new FastTurn(drive, -15, TURN_SPEED * 3),

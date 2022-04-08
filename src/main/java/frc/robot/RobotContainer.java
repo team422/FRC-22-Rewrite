@@ -282,7 +282,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        int auto = 2;
+        int auto = 4;
         switch (auto) {
             case 1:
                 return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
