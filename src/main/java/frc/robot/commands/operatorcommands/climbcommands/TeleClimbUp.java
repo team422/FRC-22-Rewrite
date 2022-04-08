@@ -16,7 +16,7 @@ public class TeleClimbUp extends CommandBase {
 
     @Override
     public void execute() {
-        climber.setPercent(0.2);
+        climber.setPercent(0.7);
         // climber.setRightPercent(0.7);
     }
 
