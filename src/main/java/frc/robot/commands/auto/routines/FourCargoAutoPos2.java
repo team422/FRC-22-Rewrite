@@ -68,6 +68,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
 
                         // Turn to loading station
                         new Turn(drive, 24.25, TURN_SPEED * 0.5),
+
                         parallel(
                                 // Run Transversal to Index balls
                                 new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(4),

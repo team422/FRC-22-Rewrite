@@ -29,8 +29,19 @@ public class TeleIndexer extends CommandBase {
             transversal.setVoltage(-4.0);
             uptake.stop();
         }
-
     }
+
+    /**
+     *     public void execute() {
+        if (colorSensor.getProximity() < 100) {
+            transversal.setVoltage(6.0);
+            uptake.setVoltage(3.0);
+        } else {
+            transversal.stop();
+            uptake.stop();
+        }
+    }
+     */
 
     @Override
     public void end(boolean interrupted) {
