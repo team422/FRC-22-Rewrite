@@ -17,13 +17,13 @@ import frc.robot.commands.operatorcommands.TeleClimbDown;
 import frc.robot.commands.operatorcommands.TeleClimbTilt;
 import frc.robot.commands.operatorcommands.TeleClimbUp;
 import frc.robot.commands.operatorcommands.TeleFeed;
+import frc.robot.commands.operatorcommands.TeleFeedWithoutTransversal;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexerV2;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
-import frc.robot.commands.operatorcommands.TeleShootSpeed;
 import frc.robot.commands.operatorcommands.TeleTransversal;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
@@ -202,9 +202,11 @@ public class RobotContainer {
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
         TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
+        TeleFeedWithoutTransversal feedCargoCommandWithoutTransversal = new TeleFeedWithoutTransversal(transversal,
+                uptake, () -> 8.0);
         TeleFlyVarSpeed revFlywheelCommand = new TeleFlyVarSpeed(varFlyWheel, hubCamera);
-        TeleShootSpeed shootSequenceCommand = new TeleShootSpeed(varFlyWheel, transversal, uptake, hubCamera,
-                (() -> 7.0));// if you will push up this value dont forget that it will mess with the actual distance shot
+        // TeleShootSpeed shootSequenceCommand = new TeleShootSpeed(varFlyWheel, transversal, uptake, hubCamera,
+        //         (() -> 7.0));// if you will push up this value dont forget that it will mess with the actual distance shot
 
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
@@ -232,7 +234,7 @@ public class RobotContainer {
 
         controls.getOperatorRevShooterButton().whileActiveOnce(operatorRevShooterCommand);
         controls.getOperatorVomitShooterButton().whileActiveOnce(operatorVomitShooterCommand);
-        controls.getShootSequenceButton().whileActiveOnce(shootSequenceCommand);
+        // controls.getShootSequenceButton().whileActiveOnce(shootSequenceCommand);
 
         controls.getTraversalInTrigger().whileActiveContinuous(traversalInCommand);
         controls.getTraversalOutTrigger().whileActiveContinuous(traversalOutCommand);
@@ -243,7 +245,10 @@ public class RobotContainer {
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
 
-        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
+        controls.getFeedShooterButton().and(controls.getRevShooterButton())
+                .and(controls.getUseTransversalWithShooterFeedButton()).whileActiveOnce(feedCargoCommand);
+        controls.getFeedShooterButton().and(controls.getRevShooterButton())
+                .whileActiveOnce(feedCargoCommandWithoutTransversal);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
