@@ -4,9 +4,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -123,8 +121,8 @@ public class RobotContainer {
                 //                 "IntakeCamera",
                 //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
-                camera = CameraServer.startAutomaticCapture(0);
-                camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+                // camera = CameraServer.startAutomaticCapture(0);
+                // camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
             case ROBOT_2022_PRACTICE:
                 drive = new DriveBase(new DriveIOFalcon());
@@ -207,7 +205,7 @@ public class RobotContainer {
         TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -11.0);
         TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 11.0);
         TeleShootSequence feedSequenceCommand = new TeleShootSequence(varFlyWheel, transversal, uptake, hubCamera,
-                () -> 2.5);
+                () -> 3.0);
 
         TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
