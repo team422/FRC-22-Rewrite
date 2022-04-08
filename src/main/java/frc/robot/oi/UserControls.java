@@ -75,6 +75,10 @@ public interface UserControls {
         return new Trigger();
     }
 
+    public default Trigger getShootSequenceButton() {
+        return new Trigger();
+    }
+
     public default Trigger getClimbButton() {
         return new Trigger();
     }
