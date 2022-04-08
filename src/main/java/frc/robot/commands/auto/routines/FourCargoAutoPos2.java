@@ -68,13 +68,14 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
 
                         // Turn to loading station
                         new Turn(drive, 24.25, TURN_SPEED * 0.5),
+                        parallel(
+                                // Run Transversal to Index balls
+                                new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(4),
 
-                        // Drive to loading station
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11), DRIVE_SPEED * 1.8),
+                                // Drive to loading station
+                                new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11),
+                                        DRIVE_SPEED * 1.8)),
 
-                        // Run Transversal to Index balls
-                        // new TeleFeed(transversal, uptake, () -> 3.0).withTimeout(1),
-                        new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(1.25),
                         // Wait for intaking at loading station
                         // new WaitCommand(1.0),
 
