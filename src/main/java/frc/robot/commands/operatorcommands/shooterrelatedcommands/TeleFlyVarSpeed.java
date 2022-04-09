@@ -36,6 +36,8 @@ public class TeleFlyVarSpeed extends CommandBase {
 
             varFlyWheel.flyVelocity(speed);
         }
+        // SmartDashboard.putNumber("Power Level", varFlyWheel.getVelocity());
+        // SmartDashboard.putBoolean("ITS OVER 9000!!!!!", varFlyWheel.getVelocity() > 9000);
     }
 
     private double calculateSpeed(PhotonPipelineResult result) {

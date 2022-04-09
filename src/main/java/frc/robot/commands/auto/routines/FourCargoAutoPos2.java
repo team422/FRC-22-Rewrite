@@ -1,6 +1,18 @@
 package frc.robot.commands.auto.routines;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.SetIntakeExtended;
+import frc.robot.commands.auto.DriveStraight;
+import frc.robot.commands.auto.DriveStraightToBall;
+import frc.robot.commands.auto.FastTurn;
+import frc.robot.commands.auto.Turn;
+import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIndexer;
+import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIntake;
+import frc.robot.commands.operatorcommands.shooterrelatedcommands.TeleFeed;
+import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -25,15 +37,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new WaitCommand(0.2),
 
                         // Run intake
-                        parallel(
-                                new TeleIntake(intake, () -> -8.0).withTimeout(15),
-                                // new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(7),
-                                // sequence(
-                                        // new WaitCommand(9),
-                                        // new SetIntakeExtended(intake, false))
-                                        // )
-                        ),
-
+                        new TeleIntake(intake, () -> -8.0).withTimeout(15)),
                 // Prepare Shooter
                 sequence(
                         // Start shooter (slightly longer distance than our sweet spot)
