@@ -14,7 +14,7 @@ public class ShuffleboardControl {
             .getLayout("Choose your auto!", BuiltInLayouts.kList)
             .withPosition(0, 0)
             .withSize(2, 1);
-    private static final boolean isTwoCargo = true;
+    private static final boolean isTwoCargo = false;
 
     private static SendableChooser<AutoMode> autoChooser = new SendableChooser<>();
 
