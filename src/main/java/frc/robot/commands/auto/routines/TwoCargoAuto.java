@@ -2,6 +2,7 @@ package frc.robot.commands.auto.routines;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.SetIntakeExtended;
 import frc.robot.commands.auto.AutoFlyVarSpeed;
@@ -22,6 +23,8 @@ public class TwoCargoAuto extends ParallelCommandGroup {
     public TwoCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel, Vision hubVision) {
         addCommands(
+                new PrintCommand("Two Cargo Started"),
+
                 // Prepare Intake
                 sequence(
                         // Extend intake
