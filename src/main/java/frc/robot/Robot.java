@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
         m_robotContainer.setLEDs(false);
         m_robotContainer.calibrateGyro();
 
+        ShuffleboardControl.layoutShuffleboard();
     }
 
     /**
@@ -63,6 +64,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        ShuffleboardControl.updateAuto();
     }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
