@@ -1,7 +1,6 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operatorcommands.ballmanagmentcommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.intake.Intake;
 
 public class TeleIntakeToggle extends CommandBase {

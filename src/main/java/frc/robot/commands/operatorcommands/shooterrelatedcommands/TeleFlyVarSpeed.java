@@ -1,4 +1,4 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operatorcommands.shooterrelatedcommands;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 

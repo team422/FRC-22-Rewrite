@@ -1,4 +1,4 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operatorcommands.shooterrelatedcommands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
