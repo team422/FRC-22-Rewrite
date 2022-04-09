@@ -26,7 +26,7 @@ public class TeleIndexer extends CommandBase {
             uptake.setVoltage(3.0);
             transversal.setVoltage(5.0);
         } else {
-            transversal.stop();
+            transversal.setVoltage(3.0);
             uptake.stop();
         }
     }
