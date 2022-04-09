@@ -31,6 +31,11 @@ public final class Constants {
         TANK, ARCADE
     }
 
+    // Auto modes and corresponding strings
+    public enum AutoMode {
+        ONE_CARGO, TWO_CARGO, FOUR_CARGO_1, FOUR_CARGO_2, FIVE_CARGO
+    }
+
     // Field Constants
     public static final double BALL_HEIGHT_METERS = 0.2;
     public static final double HUB_HIGH_HEIGHT_METERS = Units.feetToMeters(8.667);

@@ -11,11 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.auto.routines.FiveCargoAuto;
-import frc.robot.commands.auto.routines.FourCargoAuto;
-import frc.robot.commands.auto.routines.FourCargoAutoPos2;
-import frc.robot.commands.auto.routines.OneCargoAuto;
-import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -282,24 +277,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        int auto = 2;
-        switch (auto) {
-            case 1:
-                return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
-            case 2:
-            default:
-                return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);
-            case 3:
-                return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                        colorSensor);
-            case 4:
-                return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                        colorSensor);
-            case 5:
-                return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                        colorSensor);
-
-        }
+        return ShuffleboardControl.getAutonomousCommand(drive, intake, transversal, uptake, varFlyWheel,
+                hubCamera, intakeCamera, colorSensor);
     }
 
     //

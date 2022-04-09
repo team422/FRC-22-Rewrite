@@ -3,8 +3,10 @@ package frc.robot.commands.auto.routines;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.AutoMode;
 import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.SetIntakeExtended;
+import frc.robot.commands.auto.AutoShuffleboard;
 import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.auto.DriveStraightToBall;
 import frc.robot.commands.auto.FastTurn;
@@ -27,6 +29,8 @@ public class FiveCargoAuto extends ParallelCommandGroup {
     public FiveCargoAuto(DriveBase drive, Intake intake, Transversal transversal, Uptake uptake,
             VarFlyWheel flywheel, Vision hubVision, Vision intakeVision, ColorSensor colorSensor) {
         addCommands(
+                new AutoShuffleboard(AutoMode.FIVE_CARGO),
+
                 // Prepare Intake
                 sequence(
                         // Extend intake (TODO make command explicit)

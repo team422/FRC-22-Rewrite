@@ -5,6 +5,8 @@
 package frc.robot.commands.auto.routines;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants.AutoMode;
+import frc.robot.commands.auto.AutoShuffleboard;
 import frc.robot.commands.auto.DriveStraight;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -22,6 +24,7 @@ public class OneCargoAuto extends ParallelCommandGroup {
             VarFlyWheel varFlyWheel) {
 
         addCommands(
+                new AutoShuffleboard(AutoMode.ONE_CARGO),
                 // sequence(
                 //         new TeleIntakeToggle(intake),
                 //         new TeleIntake(intake, () -> 7.0)),
