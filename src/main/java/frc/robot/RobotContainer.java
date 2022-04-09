@@ -283,7 +283,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        AutoMode autoMode = ShuffleboardControl.getAutoMode();
+        // AutoMode autoMode = ShuffleboardControl.getAutoMode();
+        AutoMode autoMode = AutoMode.TWO_CARGO;
         switch (autoMode) {
             case ONE_CARGO:
                 return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);

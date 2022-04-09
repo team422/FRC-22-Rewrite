@@ -35,8 +35,12 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
         m_robotContainer.setLEDs(false);
+
+        // Calibrate Gyro on Field
         m_robotContainer.calibrateGyro();
 
+        // Add Shuffleboard fields
+        ShuffleboardControl.layoutShuffleboard();
     }
 
     /**
@@ -63,6 +67,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        ShuffleboardControl.updateAuto();
     }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
