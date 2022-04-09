@@ -282,23 +282,22 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        int auto = 4;
-        switch (auto) {
-            case 1:
+        AutoMode autoMode = ShuffleboardControl.getAutoMode();
+        switch (autoMode) {
+            case ONE_CARGO:
                 return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
-            case 2:
+            case TWO_CARGO:
             default:
                 return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);
-            case 3:
+            case FOUR_CARGO_1:
                 return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                         colorSensor);
-            case 4:
+            case FOUR_CARGO_2:
                 return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                         colorSensor);
-            case 5:
+            case FIVE_CARGO:
                 return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                         colorSensor);
-
         }
     }
 
