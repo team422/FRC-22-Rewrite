@@ -14,16 +14,22 @@ public class ShuffleboardControl {
             .getLayout("Choose your auto!", BuiltInLayouts.kList)
             .withPosition(0, 0)
             .withSize(2, 1);
+    private static final boolean isTwoCargo = true;
 
     private static SendableChooser<AutoMode> autoChooser = new SendableChooser<>();
 
     private static AutoMode autoMode = AutoMode.TWO_CARGO;
 
     public static void layoutShuffleboard() {
-        autoChooser.setDefaultOption("Two Cargo", AutoMode.TWO_CARGO);
+        if (isTwoCargo) {
+            autoChooser.setDefaultOption("Two Cargo", AutoMode.TWO_CARGO);
+            autoChooser.addOption("Four Cargo Position 2", AutoMode.FOUR_CARGO_2);
+        } else {
+            autoChooser.setDefaultOption("Four Cargo Position 2", AutoMode.FOUR_CARGO_2);
+            autoChooser.addOption("Two Cargo", AutoMode.TWO_CARGO);
+        }
         autoChooser.addOption("One Cargo", AutoMode.ONE_CARGO);
         autoChooser.addOption("Four Cargo Position 1", AutoMode.FOUR_CARGO_1);
-        autoChooser.addOption("Four Cargo Position 2", AutoMode.FOUR_CARGO_2);
         autoChooser.addOption("Five Cargo", AutoMode.FIVE_CARGO);
 
         autoChooserLayout

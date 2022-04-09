@@ -37,7 +37,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new WaitCommand(0.2),
 
                         // Run intake
-                        new TeleIntake(intake, () -> -8.0).withTimeout(15)),
+                        new TeleIntake(intake, () -> -6.0).withTimeout(15)),
                 // Prepare Shooter
                 sequence(
                         // Start shooter (slightly longer distance than our sweet spot)
