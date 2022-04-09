@@ -1,18 +1,6 @@
 package frc.robot.commands.auto.routines;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.RunFlyWheel;
-import frc.robot.commands.SetIntakeExtended;
-import frc.robot.commands.auto.DriveStraight;
-import frc.robot.commands.auto.DriveStraightToBall;
-import frc.robot.commands.auto.FastTurn;
-import frc.robot.commands.auto.Turn;
-import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIndexer;
-import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIntake;
-import frc.robot.commands.operatorcommands.shooterrelatedcommands.TeleFeed;
-import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.drivetrain.DriveBase;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -40,9 +28,11 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         parallel(
                                 new TeleIntake(intake, () -> -8.0).withTimeout(15),
                                 // new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(7),
-                                sequence(
-                                        new WaitCommand(8),
-                                        new SetIntakeExtended(intake, false)))),
+                                // sequence(
+                                        // new WaitCommand(9),
+                                        // new SetIntakeExtended(intake, false))
+                                        // )
+                        ),
 
                 // Prepare Shooter
                 sequence(
@@ -71,7 +61,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
 
                         parallel(
                                 // Run Transversal to Index balls
-                                new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(4),
+                                new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(5),
 
                                 // Drive to loading station
                                 new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11),
@@ -87,7 +77,7 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new WaitCommand(1),
 
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-11.5), DRIVE_SPEED * 2.2),
+                        new DriveStraight(drive, Units.feetToMeters(-9.5), DRIVE_SPEED * 2.2),
 
                         // Turn to hub
                         new FastTurn(drive, -15, TURN_SPEED * 3),

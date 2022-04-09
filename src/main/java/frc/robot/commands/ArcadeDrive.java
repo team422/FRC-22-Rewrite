@@ -63,8 +63,8 @@ public class ArcadeDrive extends CommandBase {
         double mult = 1;
         double forwardSpeed;
         double turnSpeed;
-        System.out.println("LEFTY:" + leftYValue);
-        System.out.println("RIGHTX:" + rightXValue);
+        // System.out.println("LEFTY:" + leftYValue);
+        // System.out.println("RIGHTX:" + rightXValue);
         forwardSpeed = -Math.pow(leftYValue, 2) * Math.copySign(mult, leftYValue);
         turnSpeed = Math.pow(rightXValue, 2) * Math.copySign(mult, rightXValue);
 
