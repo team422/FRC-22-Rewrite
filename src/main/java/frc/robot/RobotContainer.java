@@ -9,8 +9,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants.AutoMode;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.auto.routines.FiveCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAutoPos2;
+import frc.robot.commands.auto.routines.OneCargoAuto;
+import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -277,8 +283,23 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return ShuffleboardControl.getAutonomousCommand(drive, intake, transversal, uptake, varFlyWheel,
-                hubCamera, intakeCamera, colorSensor);
+        AutoMode autoMode = ShuffleboardControl.getAutoMode();
+        switch (autoMode) {
+            case ONE_CARGO:
+                return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+            case TWO_CARGO:
+            default:
+                return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);
+            case FOUR_CARGO_1:
+                return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case FOUR_CARGO_2:
+                return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case FIVE_CARGO:
+                return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+        }
     }
 
     //
