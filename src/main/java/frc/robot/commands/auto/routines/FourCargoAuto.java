@@ -34,7 +34,7 @@ public class FourCargoAuto extends ParallelCommandGroup {
                         new SetIntakeExtended(intake, true),
 
                         // Wait for intake extend
-                        new WaitCommand(0.2),
+                        new WaitCommand(0.3),
 
                         // Run intake
                         new TeleIntake(intake, () -> -7.0)).withTimeout(15),
@@ -42,7 +42,7 @@ public class FourCargoAuto extends ParallelCommandGroup {
                 // Prepare Shooter
                 sequence(
                         // Start shooter (slightly longer distance than our sweet spot)
-                        new RunFlyWheel(flywheel, 2300, true).withTimeout(5),
+                        new RunFlyWheel(flywheel, 2300, true).withTimeout(5.1),
 
                         // No need to run flywheel in this interim time
                         new WaitCommand(2),
@@ -52,6 +52,7 @@ public class FourCargoAuto extends ParallelCommandGroup {
 
                 // Auto Drive Sequence
                 sequence(
+                        new WaitCommand(0.1),
                         // Drive to pick up cargo
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
@@ -59,7 +60,7 @@ public class FourCargoAuto extends ParallelCommandGroup {
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, -74.3, TURN_SPEED),
+                        new Turn(drive, -72, TURN_SPEED),
 
                         // Drive to loading station
                         new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(17), DRIVE_SPEED * 1.8),

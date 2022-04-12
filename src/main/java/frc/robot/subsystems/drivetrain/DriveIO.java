@@ -70,6 +70,9 @@ public interface DriveIO {
     public default void resetGyroAngle() {
     }
 
+    public default void calibrateGyro() {
+    }
+
     /** Gets gyro rate */
     public default double getGyroRate() {
         return 0.0;

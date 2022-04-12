@@ -37,7 +37,12 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new WaitCommand(0.2),
 
                         // Run intake
-                        new TeleIntake(intake, () -> -7.0)).withTimeout(15),
+                        parallel(
+                                new TeleIntake(intake, () -> -8.0).withTimeout(15),
+                                // new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(7),
+                                sequence(
+                                        new WaitCommand(8),
+                                        new SetIntakeExtended(intake, false)))),
 
                 // Prepare Shooter
                 sequence(
@@ -56,25 +61,33 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         new DriveStraight(drive, Units.feetToMeters(3), DRIVE_SPEED),
 
                         //turn to align to the hub.
-                        new Turn(drive, -8, TURN_SPEED * 0.25),
+                        new Turn(drive, -9, TURN_SPEED * 0.25),
 
                         // Shoot first two cargo
                         new TeleFeed(transversal, uptake, () -> 9.0).withTimeout(2),
 
                         // Turn to loading station
-                        new Turn(drive, 20, TURN_SPEED * 0.5),
+                        new Turn(drive, 22.25, TURN_SPEED * 0.5),
 
-                        // Drive to loading station
-                        new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(12), DRIVE_SPEED * 1.8),
+                        parallel(
+                                // Run Transversal to Index balls
+                                new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(4),
 
-                        // Run Transversal to Index balls
-                        // new TeleFeed(transversal, uptake, () -> 3.0).withTimeout(1),
-                        new TeleIndexer(transversal, uptake, colorSensor, intake).withTimeout(1.25),
+                                // Drive to loading station
+                                new DriveStraightToBall(drive, intakeVision, Units.feetToMeters(11),
+                                        DRIVE_SPEED * 1.8)),
+
                         // Wait for intaking at loading station
                         // new WaitCommand(1.0),
 
+                        // Drive away 1 foot for human player
+                        new DriveStraight(drive, Units.feetToMeters(-1), DRIVE_SPEED * 2.2),
+
+                        // Wait for human throw
+                        new WaitCommand(0.5),
+
                         // Drive to hub
-                        new DriveStraight(drive, Units.feetToMeters(-13.5), DRIVE_SPEED * 2.2),
+                        new DriveStraight(drive, Units.feetToMeters(-11.5), DRIVE_SPEED * 2.2),
 
                         // Turn to hub
                         new FastTurn(drive, -15, TURN_SPEED * 3),

@@ -156,6 +156,11 @@ public class DriveBase extends SubsystemBase {
         return driveIO.getkD();
     }
 
+    public void calibrateGyro() {
+        System.out.println("Calibrating Gyro...");
+        driveIO.calibrateGyro();
+    }
+
     public double getMaxAccelerationMetersPerSecondSq() {
         return maxAccelerationMetersPerSecondSq;
     }

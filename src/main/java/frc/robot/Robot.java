@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -29,9 +30,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        PortForwarder.add(Constants.PHOTONVISION_PORT, "gloworm.local", Constants.PHOTONVISION_PORT);
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        m_robotContainer.setLEDs(false);
+        m_robotContainer.calibrateGyro();
 
     }
 
@@ -98,6 +102,7 @@ public class Robot extends TimedRobot {
     public void testInit() {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
+        m_robotContainer.calibrateGyro();
     }
 
     /** This function is called periodically during test mode. */

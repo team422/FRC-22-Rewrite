@@ -4,18 +4,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.auto.routines.FiveCargoAuto;
+import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
-import frc.robot.commands.operatorcommands.TeleClimbDown;
-import frc.robot.commands.operatorcommands.TeleClimbTilt;
-import frc.robot.commands.operatorcommands.TeleClimbUp;
+import frc.robot.commands.auto.routines.OneCargoAuto;
+import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.TeleFeed;
 import frc.robot.commands.operatorcommands.TeleFlyVarDown;
 import frc.robot.commands.operatorcommands.TeleFlyVarSpeed;
@@ -23,7 +23,15 @@ import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.TeleIntakeToggle;
+import frc.robot.commands.operatorcommands.TeleShootSequence;
 import frc.robot.commands.operatorcommands.TeleTransversal;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDown;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDownLeft;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbDownRight;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbTilt;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUp;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUpLeft;
+import frc.robot.commands.operatorcommands.climbcommands.TeleClimbUpRight;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
 import frc.robot.commands.visioncommands.VisionSniperMode;
@@ -76,6 +84,7 @@ public class RobotContainer {
     private Vision hubCamera;
     private Vision intakeCamera;
     private UsbCamera camera;
+    private boolean climbMode;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -83,6 +92,8 @@ public class RobotContainer {
     public RobotContainer() {
         // Initialize Subsystems
         configureSubsystems();
+
+        this.climbMode = false;
 
         // Configure the button bindings
         configureButtonBindings();
@@ -110,8 +121,6 @@ public class RobotContainer {
                 //                 "IntakeCamera",
                 //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
-                camera = CameraServer.startAutomaticCapture();
-                camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
             case ROBOT_2022_PRACTICE:
                 drive = new DriveBase(new DriveIOFalcon());
@@ -180,6 +189,10 @@ public class RobotContainer {
 
         TeleClimbUp climberUpCommand = new TeleClimbUp(climber);
         TeleClimbDown climberDownCommand = new TeleClimbDown(climber);
+        TeleClimbUpLeft climberUpLeftCommand = new TeleClimbUpLeft(climber);
+        TeleClimbDownLeft climberDownLeftCommand = new TeleClimbDownLeft(climber);
+        TeleClimbUpRight climberUpRightCommand = new TeleClimbUpRight(climber);
+        TeleClimbDownRight climberDownRightCommand = new TeleClimbDownRight(climber);
         TeleClimbTilt climmberTiltCommand = new TeleClimbTilt(climber);
 
         TeleIntakeToggle intakeToggleCommand = new TeleIntakeToggle(intake);
@@ -187,8 +200,10 @@ public class RobotContainer {
         TeleIntake intakeOutCommand = new TeleIntake(intake, () -> 7.0);
         TeleIntake operatorIntakeCommand = new TeleIntake(intake, () -> controls.getRightOperatorY() * 12);
 
-        TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -10.0);
-        TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 10.0);
+        TeleFeed uptakeUpCommand = new TeleFeed(transversal, uptake, () -> -11.0);
+        TeleFeed uptakeDownCommand = new TeleFeed(transversal, uptake, () -> 11.0);
+        TeleShootSequence feedSequenceCommand = new TeleShootSequence(varFlyWheel, transversal, uptake, hubCamera,
+                () -> 3.0);
 
         TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
@@ -215,16 +230,19 @@ public class RobotContainer {
         // Define button / command bindings here
 
         // Operator command bindings
-        controls.getClimbUp().whileActiveOnce(climberUpCommand);
-        controls.getClimbDown().whileActiveOnce(climberDownCommand);
-        controls.getClimbButton().whenActive(climmberTiltCommand);
+        controls.getClimbUpLeft().whileActiveOnce(climberUpLeftCommand);
+        controls.getClimbUpRight().whileActiveOnce(climberUpRightCommand);
 
         controls.getUptakeUpTrigger().whileActiveContinuous(uptakeUpCommand);
         controls.getUptakeDownTrigger().whileActiveContinuous(uptakeDownCommand);
 
         // Potential issues if driver and operator try to run intake in opposite directions? Ignoring since that issue would already exist anyways (feedCargo & Uptake)
-        controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
-        controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+        // controls.getOperatorIntakeRunInButton().whileActiveContinuous(intakeInCommand);
+        // controls.getOperatorIntakeRunOutButton().whileActiveContinuous(intakeOutCommand);
+        controls.getClimbUp().whileActiveOnce(climberUpCommand);
+        controls.getClimbDown().whileActiveOnce(climberDownCommand);
+        controls.getClimbButton().whenActive(climmberTiltCommand);
+        // controls.getClimbEnable().whenActive(new TeleToggleClimbMode());
 
         controls.getOperatorRevShooterButton().whileActiveOnce(operatorRevShooterCommand);
         controls.getOperatorVomitShooterButton().whileActiveOnce(operatorVomitShooterCommand);
@@ -237,8 +255,10 @@ public class RobotContainer {
         // Driver command bindings
         controls.getDriverFlyWheelHoodUp().whenActive(flyUp);
         controls.getDriverFlyWheelHoodDown().whenActive(flyDown);
+        controls.switchShootType()
+                .whileActiveOnce(new InstantCommand(() -> Constants.useVisionShot = !Constants.useVisionShot));
 
-        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveOnce(feedCargoCommand);
+        controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveContinuous(feedSequenceCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
         controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
@@ -250,18 +270,46 @@ public class RobotContainer {
         // controls.getAutoDriveButton().whileActiveOnce(turnToBall);
     }
 
+    // public boolean setClimbMode(boolean climbMode) {
+    //     return climbMode;
+    // }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
-                colorSensor);
-        // return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+        int auto = 4;
+        switch (auto) {
+            case 1:
+                return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
+            case 2:
+            default:
+                return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);
+            case 3:
+                return new FourCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case 4:
+                return new FourCargoAutoPos2(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+            case 5:
+                return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
+                        colorSensor);
+
+        }
     }
 
+    //
     public void setBrakeMode(boolean enabled) {
         drive.setBrakeMode(enabled);
+    }
+
+    public void setLEDs(boolean enabled) {
+        hubCamera.setLEDEnabled(enabled);
+    }
+
+    public void calibrateGyro() {
+        drive.calibrateGyro();
     }
 }

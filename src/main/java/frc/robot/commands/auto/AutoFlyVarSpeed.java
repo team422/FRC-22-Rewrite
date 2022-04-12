@@ -1,4 +1,4 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.auto;
 
 import org.photonvision.targeting.PhotonPipelineResult;
 
@@ -11,14 +11,16 @@ import frc.robot.subsystems.flywheel.VarFlyWheel;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.util.FieldUtils;
 
-public class TeleFlyVarSpeed extends CommandBase {
+public class AutoFlyVarSpeed extends CommandBase {
     private final VarFlyWheel varFlyWheel;
     private final Vision hubCam;
+    private final double defaultValue;
 
-    public TeleFlyVarSpeed(VarFlyWheel varFlyWheel, Vision hubCam) {
+    public AutoFlyVarSpeed(VarFlyWheel varFlyWheel, Vision hubCam, double defaultValue) {
         addRequirements(varFlyWheel);
         this.varFlyWheel = varFlyWheel;
         this.hubCam = hubCam;
+        this.defaultValue = defaultValue;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class TeleFlyVarSpeed extends CommandBase {
         if (result == null || !result.hasTargets()) {
             SmartDashboard.putBoolean("Hub Visible", false);
             SmartDashboard.putBoolean("Hub In Range", false);
-            return 2200;
+            return defaultValue;
         }
 
         double yPos = result.getBestTarget().getPitch();
@@ -72,6 +74,7 @@ public class TeleFlyVarSpeed extends CommandBase {
             } else {
                 return Constants.SHOOTER_UP_RPM;
             }
+
         }
     }
 

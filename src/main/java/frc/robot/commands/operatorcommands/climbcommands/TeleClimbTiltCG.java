@@ -1,7 +1,8 @@
-package frc.robot.commands.operatorcommands;
+package frc.robot.commands.operatorcommands.climbcommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.operatorcommands.TeleFlyVarUp;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
 
