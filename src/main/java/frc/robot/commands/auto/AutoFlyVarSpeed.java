@@ -32,12 +32,16 @@ public class AutoFlyVarSpeed extends CommandBase {
     public void execute() {
         if (varFlyWheel.get() == Value.kReverse) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
+            SmartDashboard.putNumber("Shooter Vel", varFlyWheel.getVelocity());
+            System.out.println("DEFAULT Shooter Vel " + varFlyWheel.getVelocity());
         } else {
+            System.out.println("VARIABLE Shooter Vel " + varFlyWheel.getVelocity());
+            SmartDashboard.putNumber("Shooter Vel", varFlyWheel.getVelocity());
             var result = hubCam.getLatestResult();
             double speed = calculateSpeed(result);
-
             varFlyWheel.flyVelocity(speed);
         }
+        // System.out.println("Shooter Vel " + varFlyWheel.getVelocity());
     }
 
     private double calculateSpeed(PhotonPipelineResult result) {
@@ -49,12 +53,14 @@ public class AutoFlyVarSpeed extends CommandBase {
 
         double yPos = result.getBestTarget().getPitch();
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
+        System.out.println(distance);
 
+        System.out.println("DISTANCE: " + distance);
         SmartDashboard.putBoolean("Hub Visible", true);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
         if (Constants.useVisionShot) {
             if (distance < Units.feetToMeters(6)) {
-                return 1950;
+                return 1800;
                 // } else if (distance < Units.feetToMeters(6.5)) {
                 //     return 2000;
             } else if (distance < Units.feetToMeters(7)) {

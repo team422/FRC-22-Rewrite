@@ -170,6 +170,10 @@ public class RobotContainer {
         drive.resetRightPosition();
     }
 
+    public void toggleDownVarFlyWheel() {
+        varFlyWheel.retractFly();
+    }
+
     /**
      * Use this method to define your button->command mappings. Buttons can be
      * created by
@@ -208,7 +212,7 @@ public class RobotContainer {
         TeleShootSequence feedSequenceCommand = new TeleShootSequence(varFlyWheel, transversal, uptake, hubCamera,
                 () -> 3.0);
 
-        TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 8.0);
+        TeleTransversal traversalInCommand = new TeleTransversal(transversal, () -> 9.0);
         TeleTransversal traversalOutCommand = new TeleTransversal(transversal, () -> -8.0);
 
         RunFlyWheel operatorRevShooterCommand = new RunFlyWheel(varFlyWheel, 1000, true);
@@ -217,7 +221,7 @@ public class RobotContainer {
         TeleFlyVarUp flyUp = new TeleFlyVarUp(varFlyWheel);
         TeleFlyVarDown flyDown = new TeleFlyVarDown(varFlyWheel);
 
-        TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 8.0);
+        TeleFeed feedCargoCommand = new TeleFeed(transversal, uptake, () -> 11.5);
         TeleFlyVarSpeed revFlywheelCommand = new TeleFlyVarSpeed(varFlyWheel, hubCamera);
 
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());

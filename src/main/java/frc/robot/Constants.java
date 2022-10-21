@@ -52,7 +52,7 @@ public final class Constants {
 
     // Shooter Constants
     public static final double SHOOTER_UP_RPM = 2150; // Distance is x feet to close bumper
-    public static final double SHOOTER_DOWN_RPM = 2200;
+    public static final double SHOOTER_DOWN_RPM = 3000;
 
     // Vision Constants
     public static final String PHOTONVISION_IP = "10.4.22.15";

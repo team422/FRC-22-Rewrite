@@ -30,14 +30,16 @@ public class TeleFlyVarSpeed extends CommandBase {
     public void execute() {
         if (varFlyWheel.get() == Value.kReverse) {
             varFlyWheel.flyVelocity(Constants.SHOOTER_DOWN_RPM);
+            SmartDashboard.putNumber("Shooter Vel", varFlyWheel.getVelocity());
+            System.out.println("DEFAULT Shooter Vel " + varFlyWheel.getVelocity());
         } else {
+            System.out.println("VARIABLE Shooter Vel " + varFlyWheel.getVelocity());
+            SmartDashboard.putNumber("Shooter Vel", varFlyWheel.getVelocity());
             var result = hubCam.getLatestResult();
             double speed = calculateSpeed(result);
-
             varFlyWheel.flyVelocity(speed);
         }
-        // SmartDashboard.putNumber("Power Level", varFlyWheel.getVelocity());
-        // SmartDashboard.putBoolean("ITS OVER 9000!!!!!", varFlyWheel.getVelocity() > 9000);
+        // System.out.println("Shooter Vel " + varFlyWheel.getVelocity());
     }
 
     private double calculateSpeed(PhotonPipelineResult result) {
@@ -53,6 +55,7 @@ public class TeleFlyVarSpeed extends CommandBase {
         SmartDashboard.putBoolean("Hub Visible", true);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
         if (Constants.useVisionShot) {
+            // return 840 + 165 * distance
             if (distance < Units.feetToMeters(6)) {
                 return 1950;
                 // } else if (distance < Units.feetToMeters(6.5)) {
@@ -65,8 +68,10 @@ public class TeleFlyVarSpeed extends CommandBase {
                 return 2300;
             } else if (distance < Units.feetToMeters(10)) {
                 return 2500;
+            } else if (distance < Units.feetToMeters(12)) {
+                return 3000;
             } else {
-                return 2800;
+                return 3200;
             }
         } else {
             if (varFlyWheel.get() == Value.kReverse) {
