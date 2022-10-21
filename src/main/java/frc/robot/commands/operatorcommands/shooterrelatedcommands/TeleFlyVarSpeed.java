@@ -79,7 +79,6 @@ public class TeleFlyVarSpeed extends CommandBase {
             } else {
                 return Constants.SHOOTER_UP_RPM;
             }
-
         }
     }
 

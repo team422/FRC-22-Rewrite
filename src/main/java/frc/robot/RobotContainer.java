@@ -122,8 +122,6 @@ public class RobotContainer {
                 //                 "IntakeCamera",
                 //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
-                // camera = CameraServer.startAutomaticCapture(0);
-                // camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
                 break;
             case ROBOT_2022_PRACTICE:
                 drive = new DriveBase(new DriveIOFalcon());
