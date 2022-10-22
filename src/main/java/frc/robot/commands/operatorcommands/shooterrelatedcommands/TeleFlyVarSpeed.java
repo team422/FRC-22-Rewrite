@@ -19,6 +19,8 @@ public class TeleFlyVarSpeed extends CommandBase {
         addRequirements(varFlyWheel);
         this.varFlyWheel = varFlyWheel;
         this.hubCam = hubCam;
+        // if (SmartDashboard.getNumber("Variable Shooter Speed", 0) == 0)
+        //     SmartDashboard.putNumber("Variable Shooter Speed", 0);
     }
 
     @Override
@@ -51,9 +53,12 @@ public class TeleFlyVarSpeed extends CommandBase {
 
         double yPos = result.getBestTarget().getPitch();
         double distance = FieldUtils.getHubDistance(yPos, hubCam);
-
+        System.out.println(distance);
         SmartDashboard.putBoolean("Hub Visible", true);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(distance));
+
+        // return SmartDashboard.getNumber("Variable Shooter Speed", 0);
+
         if (Constants.useVisionShot) {
             // return 840 + 165 * distance
             if (distance < Units.feetToMeters(6)) {
@@ -61,15 +66,15 @@ public class TeleFlyVarSpeed extends CommandBase {
                 // } else if (distance < Units.feetToMeters(6.5)) {
                 //     return 2000;
             } else if (distance < Units.feetToMeters(7)) {
-                return 2050;
+                return 1920;
             } else if (distance < Units.feetToMeters(8)) {
-                return 2150;
+                return 2050;
             } else if (distance < Units.feetToMeters(9)) {
-                return 2300;
+                return 2120;
             } else if (distance < Units.feetToMeters(10)) {
-                return 2500;
-            } else if (distance < Units.feetToMeters(12)) {
-                return 3000;
+                return 2200;
+            } else if (distance < Units.feetToMeters(11)) {
+                return 2760;
             } else {
                 return 3200;
             }

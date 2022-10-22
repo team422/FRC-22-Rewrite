@@ -15,7 +15,6 @@ import frc.robot.commands.RunFlyWheel;
 import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
-import frc.robot.commands.auto.routines.OneCargoAuto;
 import frc.robot.commands.auto.routines.TwoCargoAuto;
 import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIntake;
@@ -289,7 +288,6 @@ public class RobotContainer {
         AutoMode autoMode = AutoMode.FOUR_CARGO_2;
         switch (autoMode) {
             case ONE_CARGO:
-                return new OneCargoAuto(drive, intake, transversal, uptake, varFlyWheel);
             default:
             case TWO_CARGO:
                 return new TwoCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera);

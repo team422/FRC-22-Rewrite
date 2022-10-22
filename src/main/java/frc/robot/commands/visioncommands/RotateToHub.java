@@ -43,7 +43,7 @@ public class RotateToHub extends CommandBase {
         xPos = Math.abs(xPos) > 1 ? xPos : 0;
         SmartDashboard.putBoolean("Hub Visible", false);
         SmartDashboard.putNumber("Hub Distance", Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
-
+        System.out.println("Dist: " + Units.metersToFeet(FieldUtils.getHubDistance(yPos, hubCam)));
         System.out.println("X POS: " + xPos);
 
         double turnSpeed = xPos * MAX_TURN_SPEED;
