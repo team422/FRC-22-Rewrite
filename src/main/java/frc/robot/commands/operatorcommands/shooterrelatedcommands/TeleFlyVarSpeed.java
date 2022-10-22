@@ -61,13 +61,13 @@ public class TeleFlyVarSpeed extends CommandBase {
 
         if (Constants.useVisionShot) {
             if (distance < Units.feetToMeters(6)) {
-                return 1950;
+                return 2000;
                 // } else if (distance < Units.feetToMeters(6.5)) {
                 //     return 2000;
             } else if (distance < Units.feetToMeters(7)) {
-                return 1960;
+                return 2000;
             } else if (distance < Units.feetToMeters(8)) {
-                return 2050;
+                return 2060;
             } else if (distance < Units.feetToMeters(9)) {
                 return 2120;
             } else if (distance < Units.feetToMeters(10)) {

@@ -83,6 +83,9 @@ public class FourCargoAutoPos2 extends ParallelCommandGroup {
                         // Wait for human throw
                         new WaitCommand(0.5),
 
+                        // Tyurning right before going back
+                        new FastTurn(drive, 6, TURN_SPEED),
+
                         // Drive to hub
                         new DriveStraight(drive, Units.feetToMeters(-9.5), DRIVE_SPEED * 2.2),
 
