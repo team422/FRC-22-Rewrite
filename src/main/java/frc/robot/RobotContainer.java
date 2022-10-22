@@ -167,8 +167,12 @@ public class RobotContainer {
         drive.resetRightPosition();
     }
 
-    public void toggleDownVarFlyWheel() {
-        varFlyWheel.retractFly();
+    public void setFlywheelPosition(boolean up) {
+        if (up) {
+            varFlyWheel.extendFly();
+        } else {
+            varFlyWheel.retractFly();
+        }
     }
 
     /**
