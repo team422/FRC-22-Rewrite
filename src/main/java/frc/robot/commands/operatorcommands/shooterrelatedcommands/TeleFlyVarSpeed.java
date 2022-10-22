@@ -60,7 +60,6 @@ public class TeleFlyVarSpeed extends CommandBase {
         // return SmartDashboard.getNumber("Variable Shooter Speed", 0);
 
         if (Constants.useVisionShot) {
-            // return 840 + 165 * distance
             if (distance < Units.feetToMeters(6)) {
                 return 1950;
                 // } else if (distance < Units.feetToMeters(6.5)) {

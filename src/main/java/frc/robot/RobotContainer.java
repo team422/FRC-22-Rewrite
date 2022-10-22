@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.AutoMode;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.RunFlyWheel;
+import frc.robot.commands.SetIntakeExtended;
 import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
@@ -269,7 +270,11 @@ public class RobotContainer {
         controls.getFeedShooterButton().and(controls.getRevShooterButton()).whileActiveContinuous(feedSequenceCommand);
         controls.getRevShooterButton().whileActiveOnce(revFlywheelCommand);
 
-        controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
+        //controls.getIntakeRunInButton().whileActiveOnce(intakeInCommand);
+        controls.getIntakeRunInButton()
+                .whenActive(new SetIntakeExtended(intake, true))
+                .whileActiveContinuous(intakeInCommand)
+                .whenInactive(new SetIntakeExtended(intake, false));
         controls.getIntakeRunOutButton().whileActiveOnce(intakeOutCommand);
 
         controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
