@@ -279,7 +279,6 @@ public class RobotContainer {
                 .whenActive(new SetIntakeExtended(intake, true))
                 .whileActiveContinuous(intakeOutCommand)
                 .whenInactive(new SetIntakeExtended(intake, false));
-
         controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
