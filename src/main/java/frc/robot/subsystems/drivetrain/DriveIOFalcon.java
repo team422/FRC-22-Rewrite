@@ -12,10 +12,12 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
 // Internal Imports
 import frc.robot.Constants;
+import frc.robot.util.TalonFXUtils;
 
 public class DriveIOFalcon implements DriveIO {
 
     private static final double encoderTicksPerRev = 2048.0;
+    private final double wheelRadiusMeters = Units.inchesToMeters(2);
 
     public WPI_TalonFX leftLeader;
     private WPI_TalonFX leftFollower;
@@ -150,32 +152,36 @@ public class DriveIOFalcon implements DriveIO {
     }
 
     @Override
-    public double getLeftPosition() {
-        return leftLeader.getSelectedSensorPosition(0) - leftEncoderValue;
+    public double getLeftDistanceMeters() {
+        return TalonFXUtils.ticksToMeters(leftLeader.getSelectedSensorPosition(0),
+                Constants.driveGearRatio, wheelRadiusMeters);
+
     }
 
     @Override
-    public void resetLeftPosition() {
-        leftEncoderValue = leftLeader.getSelectedSensorPosition(0);
+    public void resetLeftDistanceMeters() {
+        leftLeader.setSelectedSensorPosition(0);
     }
 
     @Override
-    public double getLeftRate() {
+    public double getLeftMetersPerSecond() {
         return leftLeader.getSelectedSensorVelocity(0);
+
     }
 
     @Override
-    public double getRightPosition() {
-        return rightLeader.getSelectedSensorPosition(0) - rightEncoderValue;
+    public double getRightDistanceMeters() {
+        return TalonFXUtils.ticksToMeters(rightLeader.getSelectedSensorPosition(0),
+                Constants.driveGearRatio, wheelRadiusMeters);
     }
 
     @Override
-    public void resetRightPosition() {
-        rightEncoderValue = rightLeader.getSelectedSensorPosition(0);
+    public void resetRightDistanceMeters() {
+        rightLeader.setSelectedSensorPosition(0);
     }
 
     @Override
-    public double getRightRate() {
+    public double getRightMetersPerSecond() {
         return rightLeader.getSelectedSensorVelocity(0);
     }
 

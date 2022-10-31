@@ -34,30 +34,30 @@ public interface DriveIO {
     }
 
     /** Gets left encoder value */
-    public default double getLeftPosition() {
+    public default double getLeftDistanceMeters() {
         return 0.0;
     }
 
     /** Resets left encoder value */
-    public default void resetLeftPosition() {
+    public default void resetLeftDistanceMeters() {
     }
 
     /** Gets right encoder value */
-    public default double getRightPosition() {
+    public default double getRightDistanceMeters() {
         return 0.0;
     }
 
     /** Resets right encoder value */
-    public default void resetRightPosition() {
+    public default void resetRightDistanceMeters() {
     }
 
     /** Gets left encoder rate */
-    public default double getLeftRate() {
+    public default double getLeftMetersPerSecond() {
         return 0.0;
     }
 
     /** Gets right encoder rate */
-    public default double getRightRate() {
+    public default double getRightMetersPerSecond() {
         return 0.0;
     }
 

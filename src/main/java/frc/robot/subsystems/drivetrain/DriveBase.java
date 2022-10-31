@@ -2,17 +2,21 @@ package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.numbers.N5;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.util.TalonFXUtils;
+import frc.robot.ui.GlassInterface;
 
 public class DriveBase extends SubsystemBase {
     // Final for now, make sure to change in order to switch between drives
@@ -31,8 +35,18 @@ public class DriveBase extends SubsystemBase {
     // private final SimpleMotorFeedforward leftFF;
     // private final SimpleMotorFeedforward rightFF;
 
-    private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(),
-            new Pose2d());
+    // Kalman Filter Configuration. These can be "tuned-to-taste" based on how much
+    // you trust your
+    // various sensors. Smaller numbers will cause the filter to "trust" the
+    // estimate from that particular
+    // component more than the others. This in turn means the particualr component
+    // will have a stronger
+    // influence on the final pose estimate.
+    Matrix<N5, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5), 0.05, 0.05);
+    Matrix<N3, N1> localMeasurementStdDevs = VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(0.1));
+    Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(0.1));
+
+    private final DifferentialDrivePoseEstimator m_poseEstimator;
 
     public DriveBase(DriveIO driveIO) {
         this.driveIO = driveIO;
@@ -52,19 +66,31 @@ public class DriveBase extends SubsystemBase {
         //     driveIO.getkA());
 
         setBrakeMode(false);
+
+        m_poseEstimator = new DifferentialDrivePoseEstimator(
+                getRotation2d(),
+                new Pose2d(),
+                stateStdDevs,
+                localMeasurementStdDevs,
+                visionMeasurementStdDevs);
     }
 
     @Override
     public void periodic() {
-        odometry.update(new Rotation2d(getGyroAngle()),
+        m_poseEstimator.update(
+                getRotation2d(),
+                getDifferentialDriveWheelSpeeds(),
                 getLeftDistanceMeters(),
                 getRightDistanceMeters());
 
         SmartDashboard.putNumber("Gyro Value", getGyroAngle());
+        GlassInterface.setRobotPosition(getPose());
+        SmartDashboard.putNumber("Get left distance meters", getLeftDistanceMeters());
+        SmartDashboard.putNumber("Get right distance meters", getRightDistanceMeters());
     }
 
     public void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(pose,
+        m_poseEstimator.resetPosition(pose,
                 new Rotation2d(-driveIO.getGyroAngle()));
     }
 
@@ -97,27 +123,39 @@ public class DriveBase extends SubsystemBase {
     }
 
     public double getLeftDistanceMeters() {
-        return TalonFXUtils.ticksToMeters(driveIO.getLeftPosition(), Constants.driveGearRatio, wheelRadiusMeters);
+        return driveIO.getLeftDistanceMeters();
     }
 
     public void resetLeftPosition() {
-        driveIO.resetLeftPosition();
+        driveIO.resetLeftDistanceMeters();
     }
 
     public double getLeftSpeed() {
-        return driveIO.getLeftRate();
+        return driveIO.getLeftMetersPerSecond();
+    }
+
+    public double getRightSpeed() {
+        return driveIO.getRightMetersPerSecond();
     }
 
     public double getRightDistanceMeters() {
-        return TalonFXUtils.ticksToMeters(driveIO.getRightPosition(), Constants.driveGearRatio, wheelRadiusMeters);
+        return driveIO.getRightDistanceMeters();
     }
 
     public void resetRightPosition() {
-        driveIO.resetRightPosition();
+        driveIO.resetRightDistanceMeters();
+    }
+
+    public DifferentialDriveWheelSpeeds getDifferentialDriveWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(getLeftSpeed(), getRightSpeed());
     }
 
     public double getGyroAngle() {
         return driveIO.getGyroAngle();
+    }
+
+    public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(-driveIO.getGyroAngle());
     }
 
     public void resetGyro() {
@@ -125,7 +163,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return odometry.getPoseMeters();
+        return m_poseEstimator.getEstimatedPosition();
     }
 
     public double getTrackWidthMeters() {
