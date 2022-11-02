@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision;
 
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,8 +27,12 @@ public class Vision extends SubsystemBase {
         visionIO.setLEDEnabled(enabled);
     }
 
-    public void setPipelineIndex() {
-        // TODO
+    public void setPipelineIndex(Integer index) {
+        visionIO.setPipelineIndex(index);
+    }
+
+    public PhotonTrackedTarget getVisionPositionEstimate() {
+        return visionIO.getVisionPositionTarget();
     }
 
     public double getCameraHeightMeters() {

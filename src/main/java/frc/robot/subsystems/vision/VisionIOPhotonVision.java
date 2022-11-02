@@ -3,6 +3,7 @@ package frc.robot.subsystems.vision;
 import org.photonvision.PhotonCamera;
 import org.photonvision.common.hardware.VisionLEDMode;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.util.Units;
 
@@ -53,5 +54,19 @@ public class VisionIOPhotonVision implements VisionIO {
     @Override
     public void setLEDEnabled(boolean enabled) {
         photonCam.setLED(enabled ? VisionLEDMode.kOn : VisionLEDMode.kOff);
+    }
+
+    @Override
+    public PhotonTrackedTarget getVisionPositionTarget() {
+        PhotonPipelineResult photonVisionBestResult = photonCam.getLatestResult();
+        // double aprilTagHeight = 2.0;
+        if (photonVisionBestResult.hasTargets()) {
+            PhotonTrackedTarget bestTarget = photonVisionBestResult.getBestTarget();
+            // double range = PhotonUtils.calculateDistanceToTargetMeters(cameraHeightMeters, aprilTagHeight, Units.degreesToRadians(HUB_CAMERA_DEGREES_HORIZ), Units.degreesToRadians(bestTarget.getPitch()));
+            return bestTarget; // This should be used with PhotonUtils.estimateFieldToRobot
+            // return new Pose2d(bestTarget.getTranslation().getX(), bestTarget.getTranslation().getY(), bestTarget.getRotation().getRadians());
+        }
+        return null;
+        // return new Pose2d(photonVisionBestResult.getTranslation().getX(), photonVisionBestResult.getY(), photonVisionBestResult.getRotation().getRadians());
     }
 }

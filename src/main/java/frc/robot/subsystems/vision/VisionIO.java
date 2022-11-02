@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision;
 
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 public interface VisionIO {
 
@@ -26,4 +27,10 @@ public interface VisionIO {
         return 0.0;
     }
 
+    public default PhotonTrackedTarget getVisionPositionTarget() {
+        return null;
+    }
+
+    public default void setPipelineIndex(Integer index) {
+    }
 }
