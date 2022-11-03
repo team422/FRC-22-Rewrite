@@ -1,24 +1,17 @@
 package frc.robot.subsystems.drivetrain;
 
-import org.photonvision.PhotonUtils;
-import org.photonvision.targeting.PhotonTrackedTarget;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.numbers.N5;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -54,10 +47,11 @@ public class DriveBase extends SubsystemBase {
     Matrix<N3, N1> localMeasurementStdDevs = VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(0.1));
     Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(0.1));
 
-    private final DifferentialDrivePoseEstimator m_poseEstimator;
+    private final DriveBasePoseEstimator m_poseEstimator;
 
-    public DriveBase(DriveIO driveIO) {
+    public DriveBase(DriveIO driveIO, DriveBasePoseEstimator poseEstimator) {
         this.driveIO = driveIO;
+        m_poseEstimator = poseEstimator;
 
         this.left = driveIO.getLeftLeader();
         this.right = driveIO.getRightLeader();
@@ -74,13 +68,6 @@ public class DriveBase extends SubsystemBase {
         //     driveIO.getkA());
 
         setBrakeMode(false);
-
-        m_poseEstimator = new DifferentialDrivePoseEstimator(
-                getRotation2d(),
-                new Pose2d(),
-                stateStdDevs,
-                localMeasurementStdDevs,
-                visionMeasurementStdDevs);
     }
 
     @Override
@@ -116,7 +103,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        m_poseEstimator.resetPosition(pose,
+        m_poseEstimator.resetToPose(pose,
                 new Rotation2d(-driveIO.getGyroAngle()));
     }
 
@@ -189,7 +176,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return m_poseEstimator.getEstimatedPosition();
+        return m_poseEstimator.getPoseEst();
     }
 
     public double getTrackWidthMeters() {
@@ -231,36 +218,5 @@ public class DriveBase extends SubsystemBase {
 
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds();
-    }
-
-    public void setNewVisionPose(PhotonTrackedTarget target) {
-        double aprilTagHeight = 0.5;
-        /**
-        * Estimate the position of the robot in the field.
-        *
-        * @param cameraHeightMeters The physical height of the camera off the floor in meters.
-        * @param targetHeightMeters The physical height of the target off the floor in meters. This
-        *     should be the height of whatever is being targeted (i.e. if the targeting region is set to
-        *     top, this should be the height of the top of the target).
-        * @param cameraPitchRadians The pitch of the camera from the horizontal plane in radians.
-        *     Positive values up.
-        * @param targetPitchRadians The pitch of the target in the camera's lens in radians. Positive
-        *     values up.
-        * @param targetYaw The observed yaw of the target. Note that this *must* be CCW-positive, and
-        *     Photon returns CW-positive.
-        * @param gyroAngle The current robot gyro angle, likely from odometry.
-        * @param fieldToTarget A Pose2d representing the target position in the field coordinate system.
-        * @param cameraToRobot The position of the robot relative to the camera. If the camera was
-        *     mounted 3 inches behind the "origin" (usually physical center) of the robot, this would be
-        *     Transform2d(3 inches, 0 inches, 0 degrees).
-        * @return The position of the robot in the field.
-        */
-        Pose2d poseFromVision = PhotonUtils.estimateFieldToRobot(Units.inchesToMeters(28.5), aprilTagHeight,
-                Units.degreesToRadians(45), target.getPitch(), new Rotation2d(target.getYaw()),
-                new Rotation2d(getGyroAngle()),
-                new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d()),
-                new Transform2d(new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)), new Rotation2d()));
-        m_poseEstimator.addVisionMeasurement(poseFromVision, Timer.getFPGATimestamp());
-
     }
 }

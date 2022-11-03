@@ -11,17 +11,20 @@ public class Turn extends CommandBase {
     double speed;
     private static double maxSpeed = 0.5;
     double targetGyroAngle;
+    double currentGyroAngle;
 
     public Turn(DriveBase drive, double turnDegrees, double speed) {
         addRequirements(drive);
         this.drive = drive;
         this.turnDegrees = turnDegrees;
         this.speed = speed;
+        this.currentGyroAngle = drive.getGyroAngle();
     }
 
     @Override
     public void initialize() {
-        drive.resetGyro();
+        // drive.resetGyro();
+        this.currentGyroAngle = drive.getGyroAngle();
         targetGyroAngle = drive.getGyroAngle() + turnDegrees;
         drive.setBrakeMode(true);
     }
@@ -35,13 +38,13 @@ public class Turn extends CommandBase {
 
     @Override
     public void execute() {
-        double turnSpeed = findCompletionValue(drive.getGyroAngle(), targetGyroAngle) * speed;
+        double turnSpeed = findCompletionValue(drive.getGyroAngle() - this.currentGyroAngle, targetGyroAngle) * speed;
         turnSpeed += Math.copySign(0.1, turnSpeed);
         turnSpeed = MathUtil.clamp(turnSpeed, -maxSpeed, maxSpeed);
 
         System.out.println("Turn Speed: " + turnSpeed);
 
-        SmartDashboard.putNumber("Current Gyro Angle", drive.getGyroAngle());
+        SmartDashboard.putNumber("Current Gyro Angle", drive.getGyroAngle() - this.currentGyroAngle);
         SmartDashboard.putNumber("Target Gyro Angle", targetGyroAngle);
 
         drive.driveBase.curvatureDrive(0.0, turnSpeed, true);
@@ -51,9 +54,11 @@ public class Turn extends CommandBase {
     public boolean isFinished() {
         // double turn_left = drive.getGyroAngle() - turnDegrees;
         if (turnDegrees < 13) {
-            return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 2.5 && Math.abs(drive.getLeftSpeed()) < 300;
+            return Math.abs(drive.getGyroAngle() - this.currentGyroAngle - targetGyroAngle) < 2.5
+                    && Math.abs(drive.getLeftSpeed()) < 300;
         } else {
-            return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 1.5 && Math.abs(drive.getLeftSpeed()) < 300;
+            return Math.abs(drive.getGyroAngle() - this.currentGyroAngle - targetGyroAngle) < 1.5
+                    && Math.abs(drive.getLeftSpeed()) < 300;
         }
     }
 

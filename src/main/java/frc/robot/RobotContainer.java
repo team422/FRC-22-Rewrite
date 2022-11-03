@@ -46,6 +46,7 @@ import frc.robot.subsystems.colorSensor.ColorSensor;
 import frc.robot.subsystems.colorSensor.ColorSensorIO;
 import frc.robot.subsystems.colorSensor.ColorSensorIORevV3;
 import frc.robot.subsystems.drivetrain.DriveBase;
+import frc.robot.subsystems.drivetrain.DriveBasePoseEstimator;
 import frc.robot.subsystems.drivetrain.DriveIO;
 import frc.robot.subsystems.drivetrain.DriveIOFalcon;
 import frc.robot.subsystems.flywheel.VarFlyWheel;
@@ -103,7 +104,7 @@ public class RobotContainer {
     private void configureSubsystems() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
-                drive = new DriveBase(new DriveIOFalcon());
+                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator());
                 climber = new Climber(
                         new ClimberIOFalcon(),
                         new ClimberPistonIO());
@@ -112,11 +113,11 @@ public class RobotContainer {
                 transversal = new Transversal(new TransversalIOSparkMax());
                 uptake = new Uptake(new UptakeIOSparkMax());
                 colorSensor = new ColorSensor(new ColorSensorIORevV3());
-                hubCamera = new Vision(
-                        new VisionIOPhotonVision(
-                                VisionIOPhotonVision.HUB_CAMERA_NAME,
-                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
-                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                // hubCamera = new Vision(
+                //         new VisionIOPhotonVision(
+                //                 VisionIOPhotonVision.HUB_CAMERA_NAME,
+                //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 // intakeCamera = new Vision(
                 //         new VisionIOPhotonVision(
                 //                 "IntakeCamera",
@@ -124,7 +125,7 @@ public class RobotContainer {
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 break;
             case ROBOT_2022_PRACTICE:
-                drive = new DriveBase(new DriveIOFalcon());
+                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator());
                 hubCamera = new Vision(
                         new VisionIOPhotonVision(
                                 VisionIOPhotonVision.HUB_CAMERA_NAME,
@@ -137,7 +138,7 @@ public class RobotContainer {
         }
 
         drive = drive != null ? drive : new DriveBase(new DriveIO() {
-        });
+        }, new DriveBasePoseEstimator());
 
         climber = climber != null ? climber : new Climber(new ClimberIO() {
         }, null);

@@ -9,6 +9,7 @@ public class TurnToBall extends CommandBase {
     private DriveBase drive;
     private double turnSpeed;
     private double maxAngle;
+    private double angle;
 
     public TurnToBall(Vision vision, DriveBase drive, double turnSpeed, double maxAngle) {
         setName("TurnToBall");
@@ -16,12 +17,14 @@ public class TurnToBall extends CommandBase {
         this.drive = drive;
         this.turnSpeed = turnSpeed;
         this.maxAngle = maxAngle;
+        this.angle = drive.getGyroAngle();
     }
 
     @Override
     public void initialize() {
         drive.setBrakeMode(true);
-        drive.resetGyro();
+        // drive.resetGyro();
+        this.angle = drive.getGyroAngle();
     }
 
     @Override
@@ -39,7 +42,7 @@ public class TurnToBall extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        double offset = (maxAngle - drive.getGyroAngle()) * Math.signum(maxAngle);
+        double offset = (maxAngle - drive.getGyroAngle() - this.angle) * Math.signum(maxAngle);
         return offset < 0;
     }
 

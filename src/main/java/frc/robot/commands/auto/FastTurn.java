@@ -11,18 +11,21 @@ public class FastTurn extends CommandBase {
     double speed;
     private static double maxSpeed = 0.5;
     double targetGyroAngle;
+    double currentGyroAngle;
 
     public FastTurn(DriveBase drive, double turnDegrees, double speed) {
         addRequirements(drive);
         this.drive = drive;
         this.turnDegrees = turnDegrees;
         this.speed = speed;
+        this.currentGyroAngle = drive.getGyroAngle();
     }
 
     @Override
     public void initialize() {
-        drive.resetGyro();
-        targetGyroAngle = drive.getGyroAngle() + turnDegrees;
+        // drive.resetGyro();
+        this.currentGyroAngle = drive.getGyroAngle();
+        targetGyroAngle = drive.getGyroAngle() - this.currentGyroAngle + turnDegrees;
         drive.setBrakeMode(true);
     }
 
@@ -50,7 +53,7 @@ public class FastTurn extends CommandBase {
     @Override
     public boolean isFinished() {
         // double turn_left = drive.getGyroAngle() - turnDegrees;
-        return Math.abs(drive.getGyroAngle() - targetGyroAngle) < 4;
+        return Math.abs(drive.getGyroAngle() - this.currentGyroAngle - targetGyroAngle) < 4;
     }
 
     @Override
