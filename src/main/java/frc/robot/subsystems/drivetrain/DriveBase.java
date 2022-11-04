@@ -80,6 +80,7 @@ public class DriveBase extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro Value", getGyroAngle());
         GlassInterface.setRobotPosition(getPose());
+
         SmartDashboard.putNumber("Get left distance meters", getLeftDistanceMeters());
         SmartDashboard.putNumber("Get right distance meters", getRightDistanceMeters());
         // Homemade position tracking

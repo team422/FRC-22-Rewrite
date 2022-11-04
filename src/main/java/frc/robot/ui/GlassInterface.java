@@ -9,6 +9,7 @@ public class GlassInterface {
 
     static {
         SmartDashboard.putData(field);
+
     }
 
     public static void setRobotPosition(Pose2d pose) {
