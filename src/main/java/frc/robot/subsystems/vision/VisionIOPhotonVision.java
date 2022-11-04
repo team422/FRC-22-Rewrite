@@ -5,6 +5,7 @@ import org.photonvision.common.hardware.VisionLEDMode;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants;
 
 public class VisionIOPhotonVision implements VisionIO {
     public static final String HUB_CAMERA_NAME = "limelight";
@@ -24,6 +25,22 @@ public class VisionIOPhotonVision implements VisionIO {
 
     @Override
     public PhotonPipelineResult getLatestResult() {
+        return photonCam.getLatestResult();
+    }
+
+    @Override
+    public PhotonPipelineResult getLatestResultForcedTape() {
+        if (this.getPipelineId() != Constants.aprilTagPipeline) {
+            this.setPipelineIndex(Constants.aprilTagPipeline);
+        }
+        return photonCam.getLatestResult();
+    }
+
+    @Override
+    public PhotonPipelineResult getLatestResultForcedApril() {
+        if (this.getPipelineId() != Constants.tapePipeline) {
+            this.setPipelineIndex(Constants.tapePipeline);
+        }
         return photonCam.getLatestResult();
     }
 
@@ -53,6 +70,11 @@ public class VisionIOPhotonVision implements VisionIO {
     @Override
     public void setLEDEnabled(boolean enabled) {
         photonCam.setLED(enabled ? VisionLEDMode.kOn : VisionLEDMode.kOff);
+    }
+
+    @Override
+    public int getPipelineId() {
+        return photonCam.getPipelineIndex();
     }
 
     // @Override

@@ -73,6 +73,7 @@ public final class Constants {
     public static final TunableNumber VISION_TARGET_OFFSET = new TunableNumber("Vision/TargetOffset", 3);
     public static boolean useVisionShot = true;
     public static final int aprilTagPipeline = 1;
+    public static final int tapePipeline = 0;
 
     public static class GeometryUtils {
         public static Pose2d averagePoses(Pose2d... poses) {

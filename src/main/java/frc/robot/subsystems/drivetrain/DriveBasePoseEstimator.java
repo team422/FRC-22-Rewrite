@@ -108,6 +108,7 @@ public class DriveBasePoseEstimator {
     }
 
     public double getHubAngle() { // THIS MAY HAVE TO BE NEGATIVE
+        // THIS ONLY RETURNS THE DIFFERENTIAL IN ANGLE, NOT THE ABSOLUTE ANGLE
         // Get hub position
 
         Pose2d hubPose = new Pose2d(new Translation2d(FieldConstants.kHubXPos, FieldConstants.kHubYPos),

@@ -35,6 +35,8 @@ import frc.robot.commands.operatorcommands.shooterrelatedcommands.TeleFlyVarUp;
 import frc.robot.commands.operatorcommands.shooterrelatedcommands.TeleShootSequence;
 import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
+import frc.robot.commands.visioncommands.RotateToHubOdometryOnly;
+import frc.robot.commands.visioncommands.RotateToHubOdometryPlusVision;
 import frc.robot.commands.visioncommands.VisionSniperMode;
 import frc.robot.oi.MixedXboxJoystickControls;
 import frc.robot.oi.UserControls;
@@ -228,6 +230,9 @@ public class RobotContainer {
         TeleFlyVarSpeed revFlywheelCommand = new TeleFlyVarSpeed(varFlyWheel, hubCamera);
 
         VisionSniperMode rotateToHubAdjustable = new VisionSniperMode(hubCamera, drive, () -> controls.getLeftDriveY());
+        RotateToHubOdometryOnly rotateToHubOdometryOnly = new RotateToHubOdometryOnly(drive, 0.0075);
+        RotateToHubOdometryPlusVision rotateToHubOdometryPlusVision = new RotateToHubOdometryPlusVision(hubCamera,
+                drive, 0.0075);
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
         // TurnToBall turnToBall = new TurnToBall(intakeCamera, drive, 15);
@@ -280,7 +285,10 @@ public class RobotContainer {
                 .whenActive(new SetIntakeExtended(intake, true))
                 .whileActiveContinuous(intakeOutCommand)
                 .whenInactive(new SetIntakeExtended(intake, false));
-        controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
+        // controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
+        controls.getAutoAimButton().whileActiveOnce(rotateToHubOdometryOnly);
+        // controls.getAutoAimButton().whileActiveOnce(rotateToHubOdometryPlusVision);
+
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
         // controls.getAutoDriveButton().whileActiveOnce(turnToBall);

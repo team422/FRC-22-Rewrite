@@ -9,6 +9,14 @@ public interface VisionIO {
         return null;
     }
 
+    public default PhotonPipelineResult getLatestResultForcedTape() {
+        return null;
+    }
+
+    public default PhotonPipelineResult getLatestResultForcedApril() {
+        return null;
+    }
+
     public default void updateTarget() {
     }
 
@@ -32,5 +40,9 @@ public interface VisionIO {
     }
 
     public default void setPipelineIndex(Integer index) {
+    }
+
+    public default int getPipelineId() {
+        return 0;
     }
 }
