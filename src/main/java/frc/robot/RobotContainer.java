@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -37,6 +40,7 @@ import frc.robot.commands.visioncommands.PositionForHub;
 import frc.robot.commands.visioncommands.RotateToHub;
 import frc.robot.commands.visioncommands.RotateToHubOdometryOnly;
 import frc.robot.commands.visioncommands.RotateToHubOdometryPlusVision;
+import frc.robot.commands.visioncommands.RotateToHubOdometryPlusVisionSniper;
 import frc.robot.commands.visioncommands.VisionSniperMode;
 import frc.robot.oi.MixedXboxJoystickControls;
 import frc.robot.oi.UserControls;
@@ -66,6 +70,7 @@ import frc.robot.subsystems.uptake.UptakeIOSparkMax;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
+import frc.robot.util.FieldUtils;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -233,6 +238,8 @@ public class RobotContainer {
         RotateToHubOdometryOnly rotateToHubOdometryOnly = new RotateToHubOdometryOnly(drive, 0.0075);
         RotateToHubOdometryPlusVision rotateToHubOdometryPlusVision = new RotateToHubOdometryPlusVision(hubCamera,
                 drive, 0.0075);
+        RotateToHubOdometryPlusVisionSniper rotateToHubOdometryPlusVisionSniper = new RotateToHubOdometryPlusVisionSniper(
+                hubCamera, drive, 0.0075, () -> controls.getLeftDriveY());
         RotateToHub rotateToHub = new RotateToHub(hubCamera, drive);
         PositionForHub positionToHub = new PositionForHub(hubCamera, drive);
         // TurnToBall turnToBall = new TurnToBall(intakeCamera, drive, 15);
@@ -287,6 +294,7 @@ public class RobotContainer {
                 .whenInactive(new SetIntakeExtended(intake, false));
         // controls.getAutoAimButton().whileActiveOnce(rotateToHubAdjustable);
         controls.getAutoAimButton().whileActiveOnce(rotateToHubOdometryOnly);
+        // controls.getAutoAimButton().whileActiveOnce(rotateToHubOdometryPlusVisionSniper);
         // controls.getAutoAimButton().whileActiveOnce(rotateToHubOdometryPlusVision);
 
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
@@ -321,6 +329,26 @@ public class RobotContainer {
                 return new FiveCargoAuto(drive, intake, transversal, uptake, varFlyWheel, hubCamera, intakeCamera,
                         colorSensor);
         }
+    }
+
+    public void periodic() {// COMMENT THIS OUT ONCE LIMELIGHT HAS BEEN TESTED
+        PhotonPipelineResult result = hubCamera.getLatestResult();
+        if (result != null) {
+            if (hubCamera.getPipelineId() == Constants.tapePipeline) {
+                // DISTANCE TO HUB
+                PhotonTrackedTarget finalResult = result.getBestTarget();
+                System.out.println("Distance TO HUB" + finalResult.getYaw());
+                System.out.println("Angle" + FieldUtils.getHubDistance(finalResult.getPitch(), hubCamera));
+            } else if (hubCamera.getPipelineId() == Constants.aprilTagPipeline) {
+                // DISTANCE TO APRIL TAG
+                PhotonTrackedTarget finalResult = result.getBestTarget();
+                System.out.println("Distance to april tag" + finalResult.getYaw());
+                System.out.println("Angle" + FieldUtils.getDistanceToAprilTag(finalResult.getPitch(), hubCamera,
+                        finalResult.getFiducialId()));
+            }
+
+        }
+
     }
 
     //
