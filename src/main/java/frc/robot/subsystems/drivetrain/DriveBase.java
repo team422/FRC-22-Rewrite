@@ -107,6 +107,10 @@ public class DriveBase extends SubsystemBase {
                 new Rotation2d(-driveIO.getGyroAngle()));
     }
 
+    public double getHubAngle() {
+        return m_poseEstimator.getHubAngle();
+    }
+
     public void driveVoltage(double leftVoltage, double rightVoltage) {
         driveIO.setVoltage(leftVoltage, rightVoltage);
     }

@@ -34,6 +34,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -104,6 +105,18 @@ public class DriveBasePoseEstimator {
                 m_poseEstimator.addVisionMeasurement(camPose2d, imageCaptureTime);
             }
         }
+    }
+
+    public double getHubAngle() { // THIS MAY HAVE TO BE NEGATIVE
+        // Get hub position
+
+        Pose2d hubPose = new Pose2d(new Translation2d(FieldConstants.kHubXPos, FieldConstants.kHubYPos),
+                new Rotation2d());
+        Pose2d robotPose = m_poseEstimator.getEstimatedPosition();
+        // return -robotPose.relativeTo(hubPose).getRotation().getDegrees();
+        return robotPose.relativeTo(hubPose).getRotation().getDegrees();
+
+        // return m_poseEstimator.getEstimatedPosition().getRotation().getDegrees();
     }
 
     /**
