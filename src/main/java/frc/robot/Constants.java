@@ -49,6 +49,7 @@ public final class Constants {
     // Drivebase Constants
     public static final DriveMode mode = DriveMode.ARCADE;
     public static double driveGearRatio = 6.75;
+    public static int pidgeonPort = 23;
 
     // Shooter Constants
     public static final double SHOOTER_UP_RPM = 2150; // Distance is x feet to close bumper

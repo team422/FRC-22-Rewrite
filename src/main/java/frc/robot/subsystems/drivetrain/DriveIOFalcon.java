@@ -6,10 +6,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI;
 // Internal Imports
 import frc.robot.Constants;
 
@@ -25,8 +24,11 @@ public class DriveIOFalcon implements DriveIO {
     private double leftEncoderValue;
     private double rightEncoderValue;
 
-    private ADXRS450_Gyro gyro;
-    private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
+    // private ADXRS450_Gyro gyro;
+    private WPI_Pigeon2 gyro;
+    // private WPI_Pigeon2 pigeon;
+    // private static final SPI.Port kGyroPort = SPI.Port.kOnboardCS0;
+    private final int kGyroPort = Constants.pidgeonPort;
 
     private final double kS;
     private final double kV;
@@ -51,7 +53,8 @@ public class DriveIOFalcon implements DriveIO {
 
                 this.kP = 0.064039;
                 this.kD = 0.0;
-                this.gyro = new ADXRS450_Gyro(kGyroPort);
+                // this.gyro = new ADXRS450_Gyro(kGyroPort);
+                this.gyro = new WPI_Pigeon2(kGyroPort);
                 this.isGyroInverted = true;
                 break;
             case ROBOT_2022_PRACTICE:
@@ -187,7 +190,7 @@ public class DriveIOFalcon implements DriveIO {
 
         double multiplier = isGyroInverted ? -1 : 1;
 
-        return gyro.getAngle() * multiplier;
+        return gyro.getRotation2d().getDegrees() * multiplier;
     }
 
     @Override

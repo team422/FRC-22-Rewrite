@@ -52,6 +52,7 @@ public class DriveBase extends SubsystemBase {
         //     driveIO.getkA());
 
         setBrakeMode(false);
+        resetGyro();
     }
 
     @Override

@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
-        m_robotContainer.setBrakeMode(false);
+        m_robotContainer.onDisable();
     }
 
     @Override
@@ -102,6 +102,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        System.out.println("Gyro Angle: " + m_robotContainer.getGyroAngle());
     }
 
     @Override
@@ -114,5 +115,8 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
+        // System.out.println("Gyro Angle: " + m_robotContainer.getGyroAngle());
+        // 
     }
+
 }

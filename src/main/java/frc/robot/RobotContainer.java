@@ -17,6 +17,7 @@ import frc.robot.commands.auto.routines.FiveCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAuto;
 import frc.robot.commands.auto.routines.FourCargoAutoPos2;
 import frc.robot.commands.auto.routines.TwoCargoAuto;
+import frc.robot.commands.debug.ResetDrive;
 import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIndexer;
 import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIntake;
 import frc.robot.commands.operatorcommands.ballmanagmentcommands.TeleIntakeToggle;
@@ -325,5 +326,13 @@ public class RobotContainer {
 
     public void calibrateGyro() {
         drive.calibrateGyro();
+    }
+
+    public double getGyroAngle() {
+        return drive.getGyroAngle();
+    }
+
+    public void onDisable() {
+        new ResetDrive(drive).schedule();
     }
 }

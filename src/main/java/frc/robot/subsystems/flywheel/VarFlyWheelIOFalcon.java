@@ -24,7 +24,7 @@ public class VarFlyWheelIOFalcon implements VarFlyWheelIO {
 
                 this.flyWheelExtender = new DoubleSolenoid(PneumaticsModuleType.REVPH, 15, 0);
 
-                this.setFPID(0.055, 0.070, 0, 0);
+                this.setFPID(0.055, 0.070, 0, 0.08);
                 break;
             case ROBOT_2022_PRACTICE:
             default:
