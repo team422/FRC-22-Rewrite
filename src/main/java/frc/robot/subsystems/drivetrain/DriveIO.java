@@ -8,9 +8,10 @@ public interface DriveIO {
         return null;
     }
 
-    // public default double getHubAngle() {
-    //     return 0;
-    // }
+    public default double getHubAngle() {
+        return 0;
+    }
+
     public default WPI_TalonFX getRightLeader() {
         return null;
     }

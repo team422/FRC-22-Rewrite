@@ -30,6 +30,10 @@ public class Vision extends SubsystemBase {
         return this.latestResult;
     }
 
+    public PhotonPipelineResult getLatestResultForcedApril() {
+        return this.visionIO.getLatestResultForcedApril();
+    }
+
     public PhotonPipelineResult getLatestResultWithinTwoSecondsTape() {
         if (lastUpdatePipeline != Constants.tapePipeline) {
             return null;

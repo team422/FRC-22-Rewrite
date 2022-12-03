@@ -42,6 +42,7 @@ import edu.wpi.first.math.numbers.N5;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOPhotonVision;
 
 /**
@@ -52,7 +53,7 @@ import frc.robot.subsystems.vision.VisionIOPhotonVision;
 public class DriveBasePoseEstimator {
     // Sensors used as part of the Pose Estimation
     private final PhotonCamera cam = new PhotonCamera(VisionIOPhotonVision.HUB_CAMERA_NAME);
-
+    private final Vision vision;
     // Note - drivetrain encoders are also used. The Drivetrain class must pass us
     // the relevant readings.
 
@@ -74,7 +75,8 @@ public class DriveBasePoseEstimator {
             localMeasurementStdDevs,
             visionMeasurementStdDevs);
 
-    public DriveBasePoseEstimator() {
+    public DriveBasePoseEstimator(Vision vision) {
+        this.vision = vision;
     }
 
     /**
@@ -88,21 +90,25 @@ public class DriveBasePoseEstimator {
             DifferentialDriveWheelSpeeds actWheelSpeeds, double leftDist, double rightDist) {
         m_poseEstimator.update(gyroAngle, actWheelSpeeds, leftDist, rightDist);
 
-        PhotonPipelineResult res = cam.getLatestResult();
-        if (res.hasTargets()) {
-            PhotonTrackedTarget useRes = res.getBestTarget();
-            var imageCaptureTime = Timer.getFPGATimestamp() - res.getLatencyMillis() / 1000.0;
-            // var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
-            // var camPose = Constants.kFarTargetPose.transformBy(camToTargetTrans.inverse());
-            // var fudId = res.getBestTarget().getFudId();
-            Integer fudId = useRes.getFiducialId();
-            if (fudId != null) {
-                Transform3d camToTargetTrans = useRes.getBestCameraToTarget();
-                Pose3d camPose = FieldConstants.kFiducialPoseMapping.get(fudId).transformBy(camToTargetTrans.inverse());
-                Pose2d camPose2d = new Pose2d(camPose.getTranslation().getX(), camPose.getTranslation().getY(),
-                        new Rotation2d(Units.degreesToRadians(camPose.getRotation().getAngle())));
+        PhotonPipelineResult res = vision.getLatestResultForcedApril();
+        if (res != null) {
+            if (res.hasTargets()) {
+                PhotonTrackedTarget bestTargetFromVision = res.getBestTarget();
+                var imageCaptureTime = Timer.getFPGATimestamp() - res.getLatencyMillis() / 1000.0;
+                // var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
+                // var camPose = Constants.kFarTargetPose.transformBy(camToTargetTrans.inverse());
+                // var fudId = res.getBestTarget().getFudId();
+                Integer fudId = bestTargetFromVision.getFiducialId();
+                Pose3d fudPose = FieldConstants.kFiducialPoseMapping.get(fudId);
+                if (fudPose != null) {
+                    Transform3d camToTargetTrans = bestTargetFromVision.getBestCameraToTarget();
+                    fudPose.transformBy(camToTargetTrans.inverse());
 
-                m_poseEstimator.addVisionMeasurement(camPose2d, imageCaptureTime);
+                    Pose2d camPose2d = new Pose2d(fudPose.getTranslation().getX(), fudPose.getTranslation().getY(),
+                            new Rotation2d(Units.degreesToRadians(fudPose.getRotation().getAngle())));
+
+                    m_poseEstimator.addVisionMeasurement(camPose2d, imageCaptureTime);
+                }
             }
         }
     }

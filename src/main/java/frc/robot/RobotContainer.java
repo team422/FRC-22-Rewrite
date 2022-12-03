@@ -111,7 +111,6 @@ public class RobotContainer {
     private void configureSubsystems() {
         switch (Constants.bot) {
             case ROBOT_2022_COMP:
-                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator());
                 climber = new Climber(
                         new ClimberIOFalcon(),
                         new ClimberPistonIO());
@@ -120,11 +119,12 @@ public class RobotContainer {
                 transversal = new Transversal(new TransversalIOSparkMax());
                 uptake = new Uptake(new UptakeIOSparkMax());
                 colorSensor = new ColorSensor(new ColorSensorIORevV3());
-                // hubCamera = new Vision(
-                //         new VisionIOPhotonVision(
-                //                 VisionIOPhotonVision.HUB_CAMERA_NAME,
-                //                 VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
-                //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                hubCamera = new Vision(
+                        new VisionIOPhotonVision(
+                                VisionIOPhotonVision.HUB_CAMERA_NAME,
+                                VisionIOPhotonVision.HUB_CAMERA_HEIGHT_METERS,
+                                VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
+                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator(hubCamera));
                 // intakeCamera = new Vision(
                 //         new VisionIOPhotonVision(
                 //                 "IntakeCamera",
@@ -132,7 +132,7 @@ public class RobotContainer {
                 //                 VisionIOPhotonVision.HUB_CAMERA_DEGREES_HORIZ));
                 break;
             case ROBOT_2022_PRACTICE:
-                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator());
+                drive = new DriveBase(new DriveIOFalcon(), new DriveBasePoseEstimator(null));
                 hubCamera = new Vision(
                         new VisionIOPhotonVision(
                                 VisionIOPhotonVision.HUB_CAMERA_NAME,
@@ -143,9 +143,11 @@ public class RobotContainer {
                 System.out.println("No robot selected.");
                 break;
         }
+        hubCamera = hubCamera != null ? hubCamera : new Vision(new VisionIO() {
+        });
 
         drive = drive != null ? drive : new DriveBase(new DriveIO() {
-        }, new DriveBasePoseEstimator());
+        }, new DriveBasePoseEstimator(hubCamera));
 
         climber = climber != null ? climber : new Climber(new ClimberIO() {
         }, null);
@@ -165,12 +167,9 @@ public class RobotContainer {
         colorSensor = colorSensor != null ? colorSensor : new ColorSensor(new ColorSensorIO() {
         });
 
-        hubCamera = hubCamera != null ? hubCamera : new Vision(new VisionIO() {
-        });
-
         intakeCamera = intakeCamera != null ? intakeCamera : new Vision(new VisionIO() {
         });
-
+        hubCamera.setPipelineApril();
         // hubCam.setLEDEnabled(false); (Commented out because it breaks network tables)
         drive.resetLeftPosition();
         drive.resetRightPosition();
@@ -300,6 +299,7 @@ public class RobotContainer {
         // controls.getAutoAimButton().whileActiveOnce(rotateToHub);
         // controls.getAutoDriveButton().whileActiveOnce(positionToHub);
         // controls.getAutoDriveButton().whileActiveOnce(turnToBall);
+        hubCamera.setPipelineApril();
     }
 
     // public boolean setClimbMode(boolean climbMode) {
@@ -331,22 +331,25 @@ public class RobotContainer {
         }
     }
 
-    public void periodic() {// COMMENT THIS OUT ONCE LIMELIGHT HAS BEEN TESTED
+    public void photonWorking() {// COMMENT THIS OUT ONCE LIMELIGHT HAS BEEN TESTED
         PhotonPipelineResult result = hubCamera.getLatestResult();
+        System.out.println("hub camera" + hubCamera.getPipelineId());
         if (result != null) {
-            if (hubCamera.getPipelineId() == Constants.tapePipeline) {
-                // DISTANCE TO HUB
-                PhotonTrackedTarget finalResult = result.getBestTarget();
-                System.out.println("Distance TO HUB" + finalResult.getYaw());
-                System.out.println("Angle" + FieldUtils.getHubDistance(finalResult.getPitch(), hubCamera));
-            } else if (hubCamera.getPipelineId() == Constants.aprilTagPipeline) {
-                // DISTANCE TO APRIL TAG
-                PhotonTrackedTarget finalResult = result.getBestTarget();
-                System.out.println("Distance to april tag" + finalResult.getYaw());
-                System.out.println("Angle" + FieldUtils.getDistanceToAprilTag(finalResult.getPitch(), hubCamera,
-                        finalResult.getFiducialId()));
-            }
+            if (result.hasTargets()) {
+                if (hubCamera.getPipelineId() == Constants.tapePipeline) {
+                    // DISTANCE TO HUB
+                    PhotonTrackedTarget finalResult = result.getBestTarget();
+                    System.out.println("Distance TO HUB" + finalResult.getYaw());
+                    System.out.println("Angle" + FieldUtils.getHubDistance(finalResult.getPitch(), hubCamera));
+                } else if (hubCamera.getPipelineId() == Constants.aprilTagPipeline) {
+                    // DISTANCE TO APRIL TAG
+                    PhotonTrackedTarget finalResult = result.getBestTarget();
+                    System.out.println("Distance to april tag" + finalResult.getYaw());
+                    System.out.println("Angle" + FieldUtils.getDistanceToAprilTag(finalResult.getPitch(), hubCamera,
+                            finalResult.getFiducialId()) + " FUD ID: " + finalResult.getFiducialId());
+                }
 
+            }
         }
 
     }

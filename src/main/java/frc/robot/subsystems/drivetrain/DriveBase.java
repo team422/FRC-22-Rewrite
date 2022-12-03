@@ -28,8 +28,8 @@ public class DriveBase extends SubsystemBase {
     private final DriveIO driveIO;
     private final WPI_TalonFX left;
     private final WPI_TalonFX right;
-    private double xPosition;
-    private double yPosition;
+    // private double xPosition;
+    // private double yPosition;
 
     public DifferentialDrive driveBase;
 
@@ -85,21 +85,21 @@ public class DriveBase extends SubsystemBase {
         SmartDashboard.putNumber("Get right distance meters", getRightDistanceMeters());
         // Homemade position tracking
         // Use velocity to calculate distance
-        double rightSpeedMetersPerSecond = driveIO.getRightMetersPerSecond();
-        double leftSpeedMetersPerSecond = driveIO.getLeftMetersPerSecond();
-        double rightDistanceMeters = rightSpeedMetersPerSecond * 0.02;
-        double leftDistanceMeters = leftSpeedMetersPerSecond * 0.02;
-        // Use distance to calculate position
-        double rightPositionMeters = rightDistanceMeters;
-        double leftPositionMeters = leftDistanceMeters;
-        // Use gyro angle
-        double gyroAngle = getGyroAngle();
-        // Use trig to calculate position
-        xPosition += (rightPositionMeters + leftPositionMeters) / 2 * Math.cos(gyroAngle);
-        yPosition += (rightPositionMeters + leftPositionMeters) / 2 * Math.sin(gyroAngle);
-        // Set position on smart dashboard
-        SmartDashboard.putNumber("X Position Homemade", xPosition);
-        SmartDashboard.putNumber("Y Position Homemade", yPosition);
+        // double rightSpeedMetersPerSecond = driveIO.getRightMetersPerSecond();
+        // double leftSpeedMetersPerSecond = driveIO.getLeftMetersPerSecond();
+        // double rightDistanceMeters = rightSpeedMetersPerSecond * 0.02;
+        // double leftDistanceMeters = leftSpeedMetersPerSecond * 0.02;
+        // // Use distance to calculate position
+        // double rightPositionMeters = rightDistanceMeters;
+        // double leftPositionMeters = leftDistanceMeters;
+        // // Use gyro angle
+        // double gyroAngle = getGyroAngle();
+        // // Use trig to calculate position
+        // xPosition += (rightPositionMeters + leftPositionMeters) / 2 * Math.cos(gyroAngle);
+        // yPosition += (rightPositionMeters + leftPositionMeters) / 2 * Math.sin(gyroAngle);
+        // // Set position on smart dashboard
+        // SmartDashboard.putNumber("X Position Homemade", xPosition);
+        // SmartDashboard.putNumber("Y Position Homemade", yPosition);
 
     }
 

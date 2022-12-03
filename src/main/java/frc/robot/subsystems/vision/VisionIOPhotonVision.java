@@ -29,6 +29,11 @@ public class VisionIOPhotonVision implements VisionIO {
     }
 
     @Override
+    public void setPipelineIndex(Integer index) {
+        photonCam.setPipelineIndex(index);
+    }
+
+    @Override
     public PhotonPipelineResult getLatestResultForcedTape() {
         if (this.getPipelineId() != Constants.aprilTagPipeline) {
             this.setPipelineIndex(Constants.aprilTagPipeline);
